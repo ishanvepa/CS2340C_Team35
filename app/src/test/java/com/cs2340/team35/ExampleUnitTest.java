@@ -1,4 +1,4 @@
-package com.example.cs2340_group35_project;
+package com.cs2340.team35;
 
 import org.junit.Test;
 
