@@ -6,6 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".GameView.GameActivity">
 
+    <RelativeLayout
+        android:id="@+id/luigiSpriteLayout"
+        android:layout_width="48dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="176dp"
+        app:layout_constraintStart_toEndOf="@id/HPView"
+        app:layout_constraintTop_toBottomOf="@id/HPView">
+
+        <ImageView
+            android:id="@+id/luigiCharacterMario"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:src="@drawable/marioSprite"
+            app:srcCompat="@drawable/luigiSprite" />
+
+        <TextView
+            android:id="@+id/luigiSpriteName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Luigi"
+            android:textAlignment="center" />
+    </RelativeLayout>
+
     <TextView
         android:id="@+id/HPView"
         android:layout_width="wrap_content"
@@ -33,4 +59,29 @@
         android:text="End Screen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/marioSpriteLayout"
+        android:layout_width="48dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="84dp"
+        app:layout_constraintStart_toEndOf="@id/HPView"
+        app:layout_constraintTop_toBottomOf="@id/HPView">
+
+        <ImageView
+            android:id="@+id/mainCharacterMario"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:src="@drawable/marioSprite" />
+
+        <TextView
+            android:id="@+id/marioSpriteName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mario"
+            android:textAlignment="center" />
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
