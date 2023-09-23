@@ -3,6 +3,7 @@ package com.cs2340.team35;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.Button;
 
 public class MainWelcomeActivity extends AppCompatActivity {
 
@@ -10,7 +11,6 @@ public class MainWelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-
-
+        
     }
 }
