@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/welcomeMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to Luigi's Mansion"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250dp"/>
+
+    <Button
+        android:id="@+id/startButton"
+        android:backgroundTint="#198815"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Game"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/welcomeMessage"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/exitButton"
+        android:backgroundTint="#AE3D3D"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exit Game"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/startButton"
+        android:layout_marginTop="20dp"/>
+
+</RelativeLayout>
