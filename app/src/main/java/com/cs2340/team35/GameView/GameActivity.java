@@ -66,7 +66,15 @@ public class GameActivity extends AppCompatActivity {
         mainCharacter.setLayoutParams(position);
 
         hp.setText(String.format("Current Health: %d", state.Health));
-        diff.setText(String.format("Difficulty Level: %d", state.Difficulty));
+
+        String diffS = "EASY";
+        if (state.difficulty == Difficulty.MEDIUM) {
+            diffS = "MEDIUM";
+        } else if (state.difficulty == Difficulty.HARD) {
+            diffS = "HARD";
+        }
+
+        diff.setText(String.format("Difficulty Level: %s", diffS));
     }
 
 }
