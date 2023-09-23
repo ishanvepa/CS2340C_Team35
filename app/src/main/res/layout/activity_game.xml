@@ -97,8 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="300dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginEnd="18dp"
+        android:layout_marginEnd="0dp"
         android:layout_marginBottom="35dp"
         android:text="End Screen" />
 </RelativeLayout>

@@ -1,20 +1,17 @@
 package com.cs2340.team35.GameView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsoluteLayout;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cs2340.team35.MainWelcomeActivity;
+import com.cs2340.team35.EndActivity;
 import com.cs2340.team35.R;
 
 public class GameActivity extends AppCompatActivity {
@@ -33,7 +30,7 @@ public class GameActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent i = new Intent(getApplicationContext(), MainWelcomeActivity.class);
+                        Intent i = new Intent(getApplicationContext(), EndActivity.class);
                         startActivity(i);
                     }
                 }

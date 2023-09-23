@@ -4,17 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainWelcomeActivity">
+    tools:context=".EndActivity">
 
-    <EditText
-        android:id="@+id/welcomeText"
+
+    <TextView
+        android:id="@+id/endText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="86dp"
-        android:layout_marginTop="82dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Welcome!"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="164dp"
+        android:text="The end."
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
