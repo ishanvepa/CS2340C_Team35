@@ -25,7 +25,7 @@
             android:name=".WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".GameActivity"
+            android:name=".GameView.GameActivity"
             android:exported="false" />
     </application>
 
