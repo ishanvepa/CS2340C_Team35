@@ -6,6 +6,8 @@ import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.cs2340.team35.GameView.GameActivity;
+
 public class WelcomeActivity extends AppCompatActivity {
 
     @Override

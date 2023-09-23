@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameView.GameActivity">
+
+    <RelativeLayout
+        android:id="@+id/luigiSpriteLayout"
+        android:layout_width="48dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="176dp">
+
+        <ImageView
+            android:id="@+id/luigiCharacterMario"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:src="@drawable/luigisprite"
+            app:srcCompat="@drawable/luigisprite" />
+
+        <TextView
+            android:id="@+id/luigiSpriteName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Luigi"
+            android:textAlignment="center" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/peachSpriteLayout"
+        android:layout_width="48dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="268dp">
+
+        <ImageView
+            android:id="@+id/peachCharacterMario"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:src="@drawable/peachsprite"
+            app:srcCompat="@drawable/peachsprite" />
+
+        <TextView
+            android:id="@+id/peachSpriteName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Peach"
+            android:textAlignment="center" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/HPView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="14dp"
+        android:text="HP: " />
+
+    <TextView
+        android:id="@+id/difficultyText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <RelativeLayout
+        android:id="@+id/marioSpriteLayout"
+        android:layout_width="48dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="84dp">
+
+        <ImageView
+            android:id="@+id/mainCharacterMario"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:src="@drawable/mariosprite" />
+
+        <TextView
+            android:id="@+id/marioSpriteName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mario"
+            android:textAlignment="center" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/endScreenButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="300dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="35dp"
+        android:text="End Screen" />
+</RelativeLayout>
