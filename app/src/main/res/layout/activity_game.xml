@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,9 +11,7 @@
         android:layout_width="48dp"
         android:layout_height="93dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="176dp"
-        app:layout_constraintStart_toEndOf="@id/HPView"
-        app:layout_constraintTop_toBottomOf="@id/HPView">
+        android:layout_marginTop="176dp">
 
         <ImageView
             android:id="@+id/luigiCharacterMario"
@@ -21,8 +19,8 @@
             android:layout_height="match_parent"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
-            android:src="@drawable/marioSprite"
-            app:srcCompat="@drawable/luigiSprite" />
+            android:src="@drawable/luigisprite"
+            app:srcCompat="@drawable/luigisprite" />
 
         <TextView
             android:id="@+id/luigiSpriteName"
@@ -32,42 +30,50 @@
             android:textAlignment="center" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/peachSpriteLayout"
+        android:layout_width="48dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="268dp">
+
+        <ImageView
+            android:id="@+id/peachCharacterMario"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:src="@drawable/peachsprite"
+            app:srcCompat="@drawable/peachsprite" />
+
+        <TextView
+            android:id="@+id/peachSpriteName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Peach"
+            android:textAlignment="center" />
+    </RelativeLayout>
+
     <TextView
         android:id="@+id/HPView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="14dp"
-        android:text="HP: "
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="HP: " />
 
     <TextView
         android:id="@+id/difficultyText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/HPView"
-        app:layout_constraintTop_toBottomOf="@+id/HPView" />
-
-    <Button
-        android:id="@+id/endScreenButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="35dp"
-        android:text="End Screen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:text="TextView" />
 
     <RelativeLayout
         android:id="@+id/marioSpriteLayout"
         android:layout_width="48dp"
         android:layout_height="93dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="84dp"
-        app:layout_constraintStart_toEndOf="@id/HPView"
-        app:layout_constraintTop_toBottomOf="@id/HPView">
+        android:layout_marginTop="84dp">
 
         <ImageView
             android:id="@+id/mainCharacterMario"
@@ -75,7 +81,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
-            android:src="@drawable/marioSprite" />
+            android:src="@drawable/mariosprite" />
 
         <TextView
             android:id="@+id/marioSpriteName"
@@ -84,4 +90,15 @@
             android:text="Mario"
             android:textAlignment="center" />
     </RelativeLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/endScreenButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="300dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="35dp"
+        android:text="End Screen" />
+</RelativeLayout>
