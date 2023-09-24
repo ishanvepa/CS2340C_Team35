@@ -45,15 +45,15 @@ public class GameActivity extends AppCompatActivity {
         luigi.setVisibility(View.GONE);
         mario.setVisibility(View.GONE);
 
-        if (state.characterName == CharacterName.MARIO) {
+        if (state.characterName == GameState.CharacterName.MARIO) {
             mainCharacter =  mario;
         }
 
-        else if (state.characterName == CharacterName.PEACH) {
+        else if (state.characterName == GameState.CharacterName.PEACH) {
             mainCharacter = peach;
         }
 
-        else if (state.characterName == CharacterName.LUIGI) {
+        else if (state.characterName == GameState.CharacterName.LUIGI) {
             mainCharacter = luigi;
         }
 
@@ -68,9 +68,9 @@ public class GameActivity extends AppCompatActivity {
         hp.setText(String.format("Current Health: %d", state.Health));
 
         String diffS = "EASY";
-        if (state.difficulty == Difficulty.MEDIUM) {
+        if (state.difficulty == GameState.Difficulty.MEDIUM) {
             diffS = "MEDIUM";
-        } else if (state.difficulty == Difficulty.HARD) {
+        } else if (state.difficulty == GameState.Difficulty.HARD) {
             diffS = "HARD";
         }
 

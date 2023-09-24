@@ -18,12 +18,6 @@
             android:label="@string/title_activity_configuration"
             android:theme="@style/Theme.Team35" />
         <activity
-            android:name=".GameView.ConfigurationActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"
-            android:label="@string/title_activity_configuration"
-            android:theme="@style/Theme.Team35.Fullscreen" />
-        <activity
             android:name=".EndActivity"
             android:exported="true" />
         <activity

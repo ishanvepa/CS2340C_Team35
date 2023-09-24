@@ -2,12 +2,13 @@ package com.cs2340.team35;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import com.cs2340.team35.GameView.CharacterName;
-import com.cs2340.team35.GameView.Difficulty;
+import com.cs2340.team35.GameView.GameActivity;
+import com.cs2340.team35.GameView.GameState;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -21,47 +22,48 @@ public class ConfigurationActivity extends AppCompatActivity {
         Button easyButton = findViewById(R.id.Easy);
         Button mediumButton = findViewById(R.id.Medium);
         Button hardButton = findViewById(R.id.Hard);
-        AtomicReference<Difficulty> difficulty = new AtomicReference<Difficulty>(Difficulty.EASY);
+        AtomicReference<GameState.Difficulty> difficulty = new AtomicReference<GameState.Difficulty>(GameState.Difficulty.EASY);
         ImageButton marioButton = findViewById(R.id.Mario);
         ImageButton luigiButton = findViewById(R.id.Luigi);
         ImageButton peachButton = findViewById(R.id.Peach);
-        AtomicReference<CharacterName> characterName = new AtomicReference<CharacterName>(CharacterName.MARIO);;
+        AtomicReference<GameState.CharacterName> characterName = new AtomicReference<>(GameState.CharacterName.MARIO);;
         TextInputEditText name = findViewById(R.id.Input);
         Button next = findViewById(R.id.next);
         easyButton.setOnClickListener(v -> {
             // Set Difficulty to Easy
-            difficulty.set(Difficulty.EASY);
+            difficulty.set(GameState.Difficulty.EASY);
         });
 
         mediumButton.setOnClickListener(v -> {
             // Set Difficulty to Medium
-            difficulty.set(Difficulty.MEDIUM);
+            difficulty.set(GameState.Difficulty.MEDIUM);
         });
 
         hardButton.setOnClickListener(v -> {
             // Set Difficulty to Hard
-            difficulty.set(Difficulty.HARD);
+            difficulty.set(GameState.Difficulty.HARD);
         });
 
         marioButton.setOnClickListener(v -> {
             // Set Sprite to Mario
-            characterName.set(CharacterName.MARIO);
+            characterName.set(GameState.CharacterName.MARIO);
         });
 
         luigiButton.setOnClickListener(v -> {
             // Set Sprite to Luigi
-            characterName.set(CharacterName.LUIGI);
+            characterName.set(GameState.CharacterName.LUIGI);
         });
 
         peachButton.setOnClickListener(v -> {
             // Set Sprite to Peach
-            characterName.set(CharacterName.PEACH);
+            characterName.set(GameState.CharacterName.PEACH);
         });
 
         next.setOnClickListener(v -> {
             // Set Screen to next Screen
             if(!(name.getText() == null || name.getText().toString().trim().equals(""))) {
-                setContentView(R.layout.activity_game);
+                Intent i = new Intent(getApplicationContext(), GameActivity.class);
+                startActivity(i);
             }
         });
 

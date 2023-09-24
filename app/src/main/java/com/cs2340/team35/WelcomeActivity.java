@@ -20,7 +20,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         startButton.setOnClickListener(v -> {
             // Start the game activity
-            Intent intent = new Intent(WelcomeActivity.this, GameActivity.class);
+            Intent intent = new Intent(WelcomeActivity.this, ConfigurationActivity.class);
             setContentView(R.layout.activity_configuration);
             startActivity(intent);
         });

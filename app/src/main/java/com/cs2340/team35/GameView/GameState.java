@@ -1,8 +1,9 @@
 package com.cs2340.team35.GameView;
 
-;
-;
 public class GameState {
+
+    public enum Difficulty {EASY, MEDIUM, HARD}
+    public enum CharacterName {MARIO, LUIGI, PEACH}
     public int Health;
     public final Difficulty difficulty;
     public final CharacterName characterName;
