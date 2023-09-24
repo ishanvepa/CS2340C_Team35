@@ -24,7 +24,9 @@ public class GameActivity extends AppCompatActivity {
         String difficulty = intent.getStringExtra("difficulty");
         String username = intent.getStringExtra("name");
         GameViewModel viewModel = new ViewModelProvider(this).get(GameViewModel.class);
-        viewModel.SetState(new GameState(GameState.Difficulty.valueOf(difficulty), GameState.CharacterName.valueOf(name), 100, 200, username));
+        viewModel.setState(new GameState(GameState.Difficulty.valueOf(difficulty),
+                GameState.CharacterName.valueOf(name),
+                100, 200, username));
         GameState state = viewModel.getGameState().getValue();
         TextView hp = (TextView) findViewById(R.id.HPView);
         TextView diff = (TextView) findViewById(R.id.difficultyText);
@@ -49,15 +51,11 @@ public class GameActivity extends AppCompatActivity {
         luigi.setVisibility(View.GONE);
         mario.setVisibility(View.GONE);
 
-        if (state.characterName == GameState.CharacterName.MARIO) {
+        if (state.getCharacterName() == GameState.CharacterName.MARIO) {
             mainCharacter =  mario;
-        }
-
-        else if (state.characterName == GameState.CharacterName.PEACH) {
+        } else if (state.getCharacterName() == GameState.CharacterName.PEACH) {
             mainCharacter = peach;
-        }
-
-        else if (state.characterName == GameState.CharacterName.LUIGI) {
+        } else if (state.getCharacterName() == GameState.CharacterName.LUIGI) {
             mainCharacter = luigi;
         }
 
@@ -66,17 +64,18 @@ public class GameActivity extends AppCompatActivity {
         nametext.setText(username);
 
         ViewGroup.LayoutParams oldparams = mainCharacter.getLayoutParams();
-        RelativeLayout.LayoutParams position = new RelativeLayout.LayoutParams(oldparams.width, oldparams.width);
-        position.leftMargin = state.mainCharacterX;
-        position.topMargin = state.mainCharacterY;
+        RelativeLayout.LayoutParams position = new RelativeLayout.LayoutParams(oldparams.width,
+                oldparams.width);
+        position.leftMargin = state.getMainCharacterX();
+        position.topMargin = state.getMainCharacterY();
         mainCharacter.setLayoutParams(position);
 
-        hp.setText(String.format("Current Health: %d", state.Health));
+        hp.setText(String.format("Current Health: %d", state.getHealth()));
 
         String diffS = "EASY";
-        if (state.difficulty == GameState.Difficulty.MEDIUM) {
+        if (state.getDifficulty() == GameState.Difficulty.MEDIUM) {
             diffS = "MEDIUM";
-        } else if (state.difficulty == GameState.Difficulty.HARD) {
+        } else if (state.getDifficulty() == GameState.Difficulty.HARD) {
             diffS = "HARD";
         }
 
