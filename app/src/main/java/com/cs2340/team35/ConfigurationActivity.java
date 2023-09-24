@@ -1,18 +1,15 @@
 package com.cs2340.team35;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cs2340.team35.GameView.GameActivity;
 import com.cs2340.team35.GameView.GameState;
-import com.cs2340.team35.GameView.GameViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -28,11 +25,13 @@ public class ConfigurationActivity extends AppCompatActivity {
         Button easyButton = findViewById(R.id.Easy);
         Button mediumButton = findViewById(R.id.Medium);
         Button hardButton = findViewById(R.id.Hard);
-        AtomicReference<GameState.Difficulty> difficulty = new AtomicReference<GameState.Difficulty>(GameState.Difficulty.EASY);
+        AtomicReference<GameState.Difficulty> difficulty =
+                new AtomicReference<GameState.Difficulty>(GameState.Difficulty.EASY);
         ImageButton marioButton = findViewById(R.id.Mario);
         ImageButton luigiButton = findViewById(R.id.Luigi);
         ImageButton peachButton = findViewById(R.id.Peach);
-        AtomicReference<GameState.CharacterName> characterName = new AtomicReference<>(GameState.CharacterName.MARIO);;
+        AtomicReference<GameState.CharacterName> characterName =
+                new AtomicReference<GameState.CharacterName>(GameState.CharacterName.MARIO);
         TextInputEditText name = findViewById(R.id.Input);
         TextView attributes = findViewById(R.id.currentAttributes);
         Button next = findViewById(R.id.next);
@@ -74,7 +73,7 @@ public class ConfigurationActivity extends AppCompatActivity {
 
         next.setOnClickListener(v -> {
             // Set Screen to next Screen
-            if(!(name.getText() == null || name.getText().toString().trim().equals(""))) {
+            if (!(name.getText() == null || name.getText().toString().trim().equals(""))) {
                 Intent i = new Intent(getApplicationContext(), GameActivity.class);
                 i.putExtra("difficulty", difficulty.get().name());
                 i.putExtra("characterName", characterName.get().name());

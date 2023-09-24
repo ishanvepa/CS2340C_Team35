@@ -1,12 +1,9 @@
 package com.cs2340.team35;
 
 import android.widget.Button;
-import android.view.View;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-
-import com.cs2340.team35.GameView.GameActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -20,7 +17,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
         startButton.setOnClickListener(v -> {
             // Start the game activity
-            Intent intent = new Intent(WelcomeActivity.this, ConfigurationActivity.class);
+            Intent intent = new Intent(WelcomeActivity.this,
+                    ConfigurationActivity.class);
             setContentView(R.layout.activity_configuration);
             startActivity(intent);
         });

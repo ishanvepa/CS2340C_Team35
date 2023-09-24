@@ -6,13 +6,15 @@ import androidx.lifecycle.ViewModel;
 
 public class GameViewModel extends ViewModel {
 
-    private final MutableLiveData<GameState> gameState = new MutableLiveData<>(new GameState(GameState.Difficulty.EASY, GameState.CharacterName.MARIO, 0, 0, "Mario"));
+    private final MutableLiveData<GameState> gameState = new MutableLiveData<>(
+            new GameState(GameState.Difficulty.EASY, GameState.CharacterName.MARIO,
+                    0, 0, "Mario"));
 
     public LiveData<GameState> getGameState() {
         return gameState;
     }
 
-    public void SetState(GameState newState) {
+    public void setState(GameState newState) {
         gameState.setValue(newState);
     }
 
