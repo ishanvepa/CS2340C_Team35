@@ -19,8 +19,12 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("characterName");
+        String difficulty = intent.getStringExtra("difficulty");
+        String username = intent.getStringExtra("name");
         GameViewModel viewModel = new ViewModelProvider(this).get(GameViewModel.class);
+        viewModel.SetState(new GameState(GameState.Difficulty.valueOf(difficulty), GameState.CharacterName.valueOf(name), 100, 200, username));
         GameState state = viewModel.getGameState().getValue();
         TextView hp = (TextView) findViewById(R.id.HPView);
         TextView diff = (TextView) findViewById(R.id.difficultyText);
@@ -45,19 +49,21 @@ public class GameActivity extends AppCompatActivity {
         luigi.setVisibility(View.GONE);
         mario.setVisibility(View.GONE);
 
-        if (state.characterName == CharacterName.MARIO) {
+        if (state.characterName == GameState.CharacterName.MARIO) {
             mainCharacter =  mario;
         }
 
-        else if (state.characterName == CharacterName.PEACH) {
+        else if (state.characterName == GameState.CharacterName.PEACH) {
             mainCharacter = peach;
         }
 
-        else if (state.characterName == CharacterName.LUIGI) {
+        else if (state.characterName == GameState.CharacterName.LUIGI) {
             mainCharacter = luigi;
         }
 
         mainCharacter.setVisibility(View.VISIBLE);
+        TextView nametext = (TextView) mainCharacter.getChildAt(1);
+        nametext.setText(username);
 
         ViewGroup.LayoutParams oldparams = mainCharacter.getLayoutParams();
         RelativeLayout.LayoutParams position = new RelativeLayout.LayoutParams(oldparams.width, oldparams.width);
@@ -68,9 +74,9 @@ public class GameActivity extends AppCompatActivity {
         hp.setText(String.format("Current Health: %d", state.Health));
 
         String diffS = "EASY";
-        if (state.difficulty == Difficulty.MEDIUM) {
+        if (state.difficulty == GameState.Difficulty.MEDIUM) {
             diffS = "MEDIUM";
-        } else if (state.difficulty == Difficulty.HARD) {
+        } else if (state.difficulty == GameState.Difficulty.HARD) {
             diffS = "HARD";
         }
 
