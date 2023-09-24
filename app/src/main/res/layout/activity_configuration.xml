@@ -6,144 +6,144 @@
     android:layout_height="match_parent"
     tools:context=".ConfigurationActivity">
 
-    <Button
-        android:id="@+id/Easy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="Easy"
-        app:layout_constraintBaseline_toBaselineOf="@+id/Medium"
-        app:layout_constraintEnd_toStartOf="@+id/Medium"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/Easy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Easy"
+            app:layout_constraintBaseline_toBaselineOf="@+id/Medium"
+            app:layout_constraintEnd_toStartOf="@+id/Medium"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/Difficulty"
-        android:layout_width="210dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="33dp"
-        android:text="Difficulty:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toTopOf="@+id/Hard"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+        <TextView
+            android:id="@+id/Difficulty"
+            android:layout_width="210dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="33dp"
+            android:text="Difficulty:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            app:layout_constraintBottom_toTopOf="@+id/Hard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
-    <TextView
-        android:id="@+id/chooseSprite"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginBottom="14dp"
-        android:text="Choose Sprite:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toTopOf="@+id/Mario"
-        app:layout_constraintEnd_toEndOf="@+id/Peach"
-        app:layout_constraintStart_toStartOf="@+id/Mario"
-        app:layout_constraintTop_toBottomOf="@+id/Medium" />
+        <TextView
+            android:id="@+id/chooseSprite"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="14dp"
+            android:text="Choose Sprite:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            app:layout_constraintBottom_toTopOf="@+id/Mario"
+            app:layout_constraintEnd_toEndOf="@+id/Peach"
+            app:layout_constraintStart_toStartOf="@+id/Mario"
+            app:layout_constraintTop_toBottomOf="@+id/Medium" />
 
-    <Button
-        android:id="@+id/Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="41dp"
-        android:text="Medium"
-        app:layout_constraintBottom_toTopOf="@+id/chooseSprite"
-        app:layout_constraintEnd_toStartOf="@+id/Hard"
-        app:layout_constraintStart_toEndOf="@+id/Easy"
-        app:layout_constraintTop_toBottomOf="@+id/Hard" />
+        <Button
+            android:id="@+id/Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="41dp"
+            android:text="Medium"
+            app:layout_constraintBottom_toTopOf="@+id/chooseSprite"
+            app:layout_constraintEnd_toStartOf="@+id/Hard"
+            app:layout_constraintStart_toEndOf="@+id/Easy"
+            app:layout_constraintTop_toBottomOf="@+id/Hard" />
 
-    <Button
-        android:id="@+id/Hard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="Hard"
-        app:layout_constraintBottom_toTopOf="@+id/Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Medium"
-        app:layout_constraintTop_toBottomOf="@+id/Difficulty" />
+        <Button
+            android:id="@+id/Hard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="Hard"
+            app:layout_constraintBottom_toTopOf="@+id/Medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/Medium"
+            app:layout_constraintTop_toBottomOf="@+id/Difficulty" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/Difficulty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/Difficulty"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/Input"
-            android:layout_width="match_parent"
-            android:layout_height="77dp"
-            android:hint="Input Name Here:" />
-    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/Input"
+                    android:layout_width="match_parent"
+                    android:layout_height="77dp"
+                    android:hint="Input Name Here:" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <ImageButton
-        android:id="@+id/Mario"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="20dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/Peach"
-        app:layout_constraintEnd_toStartOf="@+id/Luigi"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chooseSprite"
-        app:srcCompat="@drawable/mariosprite" />
+        <ImageButton
+            android:id="@+id/Mario"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="20dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toTopOf="@+id/Peach"
+            app:layout_constraintEnd_toStartOf="@+id/Luigi"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chooseSprite"
+            app:srcCompat="@drawable/mariosprite" />
 
-    <ImageButton
-        android:id="@+id/Luigi"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="29dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/Mario"
-        app:layout_constraintEnd_toStartOf="@+id/Peach"
-        app:layout_constraintStart_toEndOf="@+id/Mario"
-        app:layout_constraintTop_toTopOf="@+id/Mario"
-        app:srcCompat="@drawable/luigisprite" />
+        <ImageButton
+            android:id="@+id/Luigi"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="29dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="@+id/Mario"
+            app:layout_constraintEnd_toStartOf="@+id/Peach"
+            app:layout_constraintStart_toEndOf="@+id/Mario"
+            app:layout_constraintTop_toTopOf="@+id/Mario"
+            app:srcCompat="@drawable/luigisprite" />
 
-    <ImageButton
-        android:id="@+id/Peach"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="34dp"
-        android:layout_marginBottom="23dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/next"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Luigi"
-        app:layout_constraintTop_toBottomOf="@+id/Mario"
-        app:srcCompat="@drawable/peachsprite" />
+        <ImageButton
+            android:id="@+id/Peach"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="34dp"
+            android:layout_marginBottom="23dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toTopOf="@+id/next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/Luigi"
+            app:layout_constraintTop_toBottomOf="@+id/Mario"
+            app:srcCompat="@drawable/peachsprite" />
 
-    <Button
-        android:id="@+id/next"
-        android:layout_width="157dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="19dp"
-        android:layout_marginBottom="17dp"
-        android:text="Next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Peach" />
+        <Button
+            android:id="@+id/next"
+            android:layout_width="157dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="19dp"
+            android:layout_marginBottom="17dp"
+            android:text="Next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Peach" />
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="46dp"
-        android:layout_marginBottom="7dp"
-        android:text="Name:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="46dp"
+            android:layout_marginBottom="7dp"
+            android:text="Name:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
