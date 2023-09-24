@@ -62,6 +62,8 @@ public class GameActivity extends AppCompatActivity {
         }
 
         mainCharacter.setVisibility(View.VISIBLE);
+        TextView nametext = (TextView) mainCharacter.getChildAt(1);
+        nametext.setText(username);
 
         ViewGroup.LayoutParams oldparams = mainCharacter.getLayoutParams();
         RelativeLayout.LayoutParams position = new RelativeLayout.LayoutParams(oldparams.width, oldparams.width);

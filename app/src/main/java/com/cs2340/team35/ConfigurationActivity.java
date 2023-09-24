@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -77,7 +78,7 @@ public class ConfigurationActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), GameActivity.class);
                 i.putExtra("difficulty", difficulty.get().name());
                 i.putExtra("characterName", characterName.get().name());
-                i.putExtra("name", name.getText());
+                i.putExtra("name", name.getText().toString());
                 startActivity(i);
             }
         });
