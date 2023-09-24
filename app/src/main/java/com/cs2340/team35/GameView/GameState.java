@@ -1,7 +1,7 @@
 package com.cs2340.team35.GameView;
 
-enum CharacterName { MARIO, LUIGI, PEACH };
-enum Difficulty { EASY, MEDIUM, HARD};
+;
+;
 public class GameState {
     public int Health;
     public final Difficulty difficulty;
@@ -17,7 +17,7 @@ public class GameState {
         } else if (this.difficulty == Difficulty.MEDIUM) {
             Health = 100;
         } else if (this.difficulty == Difficulty.EASY) {
-            Health = 50;
+            Health = 150;
         }
         this.characterName = characterName;
         this.mainCharacterX = mainCharacterX;
