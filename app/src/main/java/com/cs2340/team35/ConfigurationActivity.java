@@ -75,8 +75,9 @@ public class ConfigurationActivity extends AppCompatActivity {
             // Set Screen to next Screen
             if(!(name.getText() == null || name.getText().toString().trim().equals(""))) {
                 Intent i = new Intent(getApplicationContext(), GameActivity.class);
-                GameViewModel viewModel = new ViewModelProvider(this).get(GameViewModel.class);
-                viewModel.SetState(new GameState(difficulty.get(), characterName.get(), 0, 0));
+                i.putExtra("difficulty", difficulty.get().name());
+                i.putExtra("characterName", characterName.get().name());
+                i.putExtra("name", name.getText());
                 startActivity(i);
             }
         });

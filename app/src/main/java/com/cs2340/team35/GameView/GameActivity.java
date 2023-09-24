@@ -19,8 +19,12 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("characterName");
+        String difficulty = intent.getStringExtra("difficulty");
+        String username = intent.getStringExtra("name");
         GameViewModel viewModel = new ViewModelProvider(this).get(GameViewModel.class);
+        viewModel.SetState(new GameState(GameState.Difficulty.valueOf(difficulty), GameState.CharacterName.valueOf(name), 100, 200, username));
         GameState state = viewModel.getGameState().getValue();
         TextView hp = (TextView) findViewById(R.id.HPView);
         TextView diff = (TextView) findViewById(R.id.difficultyText);
