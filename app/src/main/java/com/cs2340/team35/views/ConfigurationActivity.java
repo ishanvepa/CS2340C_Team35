@@ -1,4 +1,4 @@
-package com.cs2340.team35;
+package com.cs2340.team35.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.cs2340.team35.GameView.GameActivity;
-import com.cs2340.team35.GameView.GameState;
+import com.cs2340.team35.R;
+import com.cs2340.team35.viewmodels.GameState;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.concurrent.atomic.AtomicReference;

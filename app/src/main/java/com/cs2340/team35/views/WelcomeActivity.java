@@ -1,9 +1,11 @@
-package com.cs2340.team35;
+package com.cs2340.team35.views;
 
 import android.widget.Button;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.cs2340.team35.R;
 
 public class WelcomeActivity extends AppCompatActivity {
 

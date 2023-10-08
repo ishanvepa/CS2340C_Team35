@@ -1,4 +1,4 @@
-package com.cs2340.team35.GameView;
+package com.cs2340.team35.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -11,8 +11,10 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cs2340.team35.EndActivity;
+import com.cs2340.team35.views.EndActivity;
 import com.cs2340.team35.R;
+import com.cs2340.team35.viewmodels.GameState;
+import com.cs2340.team35.viewmodels.GameViewModel;
 
 public class GameActivity extends AppCompatActivity {
     @Override

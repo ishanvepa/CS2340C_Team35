@@ -1,4 +1,4 @@
-package com.cs2340.team35.GameView;
+package com.cs2340.team35.viewmodels;
 
 public class GameState {
 
