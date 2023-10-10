@@ -5,7 +5,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,12 +37,32 @@ public class GameActivity extends AppCompatActivity {
         TextView score = (TextView) findViewById(R.id.Score);
         TextView timeElapsed = (TextView) findViewById(R.id.timeElapsed);
         TextView level = (TextView) findViewById(R.id.level);
-        Button endButton = (Button) findViewById(R.id.endScreenButton);
+        Button endButton = (Button) findViewById(R.id.endScreen);
+        Button nextButton = (Button) findViewById(R.id.nextLevel);
+
+        if (gameViewModel.getLevel() >= 3) {
+            nextButton.setVisibility(View.GONE);
+        }
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gameViewModel.increaseLevel();
+                Intent i = new Intent(getApplicationContext(), GameActivity.class);
+                startActivity(i);
+            }
+        });
 
         int currentLevel = gameViewModel.getLevel();
         if (currentLevel == 1) {
             View root = findViewById(android.R.id.content);
             root.setBackgroundResource(R.drawable.peachscastle);
+        } else if (currentLevel == 2) {
+            View root = findViewById(android.R.id.content);
+            root.setBackgroundResource(R.drawable.luigimansion);
+        } else if (currentLevel == 3) {
+            View root = findViewById(android.R.id.content);
+            root.setBackgroundResource(R.drawable.bowserscastle);
         }
 
         if (timer != null) {
