@@ -4,18 +4,28 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class LeaderboardModel {
-    private ArrayList<ScoreModel>scores;
+    private static ArrayList<ScoreModel>scores;
+    private static LeaderboardModel instance;
 
-    public LeaderboardModel() {
+    private LeaderboardModel() {
         this.scores = new ArrayList<>();
     }
 
-    public void addScore(ScoreModel n) {
-        this.scores.add(n);
-        this.scores.sort(Comparator.naturalOrder());
+    public static void addScore(ScoreModel n) {
+        scores.add(n);
+        scores.sort(Comparator.naturalOrder());
     }
 
-    public ArrayList<ScoreModel> getScores() {
-        return this.scores;
+    public static ArrayList<ScoreModel> getScores() {
+        return scores;
     }
+
+    public static LeaderboardModel getInstance() {
+        if (instance == null) {
+            instance = new LeaderboardModel();
+        }
+
+        return instance;
+    }
+
 }
