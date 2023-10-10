@@ -8,13 +8,15 @@ import com.cs2340.team35.models.GameModel;
 
 public class GameViewModel extends ViewModel {
 
+
+
     public String getDifficulty() {
         GameModel instance = GameModel.getInstance();
         return instance.getGameDifficulty().toString();
     }
 
-    public void setDifficulty(GameModel.Difficulty diff) {
+    public void setDifficulty(String diff) {
         GameModel instance = GameModel.getInstance();
-        instance.setGameDifficulty(diff);
+        instance.setGameDifficulty(GameModel.Difficulty.valueOf(diff));
     }
 }

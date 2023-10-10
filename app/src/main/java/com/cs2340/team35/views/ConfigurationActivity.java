@@ -1,6 +1,7 @@
 package com.cs2340.team35.views;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,14 +10,18 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cs2340.team35.R;
+import com.cs2340.team35.models.GameModel;
+import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.viewmodels.GameState;
+import com.cs2340.team35.viewmodels.GameViewModel;
+import com.cs2340.team35.viewmodels.PlayerViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ConfigurationActivity extends AppCompatActivity {
-    private String getAttributeText(GameState.CharacterName name, GameState.Difficulty difficulty) {
-        return "Current Name: " + name.name() + "\nCurrent Difficulty: " + difficulty.name();
+    private String getAttributeText(String name, String difficulty) {
+        return "Current Name: " + name + "\nCurrent Difficulty: " + difficulty;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,49 +40,51 @@ public class ConfigurationActivity extends AppCompatActivity {
         TextInputEditText name = findViewById(R.id.Input);
         TextView attributes = findViewById(R.id.currentAttributes);
         Button next = findViewById(R.id.next);
+
+        GameViewModel gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
+        PlayerViewModel playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
+
         easyButton.setOnClickListener(v -> {
             // Set Difficulty to Easy
-            difficulty.set(GameState.Difficulty.EASY);
-            attributes.setText(getAttributeText(characterName.get(), difficulty.get()));
+            gameViewModel.setDifficulty(GameModel.Difficulty.EASY.toString());
+            attributes.setText(getAttributeText(playerViewModel.getCharacterName(), gameViewModel.getDifficulty()));
+
         });
 
         mediumButton.setOnClickListener(v -> {
             // Set Difficulty to Medium
-            difficulty.set(GameState.Difficulty.MEDIUM);
-            attributes.setText(getAttributeText(characterName.get(), difficulty.get()));
+            gameViewModel.setDifficulty(GameModel.Difficulty.MEDIUM.toString());
+            attributes.setText(getAttributeText(playerViewModel.getCharacterName(), gameViewModel.getDifficulty()));
         });
 
         hardButton.setOnClickListener(v -> {
             // Set Difficulty to Hard
-            difficulty.set(GameState.Difficulty.HARD);
-            attributes.setText(getAttributeText(characterName.get(), difficulty.get()));
+            gameViewModel.setDifficulty(GameModel.Difficulty.HARD.toString());
+            attributes.setText(getAttributeText(playerViewModel.getCharacterName(), gameViewModel.getDifficulty()));
         });
 
         marioButton.setOnClickListener(v -> {
             // Set Sprite to Mario
-            characterName.set(GameState.CharacterName.MARIO);
-            attributes.setText(getAttributeText(characterName.get(), difficulty.get()));
+            playerViewModel.setCharacterName(PlayerModel.CharacterName.MARIO.toString());
+            attributes.setText(getAttributeText(playerViewModel.getCharacterName(), gameViewModel.getDifficulty()));
         });
 
         luigiButton.setOnClickListener(v -> {
             // Set Sprite to Luigi
-            characterName.set(GameState.CharacterName.LUIGI);
-            attributes.setText(getAttributeText(characterName.get(), difficulty.get()));
+            playerViewModel.setCharacterName(PlayerModel.CharacterName.LUIGI.toString());
+            attributes.setText(getAttributeText(playerViewModel.getCharacterName(), gameViewModel.getDifficulty()));
         });
 
         peachButton.setOnClickListener(v -> {
             // Set Sprite to Peach
-            characterName.set(GameState.CharacterName.PEACH);
-            attributes.setText(getAttributeText(characterName.get(), difficulty.get()));
+            playerViewModel.setCharacterName(PlayerModel.CharacterName.PEACH.toString());
+            attributes.setText(getAttributeText(playerViewModel.getCharacterName(), gameViewModel.getDifficulty()));
         });
 
         next.setOnClickListener(v -> {
             // Set Screen to next Screen
             if (!(name.getText() == null || name.getText().toString().trim().equals(""))) {
                 Intent i = new Intent(getApplicationContext(), GameActivity.class);
-                i.putExtra("difficulty", difficulty.get().name());
-                i.putExtra("characterName", characterName.get().name());
-                i.putExtra("name", name.getText().toString());
                 startActivity(i);
             }
         });

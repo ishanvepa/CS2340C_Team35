@@ -16,6 +16,9 @@ public class GameModel {
     }
 
     public static GameModel getInstance() {
+        if (instance == null) {
+            instance = new GameModel();
+        }
         return instance;
     }
 
