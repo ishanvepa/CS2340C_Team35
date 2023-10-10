@@ -6,6 +6,16 @@ public class GameModel {
     private static GameModel instance;
 
     private static int level;
+
+    public int getTimeElapsed() {
+        return timeElapsed;
+    }
+
+    public void setTimeElapsed(int timeElapsed) {
+        GameModel.timeElapsed = timeElapsed;
+    }
+
+    private static int timeElapsed;
     private GameModel() {
         GameDifficulty = Difficulty.EASY;
     }

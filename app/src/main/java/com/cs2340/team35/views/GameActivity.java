@@ -49,6 +49,11 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View view) {
                 gameViewModel.increaseLevel();
                 Intent i = new Intent(getApplicationContext(), GameActivity.class);
+                if (timer != null) {
+                    timer.cancel();
+                    timer.purge();
+                    timer  = null;
+                }
                 startActivity(i);
             }
         });
@@ -80,7 +85,7 @@ public class GameActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-               gameViewModel.setTimeElapsed(gameViewModel.getTimeElapsed().getValue() + 1);
+               gameViewModel.incrementTimeElapsed();
             }
         }, 0, 1000);
 
@@ -151,6 +156,11 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        this.timer.cancel();
+        if (timer != null) {
+            this.timer.cancel();
+            this.timer.purge();
+            this.timer = null;
+        }
     }
+
 }
