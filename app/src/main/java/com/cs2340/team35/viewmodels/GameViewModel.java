@@ -8,7 +8,7 @@ import com.cs2340.team35.models.GameModel;
 
 public class GameViewModel extends ViewModel {
 
-    
+    private MutableLiveData<Integer> timeElapsed;
 
     public String getDifficulty() {
         GameModel instance = GameModel.getInstance();
@@ -18,5 +18,17 @@ public class GameViewModel extends ViewModel {
     public void setDifficulty(String diff) {
         GameModel instance = GameModel.getInstance();
         instance.setGameDifficulty(GameModel.Difficulty.valueOf(diff));
+    }
+
+    public GameViewModel() {
+        this.timeElapsed = new MutableLiveData<>(0);
+    }
+
+    public LiveData<Integer> getTimeElapsed() {
+        return timeElapsed;
+    }
+
+    public void setTimeElapsed(Integer timeElapsed) {
+        this.timeElapsed.postValue(timeElapsed);
     }
 }
