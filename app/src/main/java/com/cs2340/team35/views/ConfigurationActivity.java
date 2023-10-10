@@ -13,7 +13,6 @@ import com.cs2340.team35.R;
 import com.cs2340.team35.models.GameModel;
 import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.ScoreModel;
-import com.cs2340.team35.viewmodels.GameState;
 import com.cs2340.team35.viewmodels.GameViewModel;
 import com.cs2340.team35.viewmodels.PlayerViewModel;
 import com.google.android.material.textfield.TextInputEditText;
@@ -31,13 +30,9 @@ public class ConfigurationActivity extends AppCompatActivity {
         Button easyButton = findViewById(R.id.Easy);
         Button mediumButton = findViewById(R.id.Medium);
         Button hardButton = findViewById(R.id.Hard);
-        AtomicReference<GameState.Difficulty> difficulty =
-                new AtomicReference<GameState.Difficulty>(GameState.Difficulty.EASY);
         ImageButton marioButton = findViewById(R.id.Mario);
         ImageButton luigiButton = findViewById(R.id.Luigi);
         ImageButton peachButton = findViewById(R.id.Peach);
-        AtomicReference<GameState.CharacterName> characterName =
-                new AtomicReference<GameState.CharacterName>(GameState.CharacterName.MARIO);
         TextInputEditText name = findViewById(R.id.Input);
         TextView attributes = findViewById(R.id.currentAttributes);
         Button next = findViewById(R.id.next);

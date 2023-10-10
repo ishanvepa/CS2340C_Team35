@@ -1,7 +1,5 @@
 package com.cs2340.team35.models;
 
-import com.cs2340.team35.viewmodels.GameState;
-
 public class PlayerModel {
     private static PlayerModel instance;
     private static int x;

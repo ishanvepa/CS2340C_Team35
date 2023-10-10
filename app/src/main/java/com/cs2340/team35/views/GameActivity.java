@@ -13,14 +13,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cs2340.team35.models.LeaderboardModel;
-import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.viewmodels.PlayerViewModel;
-import com.cs2340.team35.views.EndActivity;
 import com.cs2340.team35.R;
-import com.cs2340.team35.viewmodels.GameState;
 import com.cs2340.team35.viewmodels.GameViewModel;
-import com.google.android.material.color.utilities.Score;
 
 import java.util.Timer;
 import java.util.TimerTask;
