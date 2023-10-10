@@ -19,6 +19,7 @@ public class PlayerViewModel extends ViewModel {
         this.x = new MutableLiveData<>(instance.getX());
         this.y = new MutableLiveData<>(instance.getY());
         this.health = new MutableLiveData<>(instance.getHealth());
+        this.score = new MutableLiveData<>(instance.getScore());
     }
 
     public String getCharacterName() {
@@ -48,6 +49,12 @@ public class PlayerViewModel extends ViewModel {
         return health;
     }
 
+    public void setHealth(Integer health) {
+        PlayerModel instance = PlayerModel.getInstance();
+        instance.setHealth(health);
+        this.health.postValue(instance.getHealth());
+    }
+
     public LiveData<ScoreModel> getScore() {
         return score;
     }
@@ -55,5 +62,6 @@ public class PlayerViewModel extends ViewModel {
     public void setScore(ScoreModel score) {
         PlayerModel instance = PlayerModel.getInstance();
         instance.setScore(score);
+        this.score.postValue(instance.getScore());
     }
 }

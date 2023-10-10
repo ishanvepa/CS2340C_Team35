@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.cs2340.team35.R;
 import com.cs2340.team35.models.GameModel;
 import com.cs2340.team35.models.PlayerModel;
-import com.cs2340.team35.viewmodels.GameState;
+import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.viewmodels.GameViewModel;
 import com.cs2340.team35.viewmodels.PlayerViewModel;
 import com.google.android.material.textfield.TextInputEditText;
@@ -30,13 +30,9 @@ public class ConfigurationActivity extends AppCompatActivity {
         Button easyButton = findViewById(R.id.Easy);
         Button mediumButton = findViewById(R.id.Medium);
         Button hardButton = findViewById(R.id.Hard);
-        AtomicReference<GameState.Difficulty> difficulty =
-                new AtomicReference<GameState.Difficulty>(GameState.Difficulty.EASY);
         ImageButton marioButton = findViewById(R.id.Mario);
         ImageButton luigiButton = findViewById(R.id.Luigi);
         ImageButton peachButton = findViewById(R.id.Peach);
-        AtomicReference<GameState.CharacterName> characterName =
-                new AtomicReference<GameState.CharacterName>(GameState.CharacterName.MARIO);
         TextInputEditText name = findViewById(R.id.Input);
         TextView attributes = findViewById(R.id.currentAttributes);
         Button next = findViewById(R.id.next);
@@ -44,9 +40,12 @@ public class ConfigurationActivity extends AppCompatActivity {
         GameViewModel gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
         PlayerViewModel playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
 
+        playerViewModel.setScore(new ScoreModel(100));
+
         easyButton.setOnClickListener(v -> {
             // Set Difficulty to Easy
             gameViewModel.setDifficulty(GameModel.Difficulty.EASY.toString());
+            playerViewModel.setHealth(150);
             attributes.setText(getAttributeText(playerViewModel.getCharacterName(), gameViewModel.getDifficulty()));
 
         });
@@ -54,12 +53,14 @@ public class ConfigurationActivity extends AppCompatActivity {
         mediumButton.setOnClickListener(v -> {
             // Set Difficulty to Medium
             gameViewModel.setDifficulty(GameModel.Difficulty.MEDIUM.toString());
+            playerViewModel.setHealth(100);
             attributes.setText(getAttributeText(playerViewModel.getCharacterName(), gameViewModel.getDifficulty()));
         });
 
         hardButton.setOnClickListener(v -> {
             // Set Difficulty to Hard
             gameViewModel.setDifficulty(GameModel.Difficulty.HARD.toString());
+            playerViewModel.setHealth(50);
             attributes.setText(getAttributeText(playerViewModel.getCharacterName(), gameViewModel.getDifficulty()));
         });
 
@@ -85,6 +86,8 @@ public class ConfigurationActivity extends AppCompatActivity {
             // Set Screen to next Screen
             if (!(name.getText() == null || name.getText().toString().trim().equals(""))) {
                 Intent i = new Intent(getApplicationContext(), GameActivity.class);
+                gameViewModel.setTimeElapsed(0);
+                playerViewModel.setScore(new ScoreModel(100));
                 startActivity(i);
             }
         });
