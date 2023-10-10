@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cs2340.team35.R;
-import com.cs2340.team35.viewmodels.GameState;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class EndActivity extends AppCompatActivity {
