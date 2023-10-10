@@ -37,6 +37,11 @@ public class PlayerViewModel extends ViewModel {
         return instance.getUserName();
     }
 
+    public void setUserName(String name) {
+        PlayerModel instance = PlayerModel.getInstance();
+        instance.setUserName(name);
+    }
+
     public LiveData<Integer> getX() {
         return x;
     }

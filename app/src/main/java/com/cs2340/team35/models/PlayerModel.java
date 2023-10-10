@@ -13,12 +13,12 @@ public class PlayerModel {
     private static String userName;
 
     private PlayerModel() {
-        this.x = 100;
-        this.y = 600;
-        this.character = CharacterName.MARIO;
-        this.userName = "";
-        this.health = 0;
-        this.score = new ScoreModel(10);
+        x = 100;
+        y = 600;
+        character = CharacterName.MARIO;
+        userName = "";
+        health = 0;
+        score = new ScoreModel(10);
     }
     public static PlayerModel getInstance() {
         if (instance == null) {
@@ -26,12 +26,18 @@ public class PlayerModel {
         }
         return instance;
     }
-    public void setX(int x) {
-        PlayerModel.x = x;
+    public void setX(int newX) {
+        if (newX < 0) {
+            newX = 0;
+        }
+        x = newX;
     }
 
-    public void setY(int y) {
-        PlayerModel.y = y;
+    public void setY(int newY) {
+        if (newY < 0) {
+            newY = 0;
+        }
+        y = newY;
     }
 
     public void setCharacter(CharacterName character) {
