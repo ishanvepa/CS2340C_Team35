@@ -1,6 +1,7 @@
 package com.cs2340.team35.views;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -11,13 +12,20 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.viewmodels.PlayerViewModel;
 import com.cs2340.team35.views.EndActivity;
 import com.cs2340.team35.R;
 import com.cs2340.team35.viewmodels.GameState;
 import com.cs2340.team35.viewmodels.GameViewModel;
+import com.google.android.material.color.utilities.Score;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity {
+
+    private Timer timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +39,17 @@ public class GameActivity extends AppCompatActivity {
         TextView score = (TextView) findViewById(R.id.Score);
         TextView level = (TextView) findViewById(R.id.level);
         Button endButton = (Button) findViewById(R.id.endScreenButton);
+
+        if (timer == null) {
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    ScoreModel old = playerViewModel.getScore().getValue();
+                    playerViewModel.setScore(new ScoreModel(old.currentScore - 2));
+                }
+            }, 1000, 1000);
+        }
 
         endButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -73,9 +92,21 @@ public class GameActivity extends AppCompatActivity {
         hp.setText(String.format("Current Health: %d", playerViewModel.getHealth().getValue()));
         score.setText(String.format("Current score: %d", playerViewModel.getScore().getValue().currentScore));
 
+        playerViewModel.getScore().observe(this, new Observer<ScoreModel>() {
+            @Override
+            public void onChanged(ScoreModel scoreModel) {
+                score.setText(String.format("Current score: %d", playerViewModel.getScore().getValue().currentScore));
+            }
+        });
+
         String diffS = gameViewModel.getDifficulty();
 
         diff.setText(String.format("Difficulty Level: %s", diffS));
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.timer.cancel();
+    }
 }

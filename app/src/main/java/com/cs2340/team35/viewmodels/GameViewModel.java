@@ -8,7 +8,7 @@ import com.cs2340.team35.models.GameModel;
 
 public class GameViewModel extends ViewModel {
 
-
+    
 
     public String getDifficulty() {
         GameModel instance = GameModel.getInstance();
