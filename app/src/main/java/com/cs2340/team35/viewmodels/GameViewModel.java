@@ -4,18 +4,17 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.cs2340.team35.models.GameModel;
+
 public class GameViewModel extends ViewModel {
 
-    private final MutableLiveData<GameState> gameState = new MutableLiveData<>(
-            new GameState(GameState.Difficulty.EASY, GameState.CharacterName.MARIO,
-                    0, 0, "Mario"));
-
-    public LiveData<GameState> getGameState() {
-        return gameState;
+    public String getDifficulty() {
+        GameModel instance = GameModel.getInstance();
+        return instance.getGameDifficulty().toString();
     }
 
-    public void setState(GameState newState) {
-        gameState.setValue(newState);
+    public void setDifficulty(GameModel.Difficulty diff) {
+        GameModel instance = GameModel.getInstance();
+        instance.setGameDifficulty(diff);
     }
-
 }

@@ -11,12 +11,12 @@ public class LeaderboardModel {
         this.scores = new ArrayList<>();
     }
 
-    public static void addScore(ScoreModel n) {
+    public void addScore(ScoreModel n) {
         scores.add(n);
         scores.sort(Comparator.naturalOrder());
     }
 
-    public static ArrayList<ScoreModel> getScores() {
+    public ArrayList<ScoreModel> getScores() {
         return scores;
     }
 

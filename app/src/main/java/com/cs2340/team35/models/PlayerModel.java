@@ -25,19 +25,19 @@ public class PlayerModel {
         }
         return instance;
     }
-    public static void setX(int x) {
+    public void setX(int x) {
         PlayerModel.x = x;
     }
 
-    public static void setY(int y) {
+    public void setY(int y) {
         PlayerModel.y = y;
     }
 
-    public static void setCharacter(CharacterName character) {
+    public void setCharacter(CharacterName character) {
         PlayerModel.character = character;
     }
 
-    public static void setUserName(String userName) {
+    public void setUserName(String userName) {
         PlayerModel.userName = userName;
     }
 
