@@ -4,6 +4,8 @@ public class GameModel {
     public enum Difficulty { EASY, MEDIUM, HARD }
     private static Difficulty GameDifficulty;
     private static GameModel instance;
+
+    private static int level;
     private GameModel() {
         GameDifficulty = Difficulty.EASY;
     }
@@ -22,5 +24,16 @@ public class GameModel {
         return instance;
     }
 
+    public static int getLevel() {
+        return level;
+    }
 
+    public static void setLevel(int newLevel) {
+        if (newLevel > 3) {
+            newLevel = 3;
+        } else if (newLevel < 1) {
+            newLevel = 1;
+        }
+        level = newLevel;
+    }
 }

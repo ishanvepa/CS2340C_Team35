@@ -20,6 +20,21 @@ public class GameViewModel extends ViewModel {
         instance.setGameDifficulty(GameModel.Difficulty.valueOf(diff));
     }
 
+    public int getLevel() {
+        GameModel instance = GameModel.getInstance();
+        return instance.getLevel();
+    }
+
+    public void increaseLevel() {
+        GameModel instance = GameModel.getInstance();
+        instance.setLevel(instance.getLevel() + 1);
+    }
+
+    public void resetLevel() {
+        GameModel instance = GameModel.getInstance();
+        instance.setLevel(1);
+    }
+
     public GameViewModel() {
         this.timeElapsed = new MutableLiveData<>(0);
     }

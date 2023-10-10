@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,12 @@ public class GameActivity extends AppCompatActivity {
         TextView timeElapsed = (TextView) findViewById(R.id.timeElapsed);
         TextView level = (TextView) findViewById(R.id.level);
         Button endButton = (Button) findViewById(R.id.endScreenButton);
+
+        int currentLevel = gameViewModel.getLevel();
+        if (currentLevel == 1) {
+            View root = findViewById(android.R.id.content);
+            root.setBackgroundResource(R.drawable.peachscastle);
+        }
 
         if (timer != null) {
             timer.cancel();
@@ -101,6 +108,7 @@ public class GameActivity extends AppCompatActivity {
 
         hp.setText(String.format("Current Health: %d", playerViewModel.getHealth().getValue()));
         score.setText(String.format("Current score: %d", playerViewModel.getScore().getValue().currentScore));
+        level.setText(String.format("Current level: %d", gameViewModel.getLevel()));
 
         playerViewModel.getScore().observe(this, new Observer<ScoreModel>() {
             @Override

@@ -87,6 +87,7 @@ public class ConfigurationActivity extends AppCompatActivity {
             if (!(name.getText() == null || name.getText().toString().trim().equals(""))) {
                 Intent i = new Intent(getApplicationContext(), GameActivity.class);
                 gameViewModel.setTimeElapsed(0);
+                gameViewModel.resetLevel();
                 playerViewModel.setScore(new ScoreModel(100));
                 startActivity(i);
             }
