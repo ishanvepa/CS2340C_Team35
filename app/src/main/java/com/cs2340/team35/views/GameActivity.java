@@ -47,6 +47,9 @@ public class GameActivity extends AppCompatActivity {
         TextView level = (TextView) findViewById(R.id.level);
         Button endButton = (Button) findViewById(R.id.endScreen);
         Button nextButton = (Button) findViewById(R.id.nextLevel);
+        TextView playerName = (TextView) findViewById(R.id.playerName);
+
+        playerName.setText(playerViewModel.getUserName());
 
         if (gameViewModel.getLevel() >= 3) {
             nextButton.setVisibility(View.GONE);
@@ -124,15 +127,23 @@ public class GameActivity extends AppCompatActivity {
         }
 
         mainCharacter.setVisibility(View.VISIBLE);
-        TextView nametext = (TextView) mainCharacter.getChildAt(1);
-        nametext.setText(playerViewModel.getUserName());
 
         ViewGroup.LayoutParams oldparams = mainCharacter.getLayoutParams();
         RelativeLayout.LayoutParams position = new RelativeLayout.LayoutParams(oldparams.width,
                 oldparams.width);
         position.leftMargin = playerViewModel.getX().getValue();
         position.topMargin = playerViewModel.getY().getValue();
+
         mainCharacter.setLayoutParams(position);
+
+        oldparams = playerName.getLayoutParams();
+        position = new RelativeLayout.LayoutParams(oldparams.width,
+                oldparams.width);
+        position.leftMargin = playerViewModel.getX().getValue();
+        position.topMargin = playerViewModel.getY().getValue() - 40;
+        playerName.setLayoutParams(position);
+
+
 
         hp.setText(String.format("Current Health: %d", playerViewModel.getHealth().getValue()));
         score.setText(String.format("Current score: %d", playerViewModel.getScore().getValue().currentScore));

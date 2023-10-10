@@ -27,12 +27,6 @@
                 android:src="@drawable/luigisprite"
                 app:srcCompat="@drawable/luigisprite" />
 
-            <TextView
-                android:id="@+id/luigiSpriteName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Luigi"
-                android:textAlignment="center" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -51,12 +45,6 @@
                 android:src="@drawable/peachsprite"
                 app:srcCompat="@drawable/peachsprite" />
 
-            <TextView
-                android:id="@+id/peachSpriteName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Peach"
-                android:textAlignment="center" />
         </RelativeLayout>
 
         <TextView
@@ -96,6 +84,15 @@
             android:text="Level:" />
 
         <TextView
+            android:id="@+id/playerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="100dp"
+            android:background="#FFFFFF"
+            android:text="Level:" />
+
+        <TextView
             android:id="@+id/difficultyText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -117,12 +114,6 @@
                 android:layout_marginTop="0dp"
                 android:src="@drawable/mariosprite" />
 
-            <TextView
-                android:id="@+id/marioSpriteName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Mario"
-                android:textAlignment="center" />
         </RelativeLayout>
 
         <Button
