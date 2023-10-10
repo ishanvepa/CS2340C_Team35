@@ -37,7 +37,38 @@ public class GameActivity extends AppCompatActivity {
         TextView score = (TextView) findViewById(R.id.Score);
         TextView timeElapsed = (TextView) findViewById(R.id.timeElapsed);
         TextView level = (TextView) findViewById(R.id.level);
-        Button endButton = (Button) findViewById(R.id.endScreenButton);
+        Button endButton = (Button) findViewById(R.id.endScreen);
+        Button nextButton = (Button) findViewById(R.id.nextLevel);
+
+        if (gameViewModel.getLevel() >= 3) {
+            nextButton.setVisibility(View.GONE);
+        }
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gameViewModel.increaseLevel();
+                Intent i = new Intent(getApplicationContext(), GameActivity.class);
+                if (timer != null) {
+                    timer.cancel();
+                    timer.purge();
+                    timer  = null;
+                }
+                startActivity(i);
+            }
+        });
+
+        int currentLevel = gameViewModel.getLevel();
+        if (currentLevel == 1) {
+            View root = findViewById(android.R.id.content);
+            root.setBackgroundResource(R.drawable.peachscastle);
+        } else if (currentLevel == 2) {
+            View root = findViewById(android.R.id.content);
+            root.setBackgroundResource(R.drawable.luigimansion);
+        } else if (currentLevel == 3) {
+            View root = findViewById(android.R.id.content);
+            root.setBackgroundResource(R.drawable.bowserscastle);
+        }
 
         if (timer != null) {
             timer.cancel();
@@ -54,7 +85,7 @@ public class GameActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-               gameViewModel.setTimeElapsed(gameViewModel.getTimeElapsed().getValue() + 1);
+               gameViewModel.incrementTimeElapsed();
             }
         }, 0, 1000);
 
@@ -101,6 +132,7 @@ public class GameActivity extends AppCompatActivity {
 
         hp.setText(String.format("Current Health: %d", playerViewModel.getHealth().getValue()));
         score.setText(String.format("Current score: %d", playerViewModel.getScore().getValue().currentScore));
+        level.setText(String.format("Current level: %d", gameViewModel.getLevel()));
 
         playerViewModel.getScore().observe(this, new Observer<ScoreModel>() {
             @Override
@@ -124,6 +156,11 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        this.timer.cancel();
+        if (timer != null) {
+            this.timer.cancel();
+            this.timer.purge();
+            this.timer = null;
+        }
     }
+
 }

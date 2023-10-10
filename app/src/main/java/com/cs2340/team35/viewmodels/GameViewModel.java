@@ -20,15 +20,39 @@ public class GameViewModel extends ViewModel {
         instance.setGameDifficulty(GameModel.Difficulty.valueOf(diff));
     }
 
+    public int getLevel() {
+        GameModel instance = GameModel.getInstance();
+        return instance.getLevel();
+    }
+
+    public void increaseLevel() {
+        GameModel instance = GameModel.getInstance();
+        instance.setLevel(instance.getLevel() + 1);
+    }
+
+    public void resetLevel() {
+        GameModel instance = GameModel.getInstance();
+        instance.setLevel(1);
+    }
+
     public GameViewModel() {
-        this.timeElapsed = new MutableLiveData<>(0);
+        GameModel instance = GameModel.getInstance();
+        this.timeElapsed = new MutableLiveData<>(instance.getTimeElapsed());
     }
 
     public LiveData<Integer> getTimeElapsed() {
         return timeElapsed;
     }
 
-    public void setTimeElapsed(Integer timeElapsed) {
-        this.timeElapsed.postValue(timeElapsed);
+    public void incrementTimeElapsed() {
+        GameModel instance = GameModel.getInstance();
+        instance.setTimeElapsed(instance.getTimeElapsed() + 1);
+        this.timeElapsed.postValue(instance.getTimeElapsed());
+    }
+
+    public void resetTimeElapsed() {
+        GameModel instance = GameModel.getInstance();
+        instance.setTimeElapsed(0);
+        this.timeElapsed.postValue(instance.getTimeElapsed());
     }
 }
