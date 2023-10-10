@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cs2340.team35.models.LeaderboardModel;
+import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.viewmodels.PlayerViewModel;
 import com.cs2340.team35.views.EndActivity;
@@ -40,22 +42,26 @@ public class GameActivity extends AppCompatActivity {
         TextView level = (TextView) findViewById(R.id.level);
         Button endButton = (Button) findViewById(R.id.endScreenButton);
 
-        if (timer == null) {
-            timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    ScoreModel old = playerViewModel.getScore().getValue();
-                    playerViewModel.setScore(new ScoreModel(old.currentScore - 2));
-                }
-            }, 1000, 1000);
+        if (timer != null) {
+            timer.cancel();
         }
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                ScoreModel old = playerViewModel.getScore().getValue();
+                playerViewModel.setScore(new ScoreModel(old.currentScore - 1));
+            }
+        }, 5000, 5000);
 
         endButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent i = new Intent(getApplicationContext(), EndActivity.class);
+                        timer.cancel();
+                        LeaderboardModel leaderboardModel = LeaderboardModel.getInstance();
+                        leaderboardModel.addScore(playerViewModel.getScore().getValue());
                         startActivity(i);
                     }
                 }
