@@ -52,7 +52,7 @@ public class PlayerViewModel extends ViewModel {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(ScoreModel score) {
         PlayerModel instance = PlayerModel.getInstance();
         instance.setScore(score);
     }

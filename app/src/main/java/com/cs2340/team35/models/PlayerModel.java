@@ -7,7 +7,7 @@ public class PlayerModel {
     private static int x;
     private static int y;
 
-    private static int score;
+    private static ScoreModel score;
 
     private static int health;
     public enum CharacterName { MARIO, LUIGI, PEACH }
@@ -20,6 +20,7 @@ public class PlayerModel {
         this.character = CharacterName.MARIO;
         this.userName = "";
         this.health = 0;
+        this.score = new ScoreModel(10);
     }
     public static PlayerModel getInstance() {
         if (instance == null) {
@@ -59,11 +60,11 @@ public class PlayerModel {
         return y;
     }
 
-    public int getScore() {
+    public ScoreModel getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(ScoreModel score) {
         this.score = score;
     }
 
