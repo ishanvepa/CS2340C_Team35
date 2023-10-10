@@ -19,6 +19,7 @@ public class PlayerViewModel extends ViewModel {
         this.x = new MutableLiveData<>(instance.getX());
         this.y = new MutableLiveData<>(instance.getY());
         this.health = new MutableLiveData<>(instance.getHealth());
+        this.score = new MutableLiveData<>(instance.getScore());
     }
 
     public String getCharacterName() {

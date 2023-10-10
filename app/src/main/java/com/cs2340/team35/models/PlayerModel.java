@@ -15,8 +15,8 @@ public class PlayerModel {
     private static String userName;
 
     private PlayerModel() {
-        this.x = 0;
-        this.y = 0;
+        this.x = 100;
+        this.y = 600;
         this.character = CharacterName.MARIO;
         this.userName = "";
         this.health = 0;

@@ -28,6 +28,8 @@ public class GameActivity extends AppCompatActivity {
 
         TextView hp = (TextView) findViewById(R.id.HPView);
         TextView diff = (TextView) findViewById(R.id.difficultyText);
+        TextView score = (TextView) findViewById(R.id.Score);
+        TextView level = (TextView) findViewById(R.id.level);
         Button endButton = (Button) findViewById(R.id.endScreenButton);
 
         endButton.setOnClickListener(
@@ -69,6 +71,7 @@ public class GameActivity extends AppCompatActivity {
         mainCharacter.setLayoutParams(position);
 
         hp.setText(String.format("Current Health: %d", playerViewModel.getHealth().getValue()));
+        score.setText(String.format("Current score: %d", playerViewModel.getScore().getValue().currentScore));
 
         String diffS = gameViewModel.getDifficulty();
 
