@@ -24,6 +24,14 @@ import java.util.TimerTask;
 public class GameActivity extends AppCompatActivity {
 
     private Timer timer;
+
+    private void cancelTimer() {
+        if (timer != null) {
+            timer.cancel();
+            timer.purge();
+            timer  = null;
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,11 +57,7 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View view) {
                 gameViewModel.increaseLevel();
                 Intent i = new Intent(getApplicationContext(), GameActivity.class);
-                if (timer != null) {
-                    timer.cancel();
-                    timer.purge();
-                    timer  = null;
-                }
+                cancelTimer();
                 startActivity(i);
             }
         });
@@ -94,7 +98,7 @@ public class GameActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Intent i = new Intent(getApplicationContext(), EndActivity.class);
-                        timer.cancel();
+                        cancelTimer();
                         LeaderboardModel leaderboardModel = LeaderboardModel.getInstance();
                         leaderboardModel.addScore(playerViewModel.getScore().getValue());
                         startActivity(i);
@@ -156,11 +160,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (timer != null) {
-            this.timer.cancel();
-            this.timer.purge();
-            this.timer = null;
-        }
+        cancelTimer();
     }
 
 }
