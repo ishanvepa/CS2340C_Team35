@@ -34,11 +34,11 @@ public class GameModel {
         return instance;
     }
 
-    public static int getLevel() {
+    public int getLevel() {
         return level;
     }
 
-    public static void setLevel(int newLevel) {
+    public void setLevel(int newLevel) {
         if (newLevel > 3) {
             newLevel = 3;
         } else if (newLevel < 1) {
