@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cs2340.team35.viewmodels.PlayerViewModel;
 import com.cs2340.team35.views.EndActivity;
 import com.cs2340.team35.R;
 import com.cs2340.team35.viewmodels.GameState;
@@ -21,15 +22,10 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("characterName");
-        String difficulty = intent.getStringExtra("difficulty");
-        String username = intent.getStringExtra("name");
-        GameViewModel viewModel = new ViewModelProvider(this).get(GameViewModel.class);
-        viewModel.setState(new GameState(GameState.Difficulty.valueOf(difficulty),
-                GameState.CharacterName.valueOf(name),
-                100, 200, username));
-        GameState state = viewModel.getGameState().getValue();
+
+        GameViewModel gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
+        PlayerViewModel playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
+
         TextView hp = (TextView) findViewById(R.id.HPView);
         TextView diff = (TextView) findViewById(R.id.difficultyText);
         Button endButton = (Button) findViewById(R.id.endScreenButton);
@@ -53,33 +49,28 @@ public class GameActivity extends AppCompatActivity {
         luigi.setVisibility(View.GONE);
         mario.setVisibility(View.GONE);
 
-        if (state.getCharacterName() == GameState.CharacterName.MARIO) {
+        if (playerViewModel.getCharacterName() == "MARIO") {
             mainCharacter =  mario;
-        } else if (state.getCharacterName() == GameState.CharacterName.PEACH) {
+        } else if (playerViewModel.getCharacterName() == "PEACH") {
             mainCharacter = peach;
-        } else if (state.getCharacterName() == GameState.CharacterName.LUIGI) {
+        } else if (playerViewModel.getCharacterName() == "LUIGI") {
             mainCharacter = luigi;
         }
 
         mainCharacter.setVisibility(View.VISIBLE);
         TextView nametext = (TextView) mainCharacter.getChildAt(1);
-        nametext.setText(username);
+        nametext.setText(playerViewModel.getUserName());
 
         ViewGroup.LayoutParams oldparams = mainCharacter.getLayoutParams();
         RelativeLayout.LayoutParams position = new RelativeLayout.LayoutParams(oldparams.width,
                 oldparams.width);
-        position.leftMargin = state.getMainCharacterX();
-        position.topMargin = state.getMainCharacterY();
+        position.leftMargin = playerViewModel.getX().getValue();
+        position.topMargin = playerViewModel.getY().getValue();
         mainCharacter.setLayoutParams(position);
 
-        hp.setText(String.format("Current Health: %d", state.getHealth()));
+        hp.setText(String.format("Current Health: %d", playerViewModel.getHealth().getValue()));
 
-        String diffS = "EASY";
-        if (state.getDifficulty() == GameState.Difficulty.MEDIUM) {
-            diffS = "MEDIUM";
-        } else if (state.getDifficulty() == GameState.Difficulty.HARD) {
-            diffS = "HARD";
-        }
+        String diffS = gameViewModel.getDifficulty();
 
         diff.setText(String.format("Difficulty Level: %s", diffS));
     }
