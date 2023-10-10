@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.cs2340.team35.R;
 import com.cs2340.team35.models.GameModel;
 import com.cs2340.team35.models.PlayerModel;
+import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.viewmodels.GameState;
 import com.cs2340.team35.viewmodels.GameViewModel;
 import com.cs2340.team35.viewmodels.PlayerViewModel;
@@ -44,9 +45,12 @@ public class ConfigurationActivity extends AppCompatActivity {
         GameViewModel gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
         PlayerViewModel playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
 
+        playerViewModel.setScore(new ScoreModel(100));
+
         easyButton.setOnClickListener(v -> {
             // Set Difficulty to Easy
             gameViewModel.setDifficulty(GameModel.Difficulty.EASY.toString());
+            playerViewModel.setHealth(150);
             attributes.setText(getAttributeText(playerViewModel.getCharacterName(), gameViewModel.getDifficulty()));
 
         });
@@ -54,12 +58,14 @@ public class ConfigurationActivity extends AppCompatActivity {
         mediumButton.setOnClickListener(v -> {
             // Set Difficulty to Medium
             gameViewModel.setDifficulty(GameModel.Difficulty.MEDIUM.toString());
+            playerViewModel.setHealth(100);
             attributes.setText(getAttributeText(playerViewModel.getCharacterName(), gameViewModel.getDifficulty()));
         });
 
         hardButton.setOnClickListener(v -> {
             // Set Difficulty to Hard
             gameViewModel.setDifficulty(GameModel.Difficulty.HARD.toString());
+            playerViewModel.setHealth(50);
             attributes.setText(getAttributeText(playerViewModel.getCharacterName(), gameViewModel.getDifficulty()));
         });
 

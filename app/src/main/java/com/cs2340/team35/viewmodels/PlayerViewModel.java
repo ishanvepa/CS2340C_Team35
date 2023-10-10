@@ -49,6 +49,12 @@ public class PlayerViewModel extends ViewModel {
         return health;
     }
 
+    public void setHealth(Integer health) {
+        PlayerModel instance = PlayerModel.getInstance();
+        instance.setHealth(health);
+        this.health.setValue(instance.getHealth());
+    }
+
     public LiveData<ScoreModel> getScore() {
         return score;
     }
@@ -56,5 +62,6 @@ public class PlayerViewModel extends ViewModel {
     public void setScore(ScoreModel score) {
         PlayerModel instance = PlayerModel.getInstance();
         instance.setScore(score);
+        this.score.setValue(instance.getScore());
     }
 }
