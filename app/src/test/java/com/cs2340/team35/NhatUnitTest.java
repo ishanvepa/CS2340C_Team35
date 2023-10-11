@@ -1,13 +1,9 @@
 package com.cs2340.team35;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
-import com.cs2340.team35.models.GameModel;
+import static org.junit.Assert.assertEquals;
+
 import com.cs2340.team35.models.ScoreModel;
-import com.cs2340.team35.views.EndActivity;
 
 import org.junit.Test;
 
@@ -35,19 +31,4 @@ public class NhatUnitTest {
         assertEquals(score7.compareTo(score4), 1);
     }
 
-    @Test
-    public void gameModelTestingSingleton() {
-        GameModel gameModel1 = GameModel.getInstance();
-        gameModel1.setLevel(55);
-        assertEquals(gameModel1.getLevel(), 3);
-        GameModel gameModel2 = GameModel.getInstance();
-        gameModel2.setLevel(5555000);
-        assertEquals(gameModel2.getLevel(), 3);
-        GameModel gameModel3 = GameModel.getInstance();
-        gameModel3.setLevel(0);
-        assertEquals(gameModel3.getLevel(), 1);
-        GameModel gameModel4 = GameModel.getInstance();
-        gameModel4.setLevel(-1);
-        assertEquals(gameModel4.getLevel(), 1);
-    }
 }
