@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class LeaderboardModel {
-    private static ArrayList<ScoreModel>scores;
+    private static ArrayList<ScoreModel> scores;
     private static LeaderboardModel instance;
 
     private LeaderboardModel() {

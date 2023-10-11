@@ -11,8 +11,6 @@ import com.cs2340.team35.R;
 import com.cs2340.team35.models.LeaderboardModel;
 import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.ScoreModel;
-import com.google.android.material.color.utilities.Score;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
@@ -35,10 +33,14 @@ public class EndActivity extends AppCompatActivity {
         PlayerModel playerModel = PlayerModel.getInstance();
         LeaderboardModel leaderboardModel = LeaderboardModel.getInstance();
 
-        score.setText(String.format("Most recent score: %d", playerModel.getScore().currentScore));
+        score.setText(String.format("Most recent score: %d",
+                playerModel.getScore().getCurrentScore()));
 
         TextView[] leaderBoards = new TextView[] {
-            findViewById(R.id.Leaderboard1), findViewById(R.id.Leaderboard2), findViewById(R.id.Leaderboard3), findViewById(R.id.Leaderboard4), findViewById(R.id.Leaderboard5), findViewById(R.id.Leaderboard6), findViewById(R.id.Leaderboard7)
+            findViewById(R.id.Leaderboard1), findViewById(R.id.Leaderboard2),
+                findViewById(R.id.Leaderboard3), findViewById(R.id.Leaderboard4),
+                findViewById(R.id.Leaderboard5), findViewById(R.id.Leaderboard6),
+                findViewById(R.id.Leaderboard7)
         };
 
         ArrayList<ScoreModel> scoreData = leaderboardModel.getScores();
@@ -48,7 +50,9 @@ public class EndActivity extends AppCompatActivity {
                 break;
             }
 
-            leaderBoards[i].setText(String.format("Score %d: %d", i + 1, scoreData.get(scoreData.size() - i - 1).currentScore));
+            leaderBoards[i].setText(
+                    String.format("Score %d: %d", i + 1,
+                            scoreData.get(scoreData.size() - i - 1).getCurrentScore()));
         }
     }
 
