@@ -21,4 +21,12 @@ public class PlayerModelUnitTest {
         model.setY(-1000);
         assertEquals(0, model.getY());
     }
+    @Test
+    public void TestEmptyName() {
+        PlayerModel model = PlayerModel.getInstance();
+        model.setUserName("Mario");
+        assertEquals("Mario", model.getUserName());
+        model.setUserName("");
+        assertEquals("", model.getUserName());
+    }
 }
