@@ -2,7 +2,7 @@ package com.cs2340.team35.models;
 
 public class GameModel {
     public enum Difficulty { EASY, MEDIUM, HARD }
-    private static Difficulty GameDifficulty;
+    private static Difficulty gameDifficulty;
     private static GameModel instance;
 
     private static int level;
@@ -17,14 +17,14 @@ public class GameModel {
 
     private static int timeElapsed;
     private GameModel() {
-        GameDifficulty = Difficulty.EASY;
+        gameDifficulty = Difficulty.EASY;
     }
     public void setGameDifficulty(Difficulty gameDifficulty) {
-        GameDifficulty = gameDifficulty;
+        GameModel.gameDifficulty = gameDifficulty;
     }
 
     public Difficulty getGameDifficulty() {
-        return GameDifficulty;
+        return gameDifficulty;
     }
 
     public static GameModel getInstance() {

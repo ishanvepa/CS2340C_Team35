@@ -11,14 +11,14 @@ public class ScoreModelUnitTest {
     @Test
     public void TestScoreModelInitialization() {
         ScoreModel sMod = new ScoreModel(0);
-        assertEquals(sMod.currentScore, 0);
+        assertEquals(sMod.getCurrentScore(), 0);
 
         ScoreModel sMod2 = new ScoreModel(5);
-        assertEquals(sMod2.currentScore, 5);
+        assertEquals(sMod2.getCurrentScore(), 5);
 
         //We are allowing negative scores in a ScoreModel
         ScoreModel sMod3 = new ScoreModel(-7);
-        assertEquals(sMod3.currentScore, -7);
+        assertEquals(sMod3.getCurrentScore(), -7);
     }
 
     @Test

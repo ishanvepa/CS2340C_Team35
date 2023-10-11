@@ -85,14 +85,14 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void run() {
                 ScoreModel old = playerViewModel.getScore().getValue();
-                playerViewModel.setScore(new ScoreModel(old.currentScore - 1));
+                playerViewModel.setScore(new ScoreModel(old.getCurrentScore() - 1));
             }
         }, 5000, 5000);
 
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-               gameViewModel.incrementTimeElapsed();
+                gameViewModel.incrementTimeElapsed();
             }
         }, 0, 1000);
 
@@ -146,20 +146,24 @@ public class GameActivity extends AppCompatActivity {
 
 
         hp.setText(String.format("Current Health: %d", playerViewModel.getHealth().getValue()));
-        score.setText(String.format("Current score: %d", playerViewModel.getScore().getValue().currentScore));
+        score.setText(String.format("Current score: %d",
+                playerViewModel.getScore().getValue().getCurrentScore()));
         level.setText(String.format("Current level: %d", gameViewModel.getLevel()));
 
         playerViewModel.getScore().observe(this, new Observer<ScoreModel>() {
             @Override
             public void onChanged(ScoreModel scoreModel) {
-                score.setText(String.format("Current score: %d", playerViewModel.getScore().getValue().currentScore));
+                score.setText(String.format("Current score: %d",
+                        playerViewModel.getScore().getValue().getCurrentScore()));
             }
         });
 
         gameViewModel.getTimeElapsed().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                timeElapsed.setText(String.format("Current time elapsed: %d", gameViewModel.getTimeElapsed().getValue()));
+                timeElapsed.setText(
+                        String.format("Current time elapsed: %d",
+                                gameViewModel.getTimeElapsed().getValue()));
             }
         });
 
