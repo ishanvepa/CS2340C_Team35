@@ -8,7 +8,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cs2340.team35.R;
+import com.cs2340.team35.models.LeaderboardModel;
+import com.cs2340.team35.models.PlayerModel;
+import com.cs2340.team35.models.ScoreModel;
+import com.google.android.material.color.utilities.Score;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.ArrayList;
 
 public class EndActivity extends AppCompatActivity {
 
@@ -26,23 +32,24 @@ public class EndActivity extends AppCompatActivity {
         });
 
         TextView score = findViewById(R.id.Score);
-        score.setText("Recent Score");
+        PlayerModel playerModel = PlayerModel.getInstance();
+        LeaderboardModel leaderboardModel = LeaderboardModel.getInstance();
 
-        TextView leaderBoard1 = findViewById(R.id.Leaderboard1);
-        TextView leaderBoard2 = findViewById(R.id.Leaderboard2);
-        TextView leaderBoard3 = findViewById(R.id.Leaderboard3);
-        TextView leaderBoard4 = findViewById(R.id.Leaderboard4);
-        TextView leaderBoard5 = findViewById(R.id.Leaderboard5);
-        TextView leaderBoard6 = findViewById(R.id.Leaderboard6);
-        TextView leaderBoard7 = findViewById(R.id.Leaderboard7);
+        score.setText(String.format("Most recent score: %d", playerModel.getScore().currentScore));
 
-        leaderBoard1.setText("1");
-        leaderBoard2.setText("2");
-        leaderBoard3.setText("3");
-        leaderBoard4.setText("4");
-        leaderBoard5.setText("5");
-        leaderBoard6.setText("6");
-        leaderBoard7.setText("7");
+        TextView[] leaderBoards = new TextView[] {
+            findViewById(R.id.Leaderboard1), findViewById(R.id.Leaderboard2), findViewById(R.id.Leaderboard3), findViewById(R.id.Leaderboard4), findViewById(R.id.Leaderboard5), findViewById(R.id.Leaderboard6), findViewById(R.id.Leaderboard7)
+        };
+
+        ArrayList<ScoreModel> scoreData = leaderboardModel.getScores();
+
+        for (int i = 0; i < scoreData.size(); i++) {
+            if (i >= 7) {
+                break;
+            }
+
+            leaderBoards[i].setText(String.format("Score %d: %d", i + 1, scoreData.get(scoreData.size() - i - 1).currentScore));
+        }
 
 
 
