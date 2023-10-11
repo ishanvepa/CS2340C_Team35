@@ -28,4 +28,8 @@ public class LeaderboardModel {
         return instance;
     }
 
+    public void clearScore() {
+        this.scores = new ArrayList<>();
+    }
+
 }

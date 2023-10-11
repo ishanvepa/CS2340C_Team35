@@ -20,6 +20,7 @@ public class LeaderboardModelUnitTest {
         ArrayList<ScoreModel> scores = new ArrayList<ScoreModel>();
         scores.add(score);
         assertEquals(scores, leaderboardModel.getScores());
+        leaderboardModel.clearScore();
     }
 
     @Test
@@ -48,6 +49,6 @@ public class LeaderboardModelUnitTest {
         scores.add(score4);
         scores.add(score5);
         assertEquals(scores, leaderboardModel.getScores());
-
+        leaderboardModel.clearScore();
     }
 }
