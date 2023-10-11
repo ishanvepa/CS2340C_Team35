@@ -8,8 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cs2340.team35.R;
-import com.cs2340.team35.viewmodels.GameState;
-import com.google.android.material.textfield.TextInputEditText;
+
 
 public class EndActivity extends AppCompatActivity {
 
@@ -20,7 +19,6 @@ public class EndActivity extends AppCompatActivity {
         Button restartButton = findViewById(R.id.restartButton);
 
         restartButton.setOnClickListener(v -> {
-            // Start the game activity
             Intent intent = new Intent(EndActivity.this,
                     WelcomeActivity.class);
             startActivity(intent);
@@ -44,9 +42,6 @@ public class EndActivity extends AppCompatActivity {
         leaderBoard5.setText("5");
         leaderBoard6.setText("6");
         leaderBoard7.setText("7");
-
-
-
     }
 
 }
