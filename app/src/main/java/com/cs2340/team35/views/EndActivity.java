@@ -25,13 +25,13 @@ public class EndActivity extends AppCompatActivity {
         Button restartButton = findViewById(R.id.restartButton);
 
         restartButton.setOnClickListener(v -> {
-            // Start the game activity
             Intent intent = new Intent(EndActivity.this,
                     WelcomeActivity.class);
             startActivity(intent);
         });
 
         TextView score = findViewById(R.id.Score);
+
         PlayerModel playerModel = PlayerModel.getInstance();
         LeaderboardModel leaderboardModel = LeaderboardModel.getInstance();
 
@@ -50,9 +50,6 @@ public class EndActivity extends AppCompatActivity {
 
             leaderBoards[i].setText(String.format("Score %d: %d", i + 1, scoreData.get(scoreData.size() - i - 1).currentScore));
         }
-
-
-
     }
 
 }
