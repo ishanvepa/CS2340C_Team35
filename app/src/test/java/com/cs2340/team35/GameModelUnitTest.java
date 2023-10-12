@@ -20,4 +20,22 @@ public class GameModelUnitTest {
         model.setLevel(5000);
         assertEquals(model.getLevel(), 3);
     }
+
+    @Test
+    public void TestLevelDifficulty(){
+        GameModel model = GameModel.getInstance();
+
+        //test EASY difficulty
+        model.setGameDifficulty(GameModel.Difficulty.EASY);
+        assertEquals(model.getGameDifficulty(), GameModel.Difficulty.EASY);
+
+        //test MEDIUM difficulty
+        model.setGameDifficulty(GameModel.Difficulty.MEDIUM);
+        assertEquals(model.getGameDifficulty(), GameModel.Difficulty.MEDIUM);
+
+        //test HARD difficulty
+        model.setGameDifficulty(GameModel.Difficulty.HARD);
+        assertEquals(model.getGameDifficulty(), GameModel.Difficulty.HARD);
+
+    }
 }
