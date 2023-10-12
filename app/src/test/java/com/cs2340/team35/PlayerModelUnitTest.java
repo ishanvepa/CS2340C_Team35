@@ -29,4 +29,25 @@ public class PlayerModelUnitTest {
         model.setUserName("");
         assertEquals("", model.getUserName());
     }
+
+    @Test
+    public void TestHealthSetting(){
+        PlayerModel pm = PlayerModel.getInstance();
+        //test init health
+        assertEquals(pm.getHealth(), 0);
+
+        //test EASY difficulty health
+        pm.setHealth(150);
+        assertEquals(pm.getHealth(), 150);
+
+        //test MEDIUM difficulty health
+        pm.setHealth(100);
+        assertEquals(pm.getHealth(), 100);
+
+        //test HARD difficulty health
+        pm.setHealth(50);
+        assertEquals(pm.getHealth(), 50);
+    }
+
+
 }
