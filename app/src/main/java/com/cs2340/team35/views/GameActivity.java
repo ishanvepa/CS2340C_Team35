@@ -28,7 +28,7 @@ public class GameActivity extends AppCompatActivity {
 
     private Timer timer;
     int screenWidth, screenHeight;
-
+    private PlayerViewModel playerViewModel;
     private void cancelTimer() {
         if (timer != null) {
             timer.cancel();
@@ -37,7 +37,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private RelativeLayout getMainCharacter(PlayerViewModel playerViewModel) {
+    private RelativeLayout getMainCharacter() {
         RelativeLayout mainCharacter = null;
         RelativeLayout mario = (RelativeLayout) findViewById(R.id.marioSpriteLayout);
         RelativeLayout luigi = (RelativeLayout) findViewById(R.id.luigiSpriteLayout);
@@ -54,6 +54,8 @@ public class GameActivity extends AppCompatActivity {
         } else if (playerViewModel.getCharacterName() == "LUIGI") {
             mainCharacter = luigi;
         }
+
+        mainCharacter.setVisibility(View.VISIBLE);
         return mainCharacter;
     }
     @Override
@@ -62,7 +64,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         GameViewModel gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
-        PlayerViewModel playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
+        playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
 
         TextView hp = (TextView) findViewById(R.id.HPView);
         TextView diff = (TextView) findViewById(R.id.difficultyText);
@@ -128,11 +130,11 @@ public class GameActivity extends AppCompatActivity {
             }
         }, 0, 1000);
 
-        RelativeLayout mainCharacter = getMainCharacter(playerViewModel);
+        RelativeLayout mainCharacter = getMainCharacter();
 
         mainCharacter.setVisibility(View.VISIBLE);
 
-        render(playerViewModel, mainCharacter, playerName);
+        render(mainCharacter, playerName);
 
         hp.setText(String.format("Current Health: %d", playerViewModel.getHealth().getValue()));
         score.setText(String.format("Current score: %d",
@@ -161,7 +163,7 @@ public class GameActivity extends AppCompatActivity {
         diff.setText(String.format("Difficulty Level: %s", diffS));
     }
 
-    private void render(PlayerViewModel playerViewModel, RelativeLayout mainCharacter, TextView nameLabel) {
+    private void render(RelativeLayout mainCharacter, TextView nameLabel) {
         ViewGroup.LayoutParams oldparams = mainCharacter.getLayoutParams();
         RelativeLayout.LayoutParams position = new RelativeLayout.LayoutParams(oldparams.width,
                 oldparams.width);
@@ -181,7 +183,7 @@ public class GameActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         PlayerViewModel playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
         TextView playerName = (TextView) findViewById(R.id.playerName);
-        RelativeLayout mainCharacter = getMainCharacter(playerViewModel);
+        RelativeLayout mainCharacter = getMainCharacter();
         if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
             if (playerViewModel.getY().getValue() - 10 >= 0) {
                 playerViewModel.setY(playerViewModel.getY().getValue() - 10);
@@ -200,7 +202,7 @@ public class GameActivity extends AppCompatActivity {
                 playerViewModel.setX(playerViewModel.getX().getValue() + 10);
             }
         }
-        render(playerViewModel, mainCharacter, playerName);
+        render(mainCharacter, playerName);
         return true;
     }
     @Override
