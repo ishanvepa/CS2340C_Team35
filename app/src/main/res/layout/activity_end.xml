@@ -47,7 +47,7 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/Leaderboard1"
@@ -116,5 +116,19 @@
         </TableRow>
 
     </TableLayout>
+
+    <TextView
+        android:id="@+id/WinningText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="76dp"
+        android:text="Winner"
+        android:textColor="#2196F3"
+        android:textColorLink="#E91E63"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
