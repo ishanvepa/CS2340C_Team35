@@ -1,9 +1,13 @@
 package com.cs2340.team35.viewmodels;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.ScoreModel;
 
@@ -13,6 +17,9 @@ public class PlayerViewModel extends ViewModel {
     private MutableLiveData<Integer> y;
     private MutableLiveData<Integer> health;
     private MutableLiveData<ScoreModel> score;
+
+    //wall collision subscriber list
+    private List<WallCollisionObservable> WallCollisionObservables = new ArrayList<>();
 
     public PlayerViewModel() {
         PlayerModel instance = PlayerModel.getInstance();
@@ -68,5 +75,43 @@ public class PlayerViewModel extends ViewModel {
         PlayerModel instance = PlayerModel.getInstance();
         instance.setScore(score);
         this.score.postValue(instance.getScore());
+    }
+
+    public static PlayerModel getInstance(){
+        return PlayerModel.getInstance();
+    }
+
+    //wall collision subscriber methods
+    public void notifyForCollisions(){
+        for(WallCollisionObservable sub : WallCollisionObservables){
+            sub.onCollision(this);
+        }
+    }
+
+    public void subscribe(WallCollisionObservable sub){
+        WallCollisionObservables.add(sub);
+    }
+
+    public void unsubscribe(WallCollisionObservable sub){
+            WallCollisionObservables.remove(sub);
+
+    }
+
+
+
+
+
+}
+
+interface WallCollisionObservable{
+    public void onCollision(PlayerViewModel Subject);
+}
+class WallCollisionObserver implements WallCollisionObservable{
+    @Override
+    public void onCollision(PlayerViewModel Subject) {
+
+        Subject.getInstance().setX(100);
+        Subject.getInstance().setY(600);
+
     }
 }

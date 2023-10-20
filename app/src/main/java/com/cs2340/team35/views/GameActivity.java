@@ -55,6 +55,7 @@ public class GameActivity extends AppCompatActivity {
             nextButton.setVisibility(View.GONE);
         }
 
+
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
