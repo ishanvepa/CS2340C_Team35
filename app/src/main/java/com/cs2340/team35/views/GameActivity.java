@@ -45,25 +45,28 @@ public class GameActivity extends AppCompatActivity {
         TextView score = (TextView) findViewById(R.id.Score);
         TextView timeElapsed = (TextView) findViewById(R.id.timeElapsed);
         TextView level = (TextView) findViewById(R.id.level);
-        //Button endButton = (Button) findViewById(R.id.endScreen);
-        //Button nextButton = (Button) findViewById(R.id.nextLevel);
+        Button nextButton = (Button) findViewById(R.id.nextLevel);
         TextView playerName = (TextView) findViewById(R.id.playerName);
 
         playerName.setText(playerViewModel.getUserName());
 
-        /*if (gameViewModel.getLevel() >= 3) {
-            nextButton.setVisibility(View.GONE);
-        }*/
-
-        /*nextButton.setOnClickListener(new View.OnClickListener() {
+        nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                gameViewModel.increaseLevel();
-                Intent i = new Intent(getApplicationContext(), GameActivity.class);
-                cancelTimer();
-                startActivity(i);
+                if (gameViewModel.getLevel() >= 3) {
+                    Intent i = new Intent(getApplicationContext(), EndActivity.class);
+                    cancelTimer();
+                    LeaderboardModel leaderboardModel = LeaderboardModel.getInstance();
+                    leaderboardModel.addScore(playerViewModel.getScore().getValue());
+                    startActivity(i);
+                } else {
+                    gameViewModel.increaseLevel();
+                    Intent i = new Intent(getApplicationContext(), GameActivity.class);
+                    cancelTimer();
+                    startActivity(i);
+                }
             }
-        });*/
+        });
 
         int currentLevel = gameViewModel.getLevel();
         if (currentLevel == 1) {
@@ -95,19 +98,6 @@ public class GameActivity extends AppCompatActivity {
                 gameViewModel.incrementTimeElapsed();
             }
         }, 0, 1000);
-
-        /*endButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent i = new Intent(getApplicationContext(), EndActivity.class);
-                        cancelTimer();
-                        LeaderboardModel leaderboardModel = LeaderboardModel.getInstance();
-                        leaderboardModel.addScore(playerViewModel.getScore().getValue());
-                        startActivity(i);
-                    }
-                }
-        );*/
 
         RelativeLayout mainCharacter = null;
         RelativeLayout mario = (RelativeLayout) findViewById(R.id.marioSpriteLayout);

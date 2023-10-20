@@ -129,13 +129,4 @@
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/endScreen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="300dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="35dp"
-        android:text="End Screen" />
 </RelativeLayout>
