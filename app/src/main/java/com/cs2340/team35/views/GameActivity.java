@@ -13,10 +13,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cs2340.team35.models.LeaderboardModel;
+import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.viewmodels.PlayerViewModel;
 import com.cs2340.team35.R;
 import com.cs2340.team35.viewmodels.GameViewModel;
+
+import android.view.KeyEvent;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,6 +27,8 @@ import java.util.TimerTask;
 public class GameActivity extends AppCompatActivity {
 
     private Timer timer;
+    private int playerX, playerY;
+    int screenWidth, screenHeight;
 
     private void cancelTimer() {
         if (timer != null) {
@@ -76,7 +81,11 @@ public class GameActivity extends AppCompatActivity {
             View root = findViewById(android.R.id.content);
             root.setBackgroundResource(R.drawable.bowserscastle);
         }
-
+        screenWidth = getResources().getDisplayMetrics().widthPixels;
+        screenHeight = getResources().getDisplayMetrics().heightPixels;
+        // Spawn player in middle of screen
+        playerX = screenWidth / 2;
+        playerY = screenHeight / 2;
         if (timer != null) {
             timer.cancel();
         }
@@ -131,8 +140,8 @@ public class GameActivity extends AppCompatActivity {
         ViewGroup.LayoutParams oldparams = mainCharacter.getLayoutParams();
         RelativeLayout.LayoutParams position = new RelativeLayout.LayoutParams(oldparams.width,
                 oldparams.width);
-        position.leftMargin = playerViewModel.getX().getValue();
-        position.topMargin = playerViewModel.getY().getValue();
+        position.leftMargin =  playerViewModel.getX().getValue();
+        position.topMargin =  playerViewModel.getY().getValue();
 
         mainCharacter.setLayoutParams(position);
 
@@ -171,7 +180,32 @@ public class GameActivity extends AppCompatActivity {
 
         diff.setText(String.format("Difficulty Level: %s", diffS));
     }
+    //Movement
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO logic to move the player (remember to check collisions)
+        if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+            if (playerY - 10 >= 0) {
+                playerY -= 10;
+            }
+        } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+            if (playerY + 10 <= screenHeight) {
+                playerY += 10;
+            }
 
+        } else if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+            if (playerX - 10 <= screenWidth) {
+                playerX -= 10;
+            }
+        } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+            if (playerX + 10 <= screenWidth) {
+                playerX += 10;
+            }
+        }
+        playerView.setX(playerX);
+        playerView.setY(playerY);
+        return true;
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
