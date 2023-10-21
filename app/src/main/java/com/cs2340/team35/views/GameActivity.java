@@ -184,25 +184,20 @@ public class GameActivity extends AppCompatActivity {
         PlayerViewModel playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
         TextView playerName = (TextView) findViewById(R.id.playerName);
         RelativeLayout mainCharacter = getMainCharacter();
+        Movement strategy = null;
         if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
-            if (playerViewModel.getY().getValue() - 10 >= 0) {
-                playerViewModel.setY(playerViewModel.getY().getValue() - 10);
-            }
+            strategy = new MovementDown();
         } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
-            if (playerViewModel.getY().getValue() + 10 <= screenHeight) {
-                playerViewModel.setY(playerViewModel.getY().getValue() + 10);
-            }
-
+            strategy = new MovementUp();
         } else if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
-            if (playerViewModel.getX().getValue() - 10 <= screenWidth) {
-                playerViewModel.setX(playerViewModel.getX().getValue() - 10);
-            }
+            strategy = new MovementLeft();
         } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
-            if (playerViewModel.getX().getValue() + 10 <= screenWidth) {
-                playerViewModel.setX(playerViewModel.getX().getValue() + 10);
-            }
+            strategy = new MovementRight();
         }
-        render(mainCharacter, playerName);
+        if(strategy != null) {
+            strategy.movementStrategy(playerViewModel, screenWidth, screenHeight);
+            render(mainCharacter, playerName);
+        }
         return true;
     }
     @Override
