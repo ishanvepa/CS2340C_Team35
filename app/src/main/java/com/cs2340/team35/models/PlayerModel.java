@@ -40,6 +40,7 @@ public class PlayerModel {
         if (newY < 0) {
             newY = 0;
         }
+
         y = newY;
     }
 
