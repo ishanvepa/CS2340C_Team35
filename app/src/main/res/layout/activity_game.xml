@@ -118,4 +118,20 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/walls"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".views.GameActivity">
+
+        <!-- Your existing layout elements -->
+
+        <!-- Example of a wall using a View element -->
+
+
+        <!-- Add more walls as needed -->
+
+    </RelativeLayout>
+
+
 </RelativeLayout>

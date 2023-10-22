@@ -1,9 +1,12 @@
 package com.cs2340.team35.viewmodels;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.ScoreModel;
 
@@ -79,4 +82,10 @@ public class PlayerViewModel extends ViewModel {
         instance.setScore(score);
         this.score.postValue(instance.getScore());
     }
+
+    public static PlayerModel getInstance(){
+        return PlayerModel.getInstance();
+    }
+
+
 }
