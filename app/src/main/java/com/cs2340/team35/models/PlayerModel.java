@@ -1,7 +1,5 @@
 package com.cs2340.team35.models;
 
-import android.graphics.Paint;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +15,8 @@ public class PlayerModel {
     private static CharacterName character;
     private static String userName;
 
-    public interface Subscriber {
-        public void positionUpdated(int newX, int newY);
-    }
+    private List<Subscriber> subscriberList;
 
-    public List<Subscriber> subscriberList;
 
     public void addSubscriber(Subscriber s) {
         subscriberList.add(s);
@@ -112,5 +107,9 @@ public class PlayerModel {
 
     public void setHealth(int newHealth) {
         health = newHealth;
+    }
+
+    public interface Subscriber {
+        public void positionUpdated(int newX, int newY);
     }
 }
