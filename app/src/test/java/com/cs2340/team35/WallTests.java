@@ -1,6 +1,5 @@
 package com.cs2340.team35;
 import static org.junit.Assert.assertEquals;
-
 import com.cs2340.team35.models.GameModel;
 //import com.cs2340.team35.models.WallModel;
 import com.cs2340.team35.views.GameActivity;
