@@ -6,29 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WallModel implements WallCollisionObservable{
-    private int x;
-    private int y;
     private int width;
     private int height;
-    //wall collision subscriber list
-    private List<WallCollisionObservable> WallCollisionObservables = new ArrayList<>();
+    private int leftMargin;
+    private int topMargin;
 
 
-    public WallModel(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
+
+    public WallModel(int width, int height, int leftMargin, int topMargin) {
         this.width = width;
         this.height = height;
-
+        this.leftMargin = leftMargin;
+        this.topMargin = topMargin;
     }
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
     public int getWidth() {
         return width;
     }
@@ -36,27 +26,20 @@ public class WallModel implements WallCollisionObservable{
     public int getHeight() {
         return height;
     }
-//
-//    //wall collision subscriber methods
-//    public void notifyForCollisions(){
-//        for(WallCollisionObservable sub : WallCollisionObservables){
-//            sub.onCollision(PlayerViewModel.getInstance());
-//        }
-//    }
-//
-//    public void subscribe(WallCollisionObservable sub){
-//        WallCollisionObservables.add(sub);
-//    }
-//
-//    public void unsubscribe(WallCollisionObservable sub){
-//        WallCollisionObservables.remove(sub);
-//
-//    }
+
+    public int getLeftMargin() {
+        return leftMargin;
+    }
+
+    public int getTopMargin() {
+        return topMargin;
+    }
+
 
     @Override
     public void onCollision(PlayerViewModel Subject) {
-        Subject.getInstance().setX(100);
-        Subject.getInstance().setY(600);
+        Subject.setX(100);
+        Subject.setY(600);
 
     }
 
