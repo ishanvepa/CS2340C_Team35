@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cs2340.team35.models.GameModel;
 import com.cs2340.team35.models.LeaderboardModel;
 import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.models.WallModel;
@@ -51,14 +52,6 @@ public class GameActivity extends AppCompatActivity {
         params.topMargin = topMargin;
         layout.addView(wall, params);
         return new WallModel(width, height, leftMargin, topMargin);
-    }
-
-    public boolean isAtExit(int x, int y) {
-        if (y + 120 > 1900) {
-            return true;
-        }
-
-        return false;
     }
     private RelativeLayout getMainCharacter() {
         RelativeLayout mainCharacter = null;
@@ -218,7 +211,7 @@ public class GameActivity extends AppCompatActivity {
             Integer[] newPosition = strategy.movementStrategy(currPosition[0],
                     currPosition[1], screenWidth, screenHeight);
 
-            if (isAtExit(newPosition[0], newPosition[1])) {
+            if (GameModel.isAtExit(newPosition[0], newPosition[1])) {
                 if (gameViewModel.getLevel() >= 3) {
                     Intent i = new Intent(getApplicationContext(), EndActivity.class);
                     cancelTimer();
