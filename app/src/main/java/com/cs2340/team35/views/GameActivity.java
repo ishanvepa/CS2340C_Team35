@@ -12,16 +12,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.cs2340.team35.models.LeaderboardModel;
+import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.models.WallModel;
 import com.cs2340.team35.viewmodels.PlayerViewModel;
 import com.cs2340.team35.R;
 import com.cs2340.team35.viewmodels.GameViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
+import android.view.KeyEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,7 +29,7 @@ public class GameActivity extends AppCompatActivity {
     private static int screenWidth = 1800;
     private static int screenHeight = 1900;
     private Timer timer;
-
+    private PlayerViewModel playerViewModel;
     private void cancelTimer() {
         if (timer != null) {
             timer.cancel();
@@ -47,7 +47,6 @@ public class GameActivity extends AppCompatActivity {
         params.leftMargin = leftMargin;
         params.topMargin = topMargin;
         layout.addView(wall, params);
-
         return new WallModel(width, height, leftMargin, topMargin);
     }
 
@@ -57,43 +56,44 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
+    private RelativeLayout getMainCharacter() {
+        RelativeLayout mainCharacter = null;
+        RelativeLayout mario = (RelativeLayout) findViewById(R.id.marioSpriteLayout);
+        RelativeLayout luigi = (RelativeLayout) findViewById(R.id.luigiSpriteLayout);
+        RelativeLayout peach = (RelativeLayout) findViewById(R.id.peachSpriteLayout);
+
+        peach.setVisibility(View.GONE);
+        luigi.setVisibility(View.GONE);
+        mario.setVisibility(View.GONE);
+
+        if (playerViewModel.getCharacterName() == "MARIO") {
+            mainCharacter =  mario;
+        } else if (playerViewModel.getCharacterName() == "PEACH") {
+            mainCharacter = peach;
+        } else if (playerViewModel.getCharacterName() == "LUIGI") {
+            mainCharacter = luigi;
+        }
+
+        mainCharacter.setVisibility(View.VISIBLE);
+        return mainCharacter;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
         GameViewModel gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
-        PlayerViewModel playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
+        playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
 
         TextView hp = (TextView) findViewById(R.id.HPView);
         TextView diff = (TextView) findViewById(R.id.difficultyText);
         TextView score = (TextView) findViewById(R.id.Score);
         TextView timeElapsed = (TextView) findViewById(R.id.timeElapsed);
         TextView level = (TextView) findViewById(R.id.level);
-        Button nextButton = (Button) findViewById(R.id.nextLevel);
+      //  Button nextButton = (Button) findViewById(R.id.next);
         TextView playerName = (TextView) findViewById(R.id.playerName);
 
         playerName.setText(playerViewModel.getUserName());
-
-
-
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (gameViewModel.getLevel() >= 3) {
-                    Intent i = new Intent(getApplicationContext(), EndActivity.class);
-                    cancelTimer();
-                    LeaderboardModel leaderboardModel = LeaderboardModel.getInstance();
-                    leaderboardModel.addScore(playerViewModel.getScore().getValue());
-                    startActivity(i);
-                } else {
-                    gameViewModel.increaseLevel();
-                    Intent i = new Intent(getApplicationContext(), GameActivity.class);
-                    cancelTimer();
-                    startActivity(i);
-                }
-            }
-        });
 
         int currentLevel = gameViewModel.getLevel();
         if (currentLevel == 1) {
@@ -126,6 +126,11 @@ public class GameActivity extends AppCompatActivity {
             level3Walls.add(addWalls(42, 950, 0, 475)); // left wall
             level3Walls.add(addWalls(42, 950, 1038, 475)); // right wall
         }
+        screenWidth = getResources().getDisplayMetrics().widthPixels;
+        screenHeight = getResources().getDisplayMetrics().heightPixels;
+        // Spawn player in middle of screen
+        playerViewModel.setX(screenWidth / 2);
+        playerViewModel.setY(screenHeight/2);
 
         if (timer != null) {
             timer.cancel();
@@ -146,41 +151,11 @@ public class GameActivity extends AppCompatActivity {
             }
         }, 0, 1000);
 
-        RelativeLayout mainCharacter = null;
-        RelativeLayout mario = (RelativeLayout) findViewById(R.id.marioSpriteLayout);
-        RelativeLayout luigi = (RelativeLayout) findViewById(R.id.luigiSpriteLayout);
-        RelativeLayout peach = (RelativeLayout) findViewById(R.id.peachSpriteLayout);
-
-        peach.setVisibility(View.GONE);
-        luigi.setVisibility(View.GONE);
-        mario.setVisibility(View.GONE);
-
-        if (playerViewModel.getCharacterName() == "MARIO") {
-            mainCharacter =  mario;
-        } else if (playerViewModel.getCharacterName() == "PEACH") {
-            mainCharacter = peach;
-        } else if (playerViewModel.getCharacterName() == "LUIGI") {
-            mainCharacter = luigi;
-        }
+        RelativeLayout mainCharacter = getMainCharacter();
 
         mainCharacter.setVisibility(View.VISIBLE);
 
-        ViewGroup.LayoutParams oldparams = mainCharacter.getLayoutParams();
-        RelativeLayout.LayoutParams position = new RelativeLayout.LayoutParams(oldparams.width,
-                oldparams.width);
-        position.leftMargin = playerViewModel.getX().getValue();
-        position.topMargin = playerViewModel.getY().getValue();
-
-        mainCharacter.setLayoutParams(position);
-
-        oldparams = playerName.getLayoutParams();
-        position = new RelativeLayout.LayoutParams(oldparams.width,
-                oldparams.width);
-        position.leftMargin = playerViewModel.getX().getValue();
-        position.topMargin = playerViewModel.getY().getValue() - 40;
-        playerName.setLayoutParams(position);
-
-
+        render(mainCharacter, playerName);
 
         hp.setText(String.format("Current Health: %d", playerViewModel.getHealth().getValue()));
         score.setText(String.format("Current score: %d",
@@ -209,6 +184,43 @@ public class GameActivity extends AppCompatActivity {
         diff.setText(String.format("Difficulty Level: %s", diffS));
     }
 
+    private void render(RelativeLayout mainCharacter, TextView nameLabel) {
+        ViewGroup.LayoutParams oldparams = mainCharacter.getLayoutParams();
+        RelativeLayout.LayoutParams position = new RelativeLayout.LayoutParams(oldparams.width,
+                oldparams.width);
+        position.leftMargin =  playerViewModel.getX().getValue();
+        position.topMargin =  playerViewModel.getY().getValue();
+
+        mainCharacter.setLayoutParams(position);
+        oldparams = nameLabel.getLayoutParams();
+        position = new RelativeLayout.LayoutParams(oldparams.width,
+                oldparams.width);
+        position.leftMargin = playerViewModel.getX().getValue();
+        position.topMargin = playerViewModel.getY().getValue() - 40;
+        nameLabel.setLayoutParams(position);
+    }
+    //Movement
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        PlayerViewModel playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
+        TextView playerName = (TextView) findViewById(R.id.playerName);
+        RelativeLayout mainCharacter = getMainCharacter();
+        Movement strategy = null;
+        if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+            strategy = new MovementDown();
+        } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+            strategy = new MovementUp();
+        } else if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+            strategy = new MovementLeft();
+        } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+            strategy = new MovementRight();
+        }
+        if(strategy != null) {
+            strategy.movementStrategy(playerViewModel, screenWidth, screenHeight);
+            render(mainCharacter, playerName);
+        }
+        return true;
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -52,7 +52,17 @@ public class PlayerViewModel extends ViewModel {
     public LiveData<Integer> getY() {
         return y;
     }
+    public void setX(Integer xpos) {
+        PlayerModel instance = PlayerModel.getInstance();
+        instance.setX(xpos);
+        x.setValue(instance.getX());
+    }
 
+    public void setY(Integer ypos) {
+        PlayerModel instance = PlayerModel.getInstance();
+        instance.setY(ypos);
+        y.setValue(instance.getY());
+    }
     public LiveData<Integer> getHealth() {
         return health;
     }
