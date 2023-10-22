@@ -51,6 +51,11 @@ public class GameActivity extends AppCompatActivity {
         return new WallModel(width, height, leftMargin, topMargin);
     }
 
+    //private static boolean isCollision(){}
+    private void handleCollision(){
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
