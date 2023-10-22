@@ -1,9 +1,5 @@
 package com.cs2340.team35.viewmodels;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -18,7 +14,7 @@ public class PlayerViewModel extends ViewModel implements PlayerModel.Subscriber
 
     public PlayerViewModel() {
         PlayerModel instance = PlayerModel.getInstance();
-        this.position = new MutableLiveData<>(new Integer[]{ instance.getX(), instance.getY()});
+        this.position = new MutableLiveData<>(new Integer[] {instance.getX(), instance.getY() });
         this.health = new MutableLiveData<>(instance.getHealth());
         this.score = new MutableLiveData<>(instance.getScore());
         instance.addSubscriber(this);
@@ -76,7 +72,7 @@ public class PlayerViewModel extends ViewModel implements PlayerModel.Subscriber
         this.score.postValue(instance.getScore());
     }
 
-    public static PlayerModel getInstance(){
+    public static PlayerModel getInstance() {
         return PlayerModel.getInstance();
     }
 

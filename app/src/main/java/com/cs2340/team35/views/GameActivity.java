@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cs2340.team35.models.LeaderboardModel;
-import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.models.WallModel;
 import com.cs2340.team35.viewmodels.PlayerViewModel;
@@ -54,10 +53,12 @@ public class GameActivity extends AppCompatActivity {
         return new WallModel(width, height, leftMargin, topMargin);
     }
 
-    private static boolean isCollision(int x, int y, List<WallModel> walls){
+    private static boolean isCollision(int x, int y, List<WallModel> walls) {
         for (WallModel wall : walls) {
-            if (x > wall.getLeftMargin() && x < wall.getLeftMargin() + wall.getWidth() &&
-                    ((y > wall.getTopMargin() && y < wall.getTopMargin() + wall.getHeight()) || (y+120 > wall.getTopMargin() && y+120 < wall.getTopMargin() + wall.getHeight()))) {
+            if (x > wall.getLeftMargin() && x < wall.getLeftMargin() + wall.getWidth()
+                    && ((y > wall.getTopMargin() && y < wall.getTopMargin() + wall.getHeight())
+                            || (y + 120 > wall.getTopMargin() && y + 120
+                    < wall.getTopMargin() + wall.getHeight()))) {
                 return true; // Collision detected
             }
         }
@@ -136,7 +137,7 @@ public class GameActivity extends AppCompatActivity {
 
         screenWidth = getResources().getDisplayMetrics().widthPixels;
         screenHeight = getResources().getDisplayMetrics().heightPixels;
-        playerViewModel.setPosition(screenWidth/2, screenHeight/2);
+        playerViewModel.setPosition(screenWidth / 2, screenHeight / 2);
         RelativeLayout mainCharacter = getMainCharacter();
         mainCharacter.setVisibility(View.VISIBLE);
         Integer[] startPosition = playerViewModel.getPosition().getValue();
@@ -225,8 +226,9 @@ public class GameActivity extends AppCompatActivity {
 
         Integer[] currPosition = playerViewModel.getPosition().getValue();
 
-        if(strategy != null) {
-            Integer[] newPosition = strategy.movementStrategy(currPosition[0], currPosition[1], screenWidth, screenHeight);
+        if (strategy != null) {
+            Integer[] newPosition = strategy.movementStrategy(currPosition[0],
+                    currPosition[1], screenWidth, screenHeight);
 
             if (isAtExit(newPosition[0], newPosition[1])) {
                 if (gameViewModel.getLevel() >= 3) {

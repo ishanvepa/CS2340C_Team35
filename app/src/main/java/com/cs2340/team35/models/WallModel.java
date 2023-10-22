@@ -1,10 +1,4 @@
 package com.cs2340.team35.models;
-
-import com.cs2340.team35.viewmodels.PlayerViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class WallModel {
     private int width;
     private int height;
