@@ -25,4 +25,21 @@ public class CollisionUnitTests {
         walls.add(new WallModel(42, 950, 1038, 475)); // right wall
         Assert.assertTrue(WallModel.isCollision(1038, 480, walls));
     }
+
+    @Test
+    public void TestNonCollisionSingleWalls() {
+        List<WallModel> walls = new ArrayList<>();
+        walls.add(new WallModel(480, 21, 5, 275)); //top wall
+        Assert.assertFalse(WallModel.isCollision(2, 280, walls));
+    }
+
+    @Test
+    public void TestNonCollisionMultipleWalls() {
+        List<WallModel> walls = new ArrayList<>();
+        walls.add(new WallModel(480, 21, 5, 275)); //top wall
+        walls.add(new WallModel(21, 400, 5, 275)); //left wall
+        walls.add(new WallModel(21, 400, 300, 275)); //right wall
+        Assert.assertFalse(WallModel.isCollision(2, 280, walls));
+    }
+
 }
