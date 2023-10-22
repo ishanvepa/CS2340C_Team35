@@ -4,15 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.cs2340.team35.models.LeaderboardModel;
+
 import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.models.WallModel;
@@ -30,6 +28,9 @@ public class GameActivity extends AppCompatActivity {
     private static int screenHeight = 1900;
     private Timer timer;
     private PlayerViewModel playerViewModel;
+    private List<WallModel> level1Walls = new ArrayList<>();
+    private List<WallModel> level2Walls = new ArrayList<>();
+    private List<WallModel> level3Walls = new ArrayList<>();
     private void cancelTimer() {
         if (timer != null) {
             timer.cancel();
@@ -50,9 +51,19 @@ public class GameActivity extends AppCompatActivity {
         return new WallModel(width, height, leftMargin, topMargin);
     }
 
-    //private static boolean isCollision(){}
-    private void handleCollision(){
+    private static boolean isCollision(int x, int y, List<WallModel> walls){
+        for (WallModel wall : walls) {
+            if (x > wall.getLeftMargin() && x < wall.getLeftMargin() + wall.getWidth() &&
+                    y > wall.getTopMargin() && y < wall.getTopMargin() + wall.getHeight()) {
+                return true; // Collision detected
+            }
 
+        }
+        return false; // No collision
+    }
+    private void handleCollision(PlayerViewModel playerViewModel, WallModel wall){
+//        PlayerViewModel playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
+        wall.onCollision(playerViewModel);
     }
 
 
@@ -101,7 +112,6 @@ public class GameActivity extends AppCompatActivity {
             root.setBackgroundResource(R.drawable.peachscastle);
 
             //level 1 insert walls
-            List<WallModel> level1Walls = new ArrayList<>();
             level1Walls.add(addWalls(1080, 42, 0, 475)); // top wall
             level1Walls.add(addWalls(1080, 42, 0, 1425)); // bottom wall
             level1Walls.add(addWalls(42, 950, 0, 475)); // left wall
@@ -111,16 +121,14 @@ public class GameActivity extends AppCompatActivity {
             View root = findViewById(android.R.id.content);
             root.setBackgroundResource(R.drawable.luigimansion);
             //level 2 insert walls
-            List<WallModel> levels2Walls = new ArrayList<>();
-            levels2Walls.add(addWalls(1080, 42, 0, 475)); // top wall
-            levels2Walls.add(addWalls(1080, 42, 0, 1425)); // bottom wall
-            levels2Walls.add(addWalls(42, 950, 0, 475)); // left wall
-            levels2Walls.add(addWalls(42, 950, 1038, 475)); // right wall
+            level2Walls.add(addWalls(1080, 42, 0, 475)); // top wall
+            level2Walls.add(addWalls(1080, 42, 0, 1425)); // bottom wall
+            level2Walls.add(addWalls(42, 950, 0, 475)); // left wall
+            level2Walls.add(addWalls(42, 950, 1038, 475)); // right wall
         } else if (currentLevel == 3) {
             View root = findViewById(android.R.id.content);
             root.setBackgroundResource(R.drawable.bowserscastle);
             //level 3 insert walls
-            List<WallModel> level3Walls = new ArrayList<>();
             level3Walls.add(addWalls(1080, 42, 0, 475)); // top wall
             level3Walls.add(addWalls(1080, 42, 0, 1425)); // bottom wall
             level3Walls.add(addWalls(42, 950, 0, 475)); // left wall
@@ -219,6 +227,12 @@ public class GameActivity extends AppCompatActivity {
             strategy.movementStrategy(playerViewModel, screenWidth, screenHeight);
             render(mainCharacter, playerName);
         }
+
+        //handling collision
+        if(isCollision(playerViewModel.getX().getValue(), playerViewModel.getY().getValue(), level1Walls)){
+            handleCollision(playerViewModel, level1Walls.get(0));
+        }
+
         return true;
     }
     @Override
