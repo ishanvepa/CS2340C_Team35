@@ -1,5 +1,7 @@
 package com.cs2340.team35.models;
 
+import android.graphics.Paint;
+
 public class PlayerModel {
     private static PlayerModel instance;
     private static int x;
@@ -12,6 +14,7 @@ public class PlayerModel {
     private static CharacterName character;
     private static String userName;
 
+    private Paint paint;
     private PlayerModel() {
         x = 100;
         y = 600;
@@ -37,6 +40,7 @@ public class PlayerModel {
         if (newY < 0) {
             newY = 0;
         }
+
         y = newY;
     }
 
