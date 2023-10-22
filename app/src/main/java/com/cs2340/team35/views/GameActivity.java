@@ -53,19 +53,7 @@ public class GameActivity extends AppCompatActivity {
         return new WallModel(width, height, leftMargin, topMargin);
     }
 
-    private static boolean isCollision(int x, int y, List<WallModel> walls) {
-        for (WallModel wall : walls) {
-            if (x > wall.getLeftMargin() && x < wall.getLeftMargin() + wall.getWidth()
-                    && ((y > wall.getTopMargin() && y < wall.getTopMargin() + wall.getHeight())
-                            || (y + 120 > wall.getTopMargin() && y + 120
-                    < wall.getTopMargin() + wall.getHeight()))) {
-                return true; // Collision detected
-            }
-        }
-        return false; // No collision
-    }
-
-    private boolean isAtExit(int x, int y) {
+    public boolean isAtExit(int x, int y) {
         if (y + 120 > 1900) {
             return true;
         }
@@ -245,7 +233,7 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
 
-            if (!isCollision(newPosition[0], newPosition[1], level1Walls)) {
+            if (!WallModel.isCollision(newPosition[0], newPosition[1], level1Walls)) {
                 playerViewModel.setPosition(newPosition[0], newPosition[1]);
             }
         }
