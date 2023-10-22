@@ -5,13 +5,11 @@ import com.cs2340.team35.viewmodels.PlayerViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WallModel implements WallCollisionObservable{
+public class WallModel {
     private int width;
     private int height;
     private int leftMargin;
     private int topMargin;
-
-
 
     public WallModel(int width, int height, int leftMargin, int topMargin) {
         this.width = width;
@@ -35,17 +33,4 @@ public class WallModel implements WallCollisionObservable{
         return topMargin;
     }
 
-
-    @Override
-    public void onCollision(PlayerViewModel Subject) {
-        Subject.setX(100);
-        Subject.setY(600);
-
-    }
-
-}
-
-
-interface WallCollisionObservable{
-    public void onCollision(PlayerViewModel Subject);
 }
