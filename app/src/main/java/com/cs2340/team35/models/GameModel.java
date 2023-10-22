@@ -46,4 +46,12 @@ public class GameModel {
         }
         level = newLevel;
     }
+
+    public static boolean isAtExit(int x, int y) {
+        if (y + 120 > 1900) {
+            return true;
+        }
+
+        return false;
+    }
 }
