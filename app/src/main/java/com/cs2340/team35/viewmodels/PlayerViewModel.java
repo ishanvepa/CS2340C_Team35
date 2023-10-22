@@ -18,9 +18,6 @@ public class PlayerViewModel extends ViewModel {
     private MutableLiveData<Integer> health;
     private MutableLiveData<ScoreModel> score;
 
-    //wall collision subscriber list
-    private List<WallCollisionObservable> WallCollisionObservables = new ArrayList<>();
-
     public PlayerViewModel() {
         PlayerModel instance = PlayerModel.getInstance();
         this.x = new MutableLiveData<>(instance.getX());
@@ -81,37 +78,5 @@ public class PlayerViewModel extends ViewModel {
         return PlayerModel.getInstance();
     }
 
-    //wall collision subscriber methods
-    public void notifyForCollisions(){
-        for(WallCollisionObservable sub : WallCollisionObservables){
-            sub.onCollision(this);
-        }
-    }
 
-    public void subscribe(WallCollisionObservable sub){
-        WallCollisionObservables.add(sub);
-    }
-
-    public void unsubscribe(WallCollisionObservable sub){
-            WallCollisionObservables.remove(sub);
-
-    }
-
-
-
-
-
-}
-
-interface WallCollisionObservable{
-    public void onCollision(PlayerViewModel Subject);
-}
-class WallCollisionObserver implements WallCollisionObservable{
-    @Override
-    public void onCollision(PlayerViewModel Subject) {
-
-        Subject.getInstance().setX(100);
-        Subject.getInstance().setY(600);
-
-    }
 }

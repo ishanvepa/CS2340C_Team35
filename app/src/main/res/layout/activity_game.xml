@@ -129,13 +129,20 @@
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/endScreen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="300dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="35dp"
-        android:text="End Screen" />
+    <RelativeLayout
+        android:id="@+id/walls"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".views.GameActivity">
+
+        <!-- Your existing layout elements -->
+
+        <!-- Example of a wall using a View element -->
+
+
+        <!-- Add more walls as needed -->
+
+    </RelativeLayout>
+
+
 </RelativeLayout>
