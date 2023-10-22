@@ -10,19 +10,18 @@ import androidx.lifecycle.ViewModel;
 import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.ScoreModel;
 
-public class PlayerViewModel extends ViewModel {
+public class PlayerViewModel extends ViewModel implements PlayerModel.Subscriber {
 
-    private MutableLiveData<Integer> x;
-    private MutableLiveData<Integer> y;
+    private MutableLiveData<Integer[]> position;
     private MutableLiveData<Integer> health;
     private MutableLiveData<ScoreModel> score;
 
     public PlayerViewModel() {
         PlayerModel instance = PlayerModel.getInstance();
-        this.x = new MutableLiveData<>(instance.getX());
-        this.y = new MutableLiveData<>(instance.getY());
+        this.position = new MutableLiveData<>(new Integer[]{ instance.getX(), instance.getY()});
         this.health = new MutableLiveData<>(instance.getHealth());
         this.score = new MutableLiveData<>(instance.getScore());
+        instance.addSubscriber(this);
     }
 
     public String getCharacterName() {
@@ -45,24 +44,18 @@ public class PlayerViewModel extends ViewModel {
         instance.setUserName(name);
     }
 
-    public LiveData<Integer> getX() {
-        return x;
+    public LiveData<Integer[]> getPosition() {
+        return position;
+    }
+    public void setPosition(Integer xpos, Integer ypos) {
+        PlayerModel instance = PlayerModel.getInstance();
+        instance.setPosition(xpos, ypos);
     }
 
-    public LiveData<Integer> getY() {
-        return y;
-    }
-    public void setX(Integer xpos) {
-        PlayerModel instance = PlayerModel.getInstance();
-        instance.setX(xpos);
-        x.setValue(instance.getX());
+    public void positionUpdated(int xpos, int ypos) {
+        this.position.setValue(new Integer[] {xpos, ypos});
     }
 
-    public void setY(Integer ypos) {
-        PlayerModel instance = PlayerModel.getInstance();
-        instance.setY(ypos);
-        y.setValue(instance.getY());
-    }
     public LiveData<Integer> getHealth() {
         return health;
     }

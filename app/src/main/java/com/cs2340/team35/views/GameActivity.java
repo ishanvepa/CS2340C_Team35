@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cs2340.team35.models.LeaderboardModel;
 import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.models.WallModel;
@@ -28,6 +30,7 @@ public class GameActivity extends AppCompatActivity {
     private static int screenHeight = 1900;
     private Timer timer;
     private PlayerViewModel playerViewModel;
+    private GameViewModel gameViewModel;
     private List<WallModel> level1Walls = new ArrayList<>();
     private List<WallModel> level2Walls = new ArrayList<>();
     private List<WallModel> level3Walls = new ArrayList<>();
@@ -54,19 +57,20 @@ public class GameActivity extends AppCompatActivity {
     private static boolean isCollision(int x, int y, List<WallModel> walls){
         for (WallModel wall : walls) {
             if (x > wall.getLeftMargin() && x < wall.getLeftMargin() + wall.getWidth() &&
-                    y > wall.getTopMargin() && y < wall.getTopMargin() + wall.getHeight()) {
+                    ((y > wall.getTopMargin() && y < wall.getTopMargin() + wall.getHeight()) || (y+120 > wall.getTopMargin() && y+120 < wall.getTopMargin() + wall.getHeight()))) {
                 return true; // Collision detected
             }
-
         }
         return false; // No collision
     }
-    private void handleCollision(PlayerViewModel playerViewModel, WallModel wall){
-//        PlayerViewModel playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
-        wall.onCollision(playerViewModel);
+
+    private boolean isAtExit(int x, int y) {
+        if (y + 120 > 1900) {
+            return true;
+        }
+
+        return false;
     }
-
-
     private RelativeLayout getMainCharacter() {
         RelativeLayout mainCharacter = null;
         RelativeLayout mario = (RelativeLayout) findViewById(R.id.marioSpriteLayout);
@@ -93,7 +97,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        GameViewModel gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
+        gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
         playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
 
         TextView hp = (TextView) findViewById(R.id.HPView);
@@ -101,44 +105,8 @@ public class GameActivity extends AppCompatActivity {
         TextView score = (TextView) findViewById(R.id.Score);
         TextView timeElapsed = (TextView) findViewById(R.id.timeElapsed);
         TextView level = (TextView) findViewById(R.id.level);
-      //  Button nextButton = (Button) findViewById(R.id.next);
         TextView playerName = (TextView) findViewById(R.id.playerName);
-
         playerName.setText(playerViewModel.getUserName());
-
-        int currentLevel = gameViewModel.getLevel();
-        if (currentLevel == 1) {
-            View root = findViewById(android.R.id.content);
-            root.setBackgroundResource(R.drawable.peachscastle);
-
-            //level 1 insert walls
-            level1Walls.add(addWalls(1080, 42, 0, 475)); // top wall
-            level1Walls.add(addWalls(1080, 42, 0, 1425)); // bottom wall
-            level1Walls.add(addWalls(42, 950, 0, 475)); // left wall
-            level1Walls.add(addWalls(42, 950, 1038, 475)); // right wall
-
-        } else if (currentLevel == 2) {
-            View root = findViewById(android.R.id.content);
-            root.setBackgroundResource(R.drawable.luigimansion);
-            //level 2 insert walls
-            level2Walls.add(addWalls(1080, 42, 0, 475)); // top wall
-            level2Walls.add(addWalls(1080, 42, 0, 1425)); // bottom wall
-            level2Walls.add(addWalls(42, 950, 0, 475)); // left wall
-            level2Walls.add(addWalls(42, 950, 1038, 475)); // right wall
-        } else if (currentLevel == 3) {
-            View root = findViewById(android.R.id.content);
-            root.setBackgroundResource(R.drawable.bowserscastle);
-            //level 3 insert walls
-            level3Walls.add(addWalls(1080, 42, 0, 475)); // top wall
-            level3Walls.add(addWalls(1080, 42, 0, 1425)); // bottom wall
-            level3Walls.add(addWalls(42, 950, 0, 475)); // left wall
-            level3Walls.add(addWalls(42, 950, 1038, 475)); // right wall
-        }
-        screenWidth = getResources().getDisplayMetrics().widthPixels;
-        screenHeight = getResources().getDisplayMetrics().heightPixels;
-        // Spawn player in middle of screen
-        playerViewModel.setX(screenWidth / 2);
-        playerViewModel.setY(screenHeight/2);
 
         if (timer != null) {
             timer.cancel();
@@ -159,22 +127,59 @@ public class GameActivity extends AppCompatActivity {
             }
         }, 0, 1000);
 
-        RelativeLayout mainCharacter = getMainCharacter();
-
-        mainCharacter.setVisibility(View.VISIBLE);
-
-        render(mainCharacter, playerName);
-
         hp.setText(String.format("Current Health: %d", playerViewModel.getHealth().getValue()));
         score.setText(String.format("Current score: %d",
                 playerViewModel.getScore().getValue().getCurrentScore()));
         level.setText(String.format("Current level: %d", gameViewModel.getLevel()));
+        String diffS = gameViewModel.getDifficulty();
+        diff.setText(String.format("Difficulty Level: %s", diffS));
+
+        screenWidth = getResources().getDisplayMetrics().widthPixels;
+        screenHeight = getResources().getDisplayMetrics().heightPixels;
+        playerViewModel.setPosition(screenWidth/2, screenHeight/2);
+        RelativeLayout mainCharacter = getMainCharacter();
+        mainCharacter.setVisibility(View.VISIBLE);
+        Integer[] startPosition = playerViewModel.getPosition().getValue();
+        render(mainCharacter, playerName, startPosition[0], startPosition[1]);
+
+        int currentLevel = gameViewModel.getLevel();
+        if (currentLevel == 1) {
+            View root = findViewById(android.R.id.content);
+            root.setBackgroundResource(R.drawable.peachscastle);
+
+            //level 1 insert walls
+            level1Walls.add(addWalls(1080, 42, 0, 475)); // top wall
+            level1Walls.add(addWalls(42, 950, 0, 475)); // left wall
+            level1Walls.add(addWalls(42, 950, 1038, 475)); // right wall
+
+        } else if (currentLevel == 2) {
+            View root = findViewById(android.R.id.content);
+            root.setBackgroundResource(R.drawable.luigimansion);
+            //level 2 insert walls
+            level2Walls.add(addWalls(1080, 42, 0, 475)); // top wall
+            level2Walls.add(addWalls(42, 950, 0, 475)); // left wall
+            level2Walls.add(addWalls(42, 950, 1038, 475)); // right wall
+        } else if (currentLevel == 3) {
+            View root = findViewById(android.R.id.content);
+            root.setBackgroundResource(R.drawable.bowserscastle);
+            //level 3 insert walls
+            level3Walls.add(addWalls(1080, 42, 0, 475)); // top wall
+            level3Walls.add(addWalls(42, 950, 0, 475)); // left wall
+            level3Walls.add(addWalls(42, 950, 1038, 475)); // right wall
+        }
 
         playerViewModel.getScore().observe(this, new Observer<ScoreModel>() {
             @Override
             public void onChanged(ScoreModel scoreModel) {
                 score.setText(String.format("Current score: %d",
                         playerViewModel.getScore().getValue().getCurrentScore()));
+            }
+        });
+
+        playerViewModel.getPosition().observe(this, new Observer<Integer[]>() {
+            @Override
+            public void onChanged(Integer[] integers) {
+                render(mainCharacter, playerName, integers[0], integers[1]);
             }
         });
 
@@ -186,33 +191,27 @@ public class GameActivity extends AppCompatActivity {
                                 gameViewModel.getTimeElapsed().getValue()));
             }
         });
-
-        String diffS = gameViewModel.getDifficulty();
-
-        diff.setText(String.format("Difficulty Level: %s", diffS));
     }
 
-    private void render(RelativeLayout mainCharacter, TextView nameLabel) {
+    private void render(RelativeLayout mainCharacter, TextView nameLabel, int posX, int posY) {
         ViewGroup.LayoutParams oldparams = mainCharacter.getLayoutParams();
         RelativeLayout.LayoutParams position = new RelativeLayout.LayoutParams(oldparams.width,
                 oldparams.width);
-        position.leftMargin =  playerViewModel.getX().getValue();
-        position.topMargin =  playerViewModel.getY().getValue();
+        position.leftMargin =  posX;
+        position.topMargin =  posY;
 
         mainCharacter.setLayoutParams(position);
         oldparams = nameLabel.getLayoutParams();
         position = new RelativeLayout.LayoutParams(oldparams.width,
                 oldparams.width);
-        position.leftMargin = playerViewModel.getX().getValue();
-        position.topMargin = playerViewModel.getY().getValue() - 40;
+        position.leftMargin = posX;
+        position.topMargin = posY - 40;
         nameLabel.setLayoutParams(position);
     }
     //Movement
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         PlayerViewModel playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
-        TextView playerName = (TextView) findViewById(R.id.playerName);
-        RelativeLayout mainCharacter = getMainCharacter();
         Movement strategy = null;
         if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
             strategy = new MovementDown();
@@ -223,14 +222,30 @@ public class GameActivity extends AppCompatActivity {
         } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
             strategy = new MovementRight();
         }
-        if(strategy != null) {
-            strategy.movementStrategy(playerViewModel, screenWidth, screenHeight);
-            render(mainCharacter, playerName);
-        }
 
-        //handling collision
-        if(isCollision(playerViewModel.getX().getValue(), playerViewModel.getY().getValue(), level1Walls)){
-            handleCollision(playerViewModel, level1Walls.get(0));
+        Integer[] currPosition = playerViewModel.getPosition().getValue();
+
+        if(strategy != null) {
+            Integer[] newPosition = strategy.movementStrategy(currPosition[0], currPosition[1], screenWidth, screenHeight);
+
+            if (isAtExit(newPosition[0], newPosition[1])) {
+                if (gameViewModel.getLevel() >= 3) {
+                    Intent i = new Intent(getApplicationContext(), EndActivity.class);
+                    cancelTimer();
+                    LeaderboardModel leaderboardModel = LeaderboardModel.getInstance();
+                    leaderboardModel.addScore(playerViewModel.getScore().getValue());
+                    startActivity(i);
+                } else {
+                    gameViewModel.increaseLevel();
+                    Intent i = new Intent(getApplicationContext(), GameActivity.class);
+                    cancelTimer();
+                    startActivity(i);
+                }
+            }
+
+            if (!isCollision(newPosition[0], newPosition[1], level1Walls)) {
+                playerViewModel.setPosition(newPosition[0], newPosition[1]);
+            }
         }
 
         return true;
