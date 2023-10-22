@@ -1,34 +1,19 @@
 package com.cs2340.team35.models;
 
-import com.cs2340.team35.viewmodels.PlayerViewModel;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class WallModel implements WallCollisionObservable{
-    private int x;
-    private int y;
+public class WallModel {
     private int width;
     private int height;
-    //wall collision subscriber list
-    private List<WallCollisionObservable> WallCollisionObservables = new ArrayList<>();
+    private int leftMargin;
+    private int topMargin;
 
-
-    public WallModel(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
+    public WallModel(int width, int height, int leftMargin, int topMargin) {
         this.width = width;
         this.height = height;
-
+        this.leftMargin = leftMargin;
+        this.topMargin = topMargin;
     }
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
     public int getWidth() {
         return width;
     }
@@ -36,33 +21,24 @@ public class WallModel implements WallCollisionObservable{
     public int getHeight() {
         return height;
     }
-//
-//    //wall collision subscriber methods
-//    public void notifyForCollisions(){
-//        for(WallCollisionObservable sub : WallCollisionObservables){
-//            sub.onCollision(PlayerViewModel.getInstance());
-//        }
-//    }
-//
-//    public void subscribe(WallCollisionObservable sub){
-//        WallCollisionObservables.add(sub);
-//    }
-//
-//    public void unsubscribe(WallCollisionObservable sub){
-//        WallCollisionObservables.remove(sub);
-//
-//    }
 
-    @Override
-    public void onCollision(PlayerViewModel Subject) {
-        Subject.getInstance().setX(100);
-        Subject.getInstance().setY(600);
-
+    public int getLeftMargin() {
+        return leftMargin;
     }
 
-}
+    public int getTopMargin() {
+        return topMargin;
+    }
+    public static boolean isCollision(int x, int y, List<WallModel> walls) {
+        for (WallModel wall : walls) {
+            if (x > wall.getLeftMargin() && x < wall.getLeftMargin() + wall.getWidth()
+                    && ((y > wall.getTopMargin() && y < wall.getTopMargin() + wall.getHeight())
+                    || (y + 120 > wall.getTopMargin() && y + 120
+                    < wall.getTopMargin() + wall.getHeight()))) {
+                return true; // Collision detected
+            }
+        }
+        return false; // No collision
+    }
 
-
-interface WallCollisionObservable{
-    public void onCollision(PlayerViewModel Subject);
 }
