@@ -9,6 +9,12 @@ public class WallModel {
     private int topMargin;
 
     public WallModel(int width, int height, int leftMargin, int topMargin) {
+        if (width < 10) {
+            width = 10;
+        }
+        if (height < 10) {
+            height = 10;
+        }
         this.width = width;
         this.height = height;
         this.leftMargin = leftMargin;

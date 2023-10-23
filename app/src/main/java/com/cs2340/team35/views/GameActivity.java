@@ -138,16 +138,16 @@ public class GameActivity extends AppCompatActivity {
             View root = findViewById(android.R.id.content);
             root.setBackgroundResource(R.drawable.luigimansion);
             //level 2 insert walls
-            level2Walls.add(addWalls(1080, 42, 0, 475)); // top wall
-            level2Walls.add(addWalls(42, 950, 0, 475)); // left wall
-            level2Walls.add(addWalls(42, 950, 1038, 475)); // right wall
+            level1Walls.add(addWalls(1080, 42, 0, 475)); // top wall
+            level1Walls.add(addWalls(42, 950, 0, 475)); // left wall
+            level1Walls.add(addWalls(42, 950, 1038, 475)); // right wall
         } else if (currentLevel == 3) {
             View root = findViewById(android.R.id.content);
             root.setBackgroundResource(R.drawable.bowserscastle);
             //level 3 insert walls
-            level3Walls.add(addWalls(1080, 42, 0, 475)); // top wall
-            level3Walls.add(addWalls(42, 950, 0, 475)); // left wall
-            level3Walls.add(addWalls(42, 950, 1038, 475)); // right wall
+            level1Walls.add(addWalls(1080, 42, 0, 475)); // top wall
+            level1Walls.add(addWalls(42, 950, 0, 475)); // left wall
+            level1Walls.add(addWalls(42, 950, 1038, 475)); // right wall
         }
 
         playerViewModel.getScore().observe(this, new Observer<ScoreModel>() {
