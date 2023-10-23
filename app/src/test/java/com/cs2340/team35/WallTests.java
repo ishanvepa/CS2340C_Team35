@@ -14,7 +14,7 @@ public class WallTests {
     @Test
     public void TestWallConfiguration() {
         GameActivity ga = new GameActivity();
-        WallModel wall = new WallModel(1080, 42, 0, 475); // top wall
+        WallModel wall = new WallModel(1080, 42, 0, 475);
 
         assertEquals(wall.getHeight(), 42);
         assertEquals(wall.getWidth(), 1080);
@@ -27,12 +27,11 @@ public class WallTests {
 
     @Test
     public void TestWallCollisions(){
-        //create a wall
         List<WallModel> walls = new ArrayList<>();
         GameActivity ga = new GameActivity();
-        walls.add(ga.addWalls(1080, 42, 0, 475)); // top wall
-        walls.add(ga.addWalls(42, 950, 0, 475)); // left wall
-        walls.add(ga.addWalls(42, 950, 1038, 475)); // right wall
+        walls.add(ga.addWalls(1080, 42, 0, 475));
+        walls.add(ga.addWalls(42, 950, 0, 475));
+        walls.add(ga.addWalls(42, 950, 1038, 475));
         PlayerViewModel player = new PlayerViewModel();
         player.setPosition(1080, 42);
 
