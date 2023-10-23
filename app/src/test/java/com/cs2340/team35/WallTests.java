@@ -13,8 +13,14 @@ import java.util.List;
 public class WallTests {
     @Test
     public void TestWallConfiguration() {
-        //create a list of walls
-        //test to see if their params are correct using getters
+        GameActivity ga = new GameActivity();
+        WallModel wall = new WallModel(1080, 42, 0, 475); // top wall
+
+        assertEquals(wall.getHeight(), 42);
+        assertEquals(wall.getWidth(), 1080);
+        assertEquals(wall.getLeftMargin(), 0);
+        assertEquals(wall.getHeight(), 475);
+
 
 
     }
