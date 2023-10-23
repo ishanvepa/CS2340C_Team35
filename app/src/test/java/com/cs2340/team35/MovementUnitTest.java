@@ -25,7 +25,7 @@ public class MovementUnitTest {
         PlayerModel player = PlayerModel.getInstance();
         player.setY(1000);
         player.setX(1000);
-        Movement strategy = new MovementUp();
+        Movement strategy = new MovementDown();
         player.setY(strategy.movementStrategy(player.getX(), player.getY(), 10000, 10000)[1]);
         assertEquals(990, player.getY());
 
