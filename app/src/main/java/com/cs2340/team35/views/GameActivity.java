@@ -42,7 +42,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private WallModel addWalls(int width, int height, int leftMargin, int topMargin) {
+    public WallModel addWalls(int width, int height, int leftMargin, int topMargin) {
         RelativeLayout layout = findViewById(R.id.walls);
         View wall = new View(this);
         wall.setBackgroundColor(Color.BLACK);
