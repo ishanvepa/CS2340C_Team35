@@ -1,7 +1,7 @@
 package com.cs2340.team35.views;
 
 public class EnemyFactory {
-    public Enemy createEnemy(String enemyType) {
+    public static Enemy createEnemy(String enemyType) {
         if (enemyType.equals("Goomba")) {
             return new Goomba();
         } else if (enemyType.equals("Boo")) {

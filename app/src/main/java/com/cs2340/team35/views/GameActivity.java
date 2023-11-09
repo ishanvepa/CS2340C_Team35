@@ -74,6 +74,11 @@ public class GameActivity extends AppCompatActivity {
         mainCharacter.setVisibility(View.VISIBLE);
         return mainCharacter;
     }
+    protected void createEnemies(GameModel.Difficulty difficulty) {
+        if (difficulty == GameModel.Difficulty.EASY) {
+
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,6 +188,21 @@ public class GameActivity extends AppCompatActivity {
         position.topMargin =  posY;
 
         mainCharacter.setLayoutParams(position);
+        oldparams = nameLabel.getLayoutParams();
+        position = new RelativeLayout.LayoutParams(oldparams.width,
+                oldparams.width);
+        position.leftMargin = posX;
+        position.topMargin = posY - 40;
+        nameLabel.setLayoutParams(position);
+    }
+    private void enemyRender(RelativeLayout enemy, TextView nameLabel, int posX, int posY) {
+        ViewGroup.LayoutParams oldparams = enemy.getLayoutParams();
+        RelativeLayout.LayoutParams position = new RelativeLayout.LayoutParams(oldparams.width,
+                oldparams.width);
+        position.leftMargin =  posX;
+        position.topMargin =  posY;
+
+        enemy.setLayoutParams(position);
         oldparams = nameLabel.getLayoutParams();
         position = new RelativeLayout.LayoutParams(oldparams.width,
                 oldparams.width);
