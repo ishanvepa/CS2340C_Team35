@@ -47,6 +47,74 @@
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/bowserSpriteLayout"
+            android:layout_width="48dp"
+            android:layout_height="93dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="368dp">
+
+            <ImageView
+                android:id="@+id/bowserImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:src="@drawable/Bowser"
+                app:srcCompat="@drawable/Bowser" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/booSpriteLayout"
+            android:layout_width="48dp"
+            android:layout_height="93dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="468dp">
+
+            <ImageView
+                android:id="@+id/booImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:src="@drawable/Boo"
+                app:srcCompat="@drawable/Boo" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/koopaSpriteLayout"
+            android:layout_width="48dp"
+            android:layout_height="93dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="568dp">
+
+            <ImageView
+                android:id="@+id/koopaImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:src="@drawable/koopa"
+                app:srcCompat="@drawable/koopa" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/goombaSpriteLayout"
+            android:layout_width="48dp"
+            android:layout_height="93dp"
+            android:layout_marginStart="82dp"
+            android:layout_marginTop="568dp">
+
+            <ImageView
+                android:id="@+id/goombaImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:src="@drawable/Goombawalk"
+                app:srcCompat="@drawable/Goombawalk" />
+
+        </RelativeLayout>
         <TextView
             android:id="@+id/HPView"
             android:layout_width="wrap_content"
