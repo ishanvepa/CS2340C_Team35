@@ -80,6 +80,7 @@ public class GameActivity extends AppCompatActivity {
     }
     protected void createEnemies(GameModel.Difficulty difficulty) {
         Random random = new Random();
+        RelativeLayout mainLayout = findViewById(R.id.rootLayout);
         if (difficulty == GameModel.Difficulty.EASY) {
             for(int i = 0; i < 3; i++) {
                 EnemyModel model = new EnemyModel();
@@ -93,6 +94,7 @@ public class GameActivity extends AppCompatActivity {
                 ));
                 setEnemyBackground(enemyView, model.getEnemySpecies());
                 enemyRender(enemyView, initialPosX, initialPosY);
+                mainLayout.addView(enemyView);
             }
         } else if (difficulty == GameModel.Difficulty.MEDIUM) {
             for(int i = 0; i < 5; i++) {
@@ -107,6 +109,7 @@ public class GameActivity extends AppCompatActivity {
                 ));
                 setEnemyBackground(enemyView, model.getEnemySpecies());
                 enemyRender(enemyView, initialPosX, initialPosY);
+                mainLayout.addView(enemyView);
             }
         } else if (difficulty == GameModel.Difficulty.HARD) {
             for(int i = 0; i < 10; i++) {
@@ -121,6 +124,7 @@ public class GameActivity extends AppCompatActivity {
                 ));
                 setEnemyBackground(enemyView, model.getEnemySpecies());
                 enemyRender(enemyView, initialPosX, initialPosY);
+                mainLayout.addView(enemyView);
             }
         }
     }
@@ -261,6 +265,8 @@ public class GameActivity extends AppCompatActivity {
        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) enemy.getLayoutParams();
        params.leftMargin = posX;
        params.topMargin = posY;
+       params.width = 100;
+       params.height = 100;
        enemy.setLayoutParams(params);
     }
     //Movement
