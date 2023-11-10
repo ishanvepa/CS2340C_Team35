@@ -12,16 +12,20 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cs2340.team35.models.EnemyModel;
 import com.cs2340.team35.models.GameModel;
 import com.cs2340.team35.models.LeaderboardModel;
 import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.models.WallModel;
+import com.cs2340.team35.viewmodels.EnemyViewModel;
 import com.cs2340.team35.viewmodels.PlayerViewModel;
 import com.cs2340.team35.R;
 import com.cs2340.team35.viewmodels.GameViewModel;
 import java.util.ArrayList;
 import java.util.List;
 import android.view.KeyEvent;
+
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -75,8 +79,62 @@ public class GameActivity extends AppCompatActivity {
         return mainCharacter;
     }
     protected void createEnemies(GameModel.Difficulty difficulty) {
+        Random random = new Random();
         if (difficulty == GameModel.Difficulty.EASY) {
-
+            for(int i = 0; i < 3; i++) {
+                EnemyModel model = new EnemyModel();
+                int initialPosX = random.nextInt(screenWidth);
+                int initialPosY = random.nextInt(screenHeight);
+                model.setPosition(initialPosX, initialPosY);
+                RelativeLayout enemyView = new RelativeLayout(this);
+                enemyView.setLayoutParams(new RelativeLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                ));
+                setEnemyBackground(enemyView, model.getEnemySpecies());
+            }
+        } else if (difficulty == GameModel.Difficulty.MEDIUM) {
+            for(int i = 0; i < 5; i++) {
+                EnemyModel model = new EnemyModel();
+                int initialPosX = random.nextInt(screenWidth);
+                int initialPosY = random.nextInt(screenHeight);
+                model.setPosition(initialPosX, initialPosY);
+                RelativeLayout enemyView = new RelativeLayout(this);
+                enemyView.setLayoutParams(new RelativeLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                ));
+                setEnemyBackground(enemyView, model.getEnemySpecies());
+            }
+        } else if (difficulty == GameModel.Difficulty.HARD) {
+            for(int i = 0; i < 10; i++) {
+                EnemyModel model = new EnemyModel();
+                int initialPosX = random.nextInt(screenWidth);
+                int initialPosY = random.nextInt(screenHeight);
+                model.setPosition(initialPosX, initialPosY);
+                RelativeLayout enemyView = new RelativeLayout(this);
+                enemyView.setLayoutParams(new RelativeLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                ));
+                setEnemyBackground(enemyView, model.getEnemySpecies());
+            }
+        }
+    }
+    private void setEnemyBackground(RelativeLayout enemyView, String enemyType) {
+        switch (enemyType) {
+            case "Boo":
+                enemyView.setBackgroundResource(R.drawable.boo);
+                break;
+            case "Koopa":
+                enemyView.setBackgroundResource(R.drawable.koopa);
+                break;
+            case "Bowser":
+                enemyView.setBackgroundResource(R.drawable.bowser);
+                break;
+            case "Goomba":
+                enemyView.setBackgroundResource(R.drawable.goombawalk);
+                break;
         }
     }
     @Override
@@ -178,6 +236,7 @@ public class GameActivity extends AppCompatActivity {
                                 gameViewModel.getTimeElapsed().getValue()));
             }
         });
+        createEnemies(GameModel.getInstance().getGameDifficulty());
     }
 
     private void render(RelativeLayout mainCharacter, TextView nameLabel, int posX, int posY) {
