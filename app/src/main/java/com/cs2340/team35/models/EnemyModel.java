@@ -1,15 +1,46 @@
 package com.cs2340.team35.models;
+import com.cs2340.team35.views.Enemy;
+import com.cs2340.team35.views.EnemyFactory;
+
 import java.util.Random;
 public class EnemyModel {
-    private static int x;
-    private static int y;
+    private int x;
+    private int y;
+    private int health;
 
-    public enum EnemyType {KOOPA, BOWSER, BOO, GOOMBA}
+    private String enemySpecies;
+
+    public void setPosition(Integer xpos, Integer ypos) {
+        if (xpos < 0) {
+            xpos = 0;
+        }
+        x = xpos;
+        if (ypos < 0) {
+            ypos = 0;
+        }
+
+        y = ypos;
+    }
 
     public EnemyModel() {
         Random rand = new Random();
         x = rand.nextInt(1797 - 0 + 1) + 0;
         y = rand.nextInt(950 - 0 + 1) + 0;
+        int enemyType = rand.nextInt(3 - 0 + 1) + 0;
+        if(enemyType == 0) {
+            EnemyFactory.createEnemy("Koopa");
+            enemySpecies = "Koopa";
+        } else if (enemyType == 1) {
+            EnemyFactory.createEnemy("Bowser");
+            enemySpecies = "Bowser";
+        } else if (enemyType == 2) {
+            EnemyFactory.createEnemy("Boo");
+            enemySpecies = "Boo";
+        } else if (enemyType == 3) {
+            EnemyFactory.createEnemy("Goomba");
+            enemySpecies = "Goomba";
+        }
+
     }
     public void setX(int newX) {
         if (newX < 0) {
@@ -25,6 +56,14 @@ public class EnemyModel {
 
         y = newY;
     }
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
     public int getX() {
         return x;
     }
@@ -32,5 +71,15 @@ public class EnemyModel {
     public int getY() {
         return y;
     }
+    public String getEnemySpecies() {
+        return enemySpecies;
+    }
+
+    public void setEnemySpecies(String enemySpecies) {
+        this.enemySpecies = enemySpecies;
+    }
+
+
+
 
 }

@@ -60,8 +60,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
-                android:src="@drawable/Bowser"
-                app:srcCompat="@drawable/Bowser" />
+                android:src="@drawable/bowser"
+                app:srcCompat="@drawable/bowser" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -77,8 +77,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
-                android:src="@drawable/Boo"
-                app:srcCompat="@drawable/Boo" />
+                android:src="@drawable/boo"
+                app:srcCompat="@drawable/boo" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -111,8 +111,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
-                android:src="@drawable/Goombawalk"
-                app:srcCompat="@drawable/Goombawalk" />
+                android:src="@drawable/goombawalk"
+                app:srcCompat="@drawable/goombawalk" />
 
         </RelativeLayout>
         <TextView
