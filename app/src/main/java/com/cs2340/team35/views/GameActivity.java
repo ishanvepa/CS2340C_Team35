@@ -35,6 +35,7 @@ public class GameActivity extends AppCompatActivity {
     private Timer timer;
     private PlayerViewModel playerViewModel;
     private GameViewModel gameViewModel;
+    private List<EnemyModel> enemies = new ArrayList<>();
     private List<WallModel> level1Walls = new ArrayList<>();
     private List<WallModel> level2Walls = new ArrayList<>();
     private List<WallModel> level3Walls = new ArrayList<>();
@@ -84,8 +85,12 @@ public class GameActivity extends AppCompatActivity {
         if (difficulty == GameModel.Difficulty.EASY) {
             for(int i = 0; i < 3; i++) {
                 EnemyModel model = new EnemyModel();
-                int initialPosX = random.nextInt(screenWidth);
-                int initialPosY = random.nextInt(screenHeight);
+                int initialPosX = 0;
+                int initialPosY = 0;
+                do {
+                    initialPosX = random.nextInt(screenWidth - 130);
+                    initialPosY = random.nextInt(1797 - 475 + 1) + 475;
+                } while (isInvalidPosition(initialPosX, initialPosY));
                 model.setPosition(initialPosX, initialPosY);
                 RelativeLayout enemyView = new RelativeLayout(this);
                 enemyView.setLayoutParams(new RelativeLayout.LayoutParams(
@@ -95,12 +100,17 @@ public class GameActivity extends AppCompatActivity {
                 setEnemyBackground(enemyView, model.getEnemySpecies());
                 enemyRender(enemyView, initialPosX, initialPosY);
                 mainLayout.addView(enemyView);
+                enemies.add(model);
             }
         } else if (difficulty == GameModel.Difficulty.MEDIUM) {
             for(int i = 0; i < 5; i++) {
                 EnemyModel model = new EnemyModel();
-                int initialPosX = random.nextInt(screenWidth);
-                int initialPosY = random.nextInt(screenHeight);
+                int initialPosX = 0;
+                int initialPosY = 0;
+                do {
+                    initialPosX = random.nextInt(screenWidth - 130);
+                    initialPosY = random.nextInt(1797 - 475 + 1) + 475;
+                } while (isInvalidPosition(initialPosX, initialPosY));
                 model.setPosition(initialPosX, initialPosY);
                 RelativeLayout enemyView = new RelativeLayout(this);
                 enemyView.setLayoutParams(new RelativeLayout.LayoutParams(
@@ -110,12 +120,17 @@ public class GameActivity extends AppCompatActivity {
                 setEnemyBackground(enemyView, model.getEnemySpecies());
                 enemyRender(enemyView, initialPosX, initialPosY);
                 mainLayout.addView(enemyView);
+                enemies.add(model);
             }
         } else if (difficulty == GameModel.Difficulty.HARD) {
             for(int i = 0; i < 10; i++) {
                 EnemyModel model = new EnemyModel();
-                int initialPosX = random.nextInt(screenWidth);
-                int initialPosY = random.nextInt(screenHeight);
+                int initialPosX = 0;
+                int initialPosY = 0;
+                do {
+                    initialPosX = random.nextInt(screenWidth - 130);
+                    initialPosY = random.nextInt(1797 - 475 + 1) + 475;
+                } while (isInvalidPosition(initialPosX, initialPosY));
                 model.setPosition(initialPosX, initialPosY);
                 RelativeLayout enemyView = new RelativeLayout(this);
                 enemyView.setLayoutParams(new RelativeLayout.LayoutParams(
@@ -125,8 +140,35 @@ public class GameActivity extends AppCompatActivity {
                 setEnemyBackground(enemyView, model.getEnemySpecies());
                 enemyRender(enemyView, initialPosX, initialPosY);
                 mainLayout.addView(enemyView);
+                enemies.add(model);
             }
         }
+    }
+    private boolean isInvalidPosition(int posX, int posY) {
+        for (WallModel wall : level1Walls) {
+            if (posX >= wall.getLeftMargin() && posX <= (wall.getLeftMargin() + wall.getWidth()) &&
+                    posY >= wall.getTopMargin() && posY <= (wall.getTopMargin() + wall.getHeight())) {
+                return true;
+            }
+        }
+        for (EnemyModel enemy : enemies) {
+            int distance = calculateDistance(posX, posY, enemy.getX(), enemy.getY());
+            if (distance < 60) {
+                return true;
+            }
+        }
+        int mainCharacterX = playerViewModel.getPosition().getValue()[0];
+        int mainCharacterY = playerViewModel.getPosition().getValue()[1];
+        int distanceToMainCharacter = calculateDistance(posX, posY, mainCharacterX, mainCharacterY);
+        if (distanceToMainCharacter < 60) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private int calculateDistance(int x1, int y1, int x2, int y2) {
+        return (int) Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
     private void setEnemyBackground(RelativeLayout enemyView, String enemyType) {
         switch (enemyType) {
