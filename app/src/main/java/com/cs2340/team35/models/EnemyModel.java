@@ -1,9 +1,10 @@
 package com.cs2340.team35.models;
 import com.cs2340.team35.views.Enemy;
 import com.cs2340.team35.views.EnemyFactory;
+import com.cs2340.team35.views.PlayerObserver;
 
 import java.util.Random;
-public class EnemyModel {
+public class EnemyModel implements PlayerObserver {
     private int x;
     private int y;
     private int health;
@@ -56,6 +57,13 @@ public class EnemyModel {
 
         y = newY;
     }
+
+    @Override
+    public void playerUpdatePosition(int playerX, int playerY) {
+        x = playerX;
+        y = playerY;
+    }
+
     public int getHealth() {
         return health;
     }
