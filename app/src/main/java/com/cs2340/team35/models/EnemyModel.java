@@ -42,6 +42,29 @@ public class EnemyModel {
         }
 
     }
+    public EnemyModel(String enemyType) {
+        switch (enemyType) {
+            case "Koopa":
+            EnemyFactory.createEnemy("Koopa");
+            enemySpecies = "Koopa";
+            break;
+
+            case "Bowser":
+            EnemyFactory.createEnemy("Bowser");
+            enemySpecies = "Bowser";
+            break;
+
+            case "Boo":
+            EnemyFactory.createEnemy("Boo");
+            enemySpecies = "Boo";
+            break;
+
+            case "Goomba":
+            EnemyFactory.createEnemy("Goomba");
+            enemySpecies = "Goomba";
+            break;
+        }
+    }
     public void setX(int newX) {
         if (newX < 0) {
             newX = 0;
