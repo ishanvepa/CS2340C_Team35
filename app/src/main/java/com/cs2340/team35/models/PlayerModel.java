@@ -1,5 +1,7 @@
 package com.cs2340.team35.models;
 
+import com.cs2340.team35.views.PlayerObserver;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,9 @@ public class PlayerModel {
     private static PlayerModel instance;
     private static int x;
     private static int y;
+
+    //observers list
+    private List<PlayerObserver> observers = new ArrayList<>();
 
     private static ScoreModel score;
 
@@ -22,7 +27,7 @@ public class PlayerModel {
         subscriberList.add(s);
     }
 
-    private PlayerModel() {
+    public PlayerModel() {
         x = 100;
         y = 600;
         character = CharacterName.MARIO;
@@ -66,6 +71,25 @@ public class PlayerModel {
         y = newY;
         for (Subscriber s : subscriberList) {
             s.positionUpdated(newX, newY);
+        }
+    }
+
+    public void addObserver(PlayerObserver observers) {
+        this.observers.add(observers);
+    }
+
+    public void removeObserver(PlayerObserver observers) {
+        this.observers.remove(observers);
+    }
+
+    public void moving(int newX, int newY) {
+        x = newX;
+        y = newY;
+    }
+
+    private void notifyObserver() {
+        for (PlayerObserver observer: observers) {
+            observer.playerUpdatePosition(x, y);
         }
     }
 

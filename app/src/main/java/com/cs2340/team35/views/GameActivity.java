@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.cs2340.team35.models.EnemyModel;
 import com.cs2340.team35.models.GameModel;
 import com.cs2340.team35.models.LeaderboardModel;
+import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.models.WallModel;
 import com.cs2340.team35.viewmodels.EnemyViewModel;
@@ -39,6 +41,11 @@ public class GameActivity extends AppCompatActivity {
     private List<WallModel> level1Walls = new ArrayList<>();
     private List<WallModel> level2Walls = new ArrayList<>();
     private List<WallModel> level3Walls = new ArrayList<>();
+
+    private PlayerModel playerModel;
+
+    private int numEnemies = 0;
+
     private void cancelTimer() {
         if (timer != null) {
             timer.cancel();
@@ -101,6 +108,7 @@ public class GameActivity extends AppCompatActivity {
                 enemyRender(enemyView, initialPosX, initialPosY);
                 mainLayout.addView(enemyView);
                 enemies.add(model);
+                numEnemies++;
             }
         } else if (difficulty == GameModel.Difficulty.MEDIUM) {
             for(int i = 0; i < 5; i++) {
@@ -121,6 +129,7 @@ public class GameActivity extends AppCompatActivity {
                 enemyRender(enemyView, initialPosX, initialPosY);
                 mainLayout.addView(enemyView);
                 enemies.add(model);
+                numEnemies++;
             }
         } else if (difficulty == GameModel.Difficulty.HARD) {
             for(int i = 0; i < 10; i++) {
@@ -141,6 +150,7 @@ public class GameActivity extends AppCompatActivity {
                 enemyRender(enemyView, initialPosX, initialPosY);
                 mainLayout.addView(enemyView);
                 enemies.add(model);
+                numEnemies++;
             }
         }
     }
@@ -358,6 +368,22 @@ public class GameActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         cancelTimer();
+    }
+
+    public void updatingObserverLogic() {
+        playerModel = new PlayerModel();
+        enemies = new ArrayList<>();
+
+        for (int i = 0; i < numEnemies; i++) {
+            EnemyModel enemyModel = new EnemyModel();
+            playerModel.addObserver(enemyModel);
+            enemies.add(enemyModel);
+        }
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
+        playerModel.moving((int) event.getX(), (int) event.getY());
+        return true;
     }
 
 }
