@@ -5,6 +5,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.cs2340.team35.models.GameModel;
+import com.cs2340.team35.models.WallModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameViewModel extends ViewModel {
 
@@ -18,6 +22,11 @@ public class GameViewModel extends ViewModel {
     public void setDifficulty(String diff) {
         GameModel instance = GameModel.getInstance();
         instance.setGameDifficulty(GameModel.Difficulty.valueOf(diff));
+    }
+
+    public ArrayList<WallModel> getWalls() {
+        GameModel instance = GameModel.getInstance();
+        return instance.getWalls();
     }
 
     public int getLevel() {
@@ -54,5 +63,19 @@ public class GameViewModel extends ViewModel {
         GameModel instance = GameModel.getInstance();
         instance.setTimeElapsed(0);
         this.timeElapsed.postValue(instance.getTimeElapsed());
+    }
+
+    public boolean isCollision(int x, int y) {
+        GameModel instance = GameModel.getInstance();
+        List<WallModel> walls = instance.getWalls();
+        for (WallModel wall : walls) {
+            if (x > wall.getLeftMargin() && x < wall.getLeftMargin() + wall.getWidth()
+                    && ((y > wall.getTopMargin() && y < wall.getTopMargin() + wall.getHeight())
+                    || (y + 120 > wall.getTopMargin() && y + 120
+                    < wall.getTopMargin() + wall.getHeight()))) {
+                return true; // Collision detected
+            }
+        }
+        return false; // No collision
     }
 }

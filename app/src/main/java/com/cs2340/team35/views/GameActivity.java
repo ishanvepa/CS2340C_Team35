@@ -19,7 +19,7 @@ import com.cs2340.team35.models.WallModel;
 import com.cs2340.team35.viewmodels.PlayerViewModel;
 import com.cs2340.team35.R;
 import com.cs2340.team35.viewmodels.GameViewModel;
-import java.util.ArrayList;
+
 import java.util.List;
 import android.view.KeyEvent;
 import java.util.Timer;
@@ -28,33 +28,35 @@ import java.util.TimerTask;
 public class GameActivity extends AppCompatActivity {
     private static int screenWidth = 1800;
     private static int screenHeight = 1900;
-    private Timer timer;
     private PlayerViewModel playerViewModel;
     private GameViewModel gameViewModel;
-    private List<WallModel> level1Walls = new ArrayList<>();
-    private List<WallModel> level2Walls = new ArrayList<>();
-    private List<WallModel> level3Walls = new ArrayList<>();
-    private void cancelTimer() {
-        if (timer != null) {
-            timer.cancel();
-            timer.purge();
-            timer  = null;
-        }
-    }
+    private Timer timer;
+    private Timer enemyUpdateTimer;
+    private RelativeLayout mainCharacter;
+    private TextView mainCharacterText;
+    private List<RelativeLayout> enemies;
 
-    private WallModel addWalls(int width, int height, int leftMargin, int topMargin) {
-        RelativeLayout layout = findViewById(R.id.walls);
-        View wall = new View(this);
-        wall.setBackgroundColor(Color.BLACK);
-        wall.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
-        params.leftMargin = leftMargin;
-        params.topMargin = topMargin;
-        layout.addView(wall, params);
-        return new WallModel(width, height, leftMargin, topMargin);
-    }
-    private RelativeLayout getMainCharacter() {
-        RelativeLayout mainCharacter = null;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_game);
+
+        // set up game view model
+        gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
+        playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
+
+        // set up text elements
+        TextView hp = (TextView) findViewById(R.id.HPView);
+        TextView diff = (TextView) findViewById(R.id.difficultyText);
+        TextView score = (TextView) findViewById(R.id.Score);
+        TextView timeElapsed = (TextView) findViewById(R.id.timeElapsed);
+        TextView level = (TextView) findViewById(R.id.level);
+
+        mainCharacterText = (TextView) findViewById(R.id.playerName);
+        mainCharacterText.setText(playerViewModel.getUserName());
+
+        // setup main character
+        mainCharacter = null;
         RelativeLayout mario = (RelativeLayout) findViewById(R.id.marioSpriteLayout);
         RelativeLayout luigi = (RelativeLayout) findViewById(R.id.luigiSpriteLayout);
         RelativeLayout peach = (RelativeLayout) findViewById(R.id.peachSpriteLayout);
@@ -72,24 +74,9 @@ public class GameActivity extends AppCompatActivity {
         }
 
         mainCharacter.setVisibility(View.VISIBLE);
-        return mainCharacter;
-    }
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
 
-        gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
-        playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
 
-        TextView hp = (TextView) findViewById(R.id.HPView);
-        TextView diff = (TextView) findViewById(R.id.difficultyText);
-        TextView score = (TextView) findViewById(R.id.Score);
-        TextView timeElapsed = (TextView) findViewById(R.id.timeElapsed);
-        TextView level = (TextView) findViewById(R.id.level);
-        TextView playerName = (TextView) findViewById(R.id.playerName);
-        playerName.setText(playerViewModel.getUserName());
-
+        // setup timer
         if (timer != null) {
             timer.cancel();
         }
@@ -109,6 +96,7 @@ public class GameActivity extends AppCompatActivity {
             }
         }, 0, 1000);
 
+        // setup text content within text
         hp.setText(String.format("Current Health: %d", playerViewModel.getHealth().getValue()));
         score.setText(String.format("Current score: %d",
                 playerViewModel.getScore().getValue().getCurrentScore()));
@@ -119,37 +107,21 @@ public class GameActivity extends AppCompatActivity {
         screenWidth = getResources().getDisplayMetrics().widthPixels;
         screenHeight = getResources().getDisplayMetrics().heightPixels;
         playerViewModel.setPosition(screenWidth / 2, screenHeight / 2);
-        RelativeLayout mainCharacter = getMainCharacter();
-        mainCharacter.setVisibility(View.VISIBLE);
-        Integer[] startPosition = playerViewModel.getPosition().getValue();
-        render(mainCharacter, playerName, startPosition[0], startPosition[1]);
+
+        // initial renders
+        renderPlayer();
+        renderWalls();
 
         int currentLevel = gameViewModel.getLevel();
+        View root = findViewById(android.R.id.content);
         if (currentLevel == 1) {
-            View root = findViewById(android.R.id.content);
             root.setBackgroundResource(R.drawable.peachscastle);
-
-            //level 1 insert walls
-            level1Walls.add(addWalls(1080, 42, 0, 475)); // top wall
-            level1Walls.add(addWalls(42, 950, 0, 475)); // left wall
-            level1Walls.add(addWalls(42, 950, 1038, 475)); // right wall
-
         } else if (currentLevel == 2) {
-            View root = findViewById(android.R.id.content);
             root.setBackgroundResource(R.drawable.luigimansion);
-            //level 2 insert walls
-            level1Walls.add(addWalls(1080, 42, 0, 475)); // top wall
-            level1Walls.add(addWalls(42, 950, 0, 475)); // left wall
-            level1Walls.add(addWalls(42, 950, 1038, 475)); // right wall
         } else if (currentLevel == 3) {
-            View root = findViewById(android.R.id.content);
             root.setBackgroundResource(R.drawable.bowserscastle);
-            //level 3 insert walls
-            level1Walls.add(addWalls(1080, 42, 0, 475)); // top wall
-            level1Walls.add(addWalls(42, 950, 0, 475)); // left wall
-            level1Walls.add(addWalls(42, 950, 1038, 475)); // right wall
         }
-
+        // subsequent renders and event driven reactions
         playerViewModel.getScore().observe(this, new Observer<ScoreModel>() {
             @Override
             public void onChanged(ScoreModel scoreModel) {
@@ -161,7 +133,7 @@ public class GameActivity extends AppCompatActivity {
         playerViewModel.getPosition().observe(this, new Observer<Integer[]>() {
             @Override
             public void onChanged(Integer[] integers) {
-                render(mainCharacter, playerName, integers[0], integers[1]);
+                renderPlayer();
             }
         });
 
@@ -175,7 +147,9 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
-    private void render(RelativeLayout mainCharacter, TextView nameLabel, int posX, int posY) {
+    private void renderPlayer() {
+        int posX = this.playerViewModel.getPosition().getValue()[0];
+        int posY = this.playerViewModel.getPosition().getValue()[1];
         ViewGroup.LayoutParams oldparams = mainCharacter.getLayoutParams();
         RelativeLayout.LayoutParams position = new RelativeLayout.LayoutParams(oldparams.width,
                 oldparams.width);
@@ -183,12 +157,26 @@ public class GameActivity extends AppCompatActivity {
         position.topMargin =  posY;
 
         mainCharacter.setLayoutParams(position);
-        oldparams = nameLabel.getLayoutParams();
+        oldparams = mainCharacterText.getLayoutParams();
         position = new RelativeLayout.LayoutParams(oldparams.width,
                 oldparams.width);
         position.leftMargin = posX;
         position.topMargin = posY - 40;
-        nameLabel.setLayoutParams(position);
+        mainCharacterText.setLayoutParams(position);
+    }
+
+    private void renderWalls() {
+        List<WallModel> walls = this.gameViewModel.getWalls();
+        RelativeLayout layout = findViewById(R.id.walls);
+        for (WallModel wall : walls) {
+            View v = new View(this);
+            v.setBackgroundColor(Color.BLACK);
+            v.setLayoutParams(new RelativeLayout.LayoutParams(wall.getWidth(), wall.getHeight()));
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(wall.getWidth(), wall.getHeight());
+            params.leftMargin = wall.getLeftMargin();
+            params.topMargin = wall.getTopMargin();
+            layout.addView(v);
+        }
     }
     //Movement
     @Override
@@ -207,28 +195,28 @@ public class GameActivity extends AppCompatActivity {
 
         Integer[] currPosition = playerViewModel.getPosition().getValue();
 
-        if (strategy != null) {
-            Integer[] newPosition = strategy.movementStrategy(currPosition[0],
-                    currPosition[1], screenWidth, screenHeight);
+        if (strategy == null) {
+            return true;
+        }
 
-            if (GameModel.isAtExit(newPosition[0], newPosition[1])) {
-                if (gameViewModel.getLevel() >= 3) {
-                    Intent i = new Intent(getApplicationContext(), EndActivity.class);
-                    cancelTimer();
-                    LeaderboardModel leaderboardModel = LeaderboardModel.getInstance();
-                    leaderboardModel.addScore(playerViewModel.getScore().getValue());
-                    startActivity(i);
-                } else {
-                    gameViewModel.increaseLevel();
-                    Intent i = new Intent(getApplicationContext(), GameActivity.class);
-                    cancelTimer();
-                    startActivity(i);
-                }
-            }
+        Integer[] newPosition = strategy.movementStrategy(currPosition[0],
+                currPosition[1], screenWidth, screenHeight);
 
-            if (!WallModel.isCollision(newPosition[0], newPosition[1], level1Walls)) {
-                playerViewModel.setPosition(newPosition[0], newPosition[1]);
+        if (GameModel.isAtExit(newPosition[0], newPosition[1])) {
+            if (gameViewModel.getLevel() >= 3) {
+                Intent i = new Intent(getApplicationContext(), EndActivity.class);
+                LeaderboardModel leaderboardModel = LeaderboardModel.getInstance();
+                leaderboardModel.addScore(playerViewModel.getScore().getValue());
+                startActivity(i);
+            } else {
+                gameViewModel.increaseLevel();
+                Intent i = new Intent(getApplicationContext(), GameActivity.class);
+                startActivity(i);
             }
+        }
+
+        if (!this.gameViewModel.isCollision(newPosition[0], newPosition[1])) {
+            playerViewModel.setPosition(newPosition[0], newPosition[1]);
         }
 
         return true;
@@ -236,7 +224,18 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        cancelTimer();
+
+        if (timer != null) {
+            timer.cancel();
+            timer.purge();
+            timer  = null;
+        }
+
+        if (enemyUpdateTimer != null) {
+            enemyUpdateTimer.cancel();
+            enemyUpdateTimer.purge();
+            enemyUpdateTimer  = null;
+        }
     }
 
 }

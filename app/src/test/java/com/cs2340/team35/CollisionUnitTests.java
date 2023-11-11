@@ -1,7 +1,6 @@
 package com.cs2340.team35;
 
 import com.cs2340.team35.models.WallModel;
-import com.cs2340.team35.views.GameActivity;
 
 import org.junit.Assert;
 import org.junit.Test;
