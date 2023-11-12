@@ -175,7 +175,7 @@ public class GameActivity extends AppCompatActivity {
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(wall.getWidth(), wall.getHeight());
             params.leftMargin = wall.getLeftMargin();
             params.topMargin = wall.getTopMargin();
-            layout.addView(v);
+            layout.addView(v, params);
         }
     }
     //Movement
