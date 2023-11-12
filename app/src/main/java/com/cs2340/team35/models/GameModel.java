@@ -173,6 +173,5 @@ public class GameModel {
             enemyArrayList.set(i, enemy);
         }
 
-        PlayerModel.getInstance().HandleEnemyCollision();
     }
 }
