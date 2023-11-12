@@ -6,6 +6,7 @@ import com.cs2340.team35.models.enemies.BooFactory;
 import com.cs2340.team35.models.enemies.BowserFactory;
 import com.cs2340.team35.models.enemies.Enemy;
 import com.cs2340.team35.models.enemies.EnemyFactory;
+import com.cs2340.team35.models.enemies.GoombaFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,6 +116,7 @@ public class GameModel {
     private void changeEnemies() {
         EnemyFactory booFactory = new BooFactory();
         EnemyFactory bowserFactory = new BowserFactory();
+        EnemyFactory goombaFactory = new GoombaFactory();
 
         int damageMultiplier = 1;
         if (this.getGameDifficulty() == Difficulty.MEDIUM) {
@@ -127,6 +129,7 @@ public class GameModel {
             enemyArrayList = new ArrayList<>();
             enemyArrayList.add(booFactory.CreateEnemy(10, 10, damageMultiplier, "boo1"));
             enemyArrayList.add(bowserFactory.CreateEnemy(50, 1200, damageMultiplier, "boo4"));
+            enemyArrayList.add(goombaFactory.CreateEnemy(100, 600, damageMultiplier, "boo5"));
         } else if (this.getLevel() == 2) {
             enemyArrayList = new ArrayList<>();
             enemyArrayList.add(bowserFactory.CreateEnemy(10, 300, damageMultiplier, "boo2"));

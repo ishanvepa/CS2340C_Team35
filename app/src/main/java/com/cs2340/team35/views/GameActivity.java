@@ -21,6 +21,7 @@ import com.cs2340.team35.models.WallModel;
 import com.cs2340.team35.models.enemies.Boo;
 import com.cs2340.team35.models.enemies.Bowser;
 import com.cs2340.team35.models.enemies.Enemy;
+import com.cs2340.team35.models.enemies.Goomba;
 import com.cs2340.team35.viewmodels.PlayerViewModel;
 import com.cs2340.team35.R;
 import com.cs2340.team35.viewmodels.GameViewModel;
@@ -115,6 +116,8 @@ public class GameActivity extends AppCompatActivity {
                 newEnemy.setBackground(getDrawable(R.drawable.boo));
             } else if (enemy instanceof Bowser) {
                 newEnemy.setBackground(getDrawable(R.drawable.bowser));
+            } else if (enemy instanceof Goomba) {
+                newEnemy.setBackground(getDrawable(R.drawable.goombawalk));
             }
 
             rootLayout.addView(newEnemy, params);
