@@ -8,8 +8,6 @@ public class Bowser extends Enemy {
     private int damage;
 
     private int damageMultiplier;
-    private int x;
-    private int y;
 
     private int sizeX;
     private int sizeY;
@@ -44,28 +42,8 @@ public class Bowser extends Enemy {
     }
 
     @Override
-    public int getX() {
-        return x;
-    }
-
-    @Override
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    @Override
     public String getId() {
         return this.id;
-    }
-
-    @Override
-    public int getY() {
-        return y;
-    }
-
-    @Override
-    public void setY(int y) {
-        this.y = y;
     }
 
     @Override

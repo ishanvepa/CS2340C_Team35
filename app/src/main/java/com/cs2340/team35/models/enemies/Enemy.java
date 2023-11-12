@@ -7,14 +7,27 @@ import com.cs2340.team35.models.PlayerModel;
 import java.util.ArrayList;
 
 public abstract class Enemy {
+
+    public int x;
+    public int y;
     public abstract int getDamage();
     public abstract int getNextPositionX();
     public abstract int getNextPositionY();
-    public abstract int getX();
-    public abstract void setX(int x);
+    public int getX() {
+        return x;
+    };
+    public void setX(int x) {
+        this.x = x;
+        detectCollision();
+    };
     public abstract String getId();
-    public abstract int getY();
-    public abstract void setY(int y);
+    public int getY() {
+        return y;
+    };
+    public void setY(int y) {
+        this.y = y;
+        detectCollision();
+    };
     public abstract void reverseSpeed();
     public abstract int getDamageMultiplier();
 
