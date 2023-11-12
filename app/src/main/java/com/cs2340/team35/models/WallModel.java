@@ -35,16 +35,5 @@ public class WallModel {
     public int getTopMargin() {
         return topMargin;
     }
-    public static boolean isCollision(int x, int y, List<WallModel> walls) {
-        for (WallModel wall : walls) {
-            if (x > wall.getLeftMargin() && x < wall.getLeftMargin() + wall.getWidth()
-                    && ((y > wall.getTopMargin() && y < wall.getTopMargin() + wall.getHeight())
-                    || (y + 120 > wall.getTopMargin() && y + 120
-                    < wall.getTopMargin() + wall.getHeight()))) {
-                return true; // Collision detected
-            }
-        }
-        return false; // No collision
-    }
 
 }

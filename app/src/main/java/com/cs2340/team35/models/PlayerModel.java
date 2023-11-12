@@ -1,17 +1,25 @@
 package com.cs2340.team35.models;
 
-import com.cs2340.team35.views.PlayerObserver;
+import android.graphics.Rect;
+
+import com.cs2340.team35.models.enemies.Enemy;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerModel {
+
+    public interface CollisionSubscriber {
+        void HandleCollision();
+    }
+
+    public static ArrayList<CollisionSubscriber> collisionSubscribers;
     private static PlayerModel instance;
     private static int x;
     private static int y;
 
-    //observers list
-    private List<PlayerObserver> observers = new ArrayList<>();
+    private final int width = 130;
+    private final int height = 130;
 
     private static ScoreModel score;
 
@@ -27,7 +35,7 @@ public class PlayerModel {
         subscriberList.add(s);
     }
 
-    public PlayerModel() {
+    private PlayerModel() {
         x = 100;
         y = 600;
         character = CharacterName.MARIO;
@@ -35,6 +43,7 @@ public class PlayerModel {
         health = 0;
         score = new ScoreModel(10);
         subscriberList = new ArrayList<>();
+        collisionSubscribers = new ArrayList<>();
     }
 
     public static PlayerModel getInstance() {
@@ -71,25 +80,6 @@ public class PlayerModel {
         y = newY;
         for (Subscriber s : subscriberList) {
             s.positionUpdated(newX, newY);
-        }
-    }
-
-    public void addObserver(PlayerObserver observers) {
-        this.observers.add(observers);
-    }
-
-    public void removeObserver(PlayerObserver observers) {
-        this.observers.remove(observers);
-    }
-
-    public void moving(int newX, int newY) {
-        x = newX;
-        y = newY;
-    }
-
-    private void notifyObserver() {
-        for (PlayerObserver observer: observers) {
-            observer.playerUpdatePosition(x, y);
         }
     }
 
@@ -133,7 +123,48 @@ public class PlayerModel {
         health = newHealth;
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
     public interface Subscriber {
         public void positionUpdated(int newX, int newY);
+    }
+
+    public void HandleEnemyCollision() {
+        Enemy ne = detectCollisionWithEnemies();
+        if (ne != null) {
+            this.setHealth(this.getHealth() - ne.getDamage());
+            x = 100;
+            y = 600;
+
+            for (CollisionSubscriber sub : collisionSubscribers) {
+                sub.HandleCollision();
+            }
+        }
+    }
+
+    private Enemy detectCollisionWithEnemies() {
+        ArrayList<Enemy> enemyArrayList = GameModel.getInstance().getEnemies();
+        Rect objectRect = new Rect(x, y, x + width, y + height);
+
+        if (enemyArrayList != null) {
+            for (Enemy em : enemyArrayList) {
+                Rect enemyRect = new Rect(em.getX(), em.getY(), em.getX() + em.getSizeX(), em.getY() + em.getSizeY());
+                if (objectRect.intersect(enemyRect)) {
+                    return em;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public void addCollisionSubscriber(CollisionSubscriber subscriber) {
+        collisionSubscribers.add(subscriber);
     }
 }
