@@ -116,18 +116,25 @@ public class GameModel {
         EnemyFactory booFactory = new BooFactory();
         EnemyFactory bowserFactory = new BowserFactory();
 
+        int damageMultiplier = 1;
+        if (this.getGameDifficulty() == Difficulty.MEDIUM) {
+            damageMultiplier = 2;
+        } else if (this.getGameDifficulty() == Difficulty.HARD) {
+            damageMultiplier = 3;
+        }
+
         if (this.getLevel() == 1) {
             enemyArrayList = new ArrayList<>();
-            enemyArrayList.add(booFactory.CreateEnemy(10, 10, 1, "boo1"));
-            enemyArrayList.add(bowserFactory.CreateEnemy(50, 1200, 1, "boo4"));
+            enemyArrayList.add(booFactory.CreateEnemy(10, 10, damageMultiplier, "boo1"));
+            enemyArrayList.add(bowserFactory.CreateEnemy(50, 1200, damageMultiplier, "boo4"));
         } else if (this.getLevel() == 2) {
             enemyArrayList = new ArrayList<>();
-            enemyArrayList.add(bowserFactory.CreateEnemy(10, 300, 1, "boo2"));
-            enemyArrayList.add(bowserFactory.CreateEnemy(100, 100, 1, "boo3"));
+            enemyArrayList.add(bowserFactory.CreateEnemy(10, 300, damageMultiplier, "boo2"));
+            enemyArrayList.add(bowserFactory.CreateEnemy(100, 100, damageMultiplier, "boo3"));
         } else if (this.getLevel() == 3) {
             enemyArrayList = new ArrayList<>();
-            enemyArrayList.add(booFactory.CreateEnemy(50, 1200, 1, "boo4"));
-            enemyArrayList.add(booFactory.CreateEnemy(200, 200, 1, "boo5"));
+            enemyArrayList.add(booFactory.CreateEnemy(50, 1200, damageMultiplier, "boo4"));
+            enemyArrayList.add(booFactory.CreateEnemy(200, 200, damageMultiplier, "boo5"));
         }
     }
 

@@ -19,7 +19,7 @@ public class Boo extends Enemy {
     public Boo(int startX, int startY, int damageMultiplier, String id) {
         this.x = startX;
         this.y = startY;
-        this.damage = 5;
+        this.damage = 10;
         this.damageMultiplier = damageMultiplier;
         this.deltaTX = 30;
         this.deltaTY = 50;

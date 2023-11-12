@@ -19,7 +19,7 @@ public class Bowser extends Enemy {
     public Bowser(int startX, int startY, int damageMultiplier, String id) {
         this.x = startX;
         this.y = startY;
-        this.damage = 5;
+        this.damage = 20;
         this.damageMultiplier = damageMultiplier;
         this.deltaTX = 10;
         this.deltaTY = 0;

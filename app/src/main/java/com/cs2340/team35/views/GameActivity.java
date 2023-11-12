@@ -163,6 +163,12 @@ public class GameActivity extends AppCompatActivity {
         screenHeight = getResources().getDisplayMetrics().heightPixels;
         playerViewModel.setPosition(screenWidth / 2, screenHeight / 2);
 
+        playerViewModel.getHealth().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                hp.setText(String.format("Current Health: %d", playerViewModel.getHealth().getValue()));
+            }
+        });
         // initial renders
         renderPlayer();
         renderWalls();
