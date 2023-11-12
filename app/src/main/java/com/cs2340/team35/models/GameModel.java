@@ -141,8 +141,10 @@ public class GameModel {
             enemyArrayList.add(bowserFactory.CreateEnemy(200, 1000, damageMultiplier, "bowser1"));
             enemyArrayList.add(goombaFactory.CreateEnemy(900, 600, damageMultiplier, "boo5"));
             enemyArrayList.add(koopaFactory.CreateEnemy(900, 900, damageMultiplier, "koopa1"));
+        }
 
-
+        for (Enemy en : enemyArrayList) {
+            en.addCollisisonSubscriber(PlayerModel.getInstance());
         }
     }
 
@@ -173,6 +175,5 @@ public class GameModel {
             enemyArrayList.set(i, enemy);
         }
 
-        PlayerModel.getInstance().HandleEnemyCollision();
     }
 }
