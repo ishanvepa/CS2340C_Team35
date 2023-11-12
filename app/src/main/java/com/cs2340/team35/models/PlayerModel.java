@@ -83,6 +83,10 @@ public class PlayerModel implements Enemy.CollisionSubscriber {
         for (Subscriber s : subscriberList) {
             s.positionUpdated(newX, newY);
         }
+
+        for (Enemy enemy : GameModel.getInstance().getEnemies()) {
+            enemy.detectCollision();
+        }
     }
 
     public void setCharacter(CharacterName character) {
