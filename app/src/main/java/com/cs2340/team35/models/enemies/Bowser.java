@@ -40,7 +40,7 @@ public class Bowser extends Enemy {
 
     @Override
     public int getNextPositionY() {
-        return y + speedMultiplier * deltaTX;
+        return y + speedMultiplier * deltaTY;
     }
 
     @Override

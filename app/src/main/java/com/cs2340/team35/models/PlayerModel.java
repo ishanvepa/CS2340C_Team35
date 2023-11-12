@@ -8,6 +8,9 @@ public class PlayerModel {
     private static int x;
     private static int y;
 
+    private final int width = 130;
+    private final int height = 130;
+
     private static ScoreModel score;
 
     private static int health;
@@ -107,6 +110,14 @@ public class PlayerModel {
 
     public void setHealth(int newHealth) {
         health = newHealth;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public interface Subscriber {

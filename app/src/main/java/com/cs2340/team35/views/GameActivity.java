@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.cs2340.team35.models.GameModel;
 import com.cs2340.team35.models.LeaderboardModel;
+import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.models.WallModel;
 import com.cs2340.team35.models.enemies.Boo;
@@ -64,7 +65,6 @@ public class GameActivity extends AppCompatActivity {
         mainCharacterText.setText(playerViewModel.getUserName());
 
         // setup main character
-        mainCharacter = null;
         RelativeLayout mario = (RelativeLayout) findViewById(R.id.marioSpriteLayout);
         RelativeLayout luigi = (RelativeLayout) findViewById(R.id.luigiSpriteLayout);
         RelativeLayout peach = (RelativeLayout) findViewById(R.id.peachSpriteLayout);
@@ -73,16 +73,23 @@ public class GameActivity extends AppCompatActivity {
         luigi.setVisibility(View.GONE);
         mario.setVisibility(View.GONE);
 
+        RelativeLayout rootLayout = (RelativeLayout) findViewById(R.id.rootLayout);
+
+        mainCharacter = new RelativeLayout(this);
+        mainCharacter.setLayoutParams(new RelativeLayout.LayoutParams(PlayerModel.getInstance().getWidth(), PlayerModel.getInstance().getHeight()));
+        RelativeLayout.LayoutParams mcParams = new RelativeLayout.LayoutParams(PlayerModel.getInstance().getWidth(), PlayerModel.getInstance().getHeight());
+        mcParams.leftMargin = playerViewModel.getPosition().getValue()[0];
+        mcParams.topMargin = playerViewModel.getPosition().getValue()[1];
+
         if (playerViewModel.getCharacterName() == "MARIO") {
-            mainCharacter =  mario;
+            mainCharacter.setBackground(getDrawable(R.drawable.mariosprite));
         } else if (playerViewModel.getCharacterName() == "PEACH") {
-            mainCharacter = peach;
+            mainCharacter.setBackground(getDrawable(R.drawable.peachsprite));
         } else if (playerViewModel.getCharacterName() == "LUIGI") {
-            mainCharacter = luigi;
+            mainCharacter.setBackground(getDrawable(R.drawable.luigisprite));
         }
 
-        mainCharacter.setVisibility(View.VISIBLE);
-
+        rootLayout.addView(mainCharacter, mcParams);
         // setup enemies
 
         RelativeLayout boo = (RelativeLayout) findViewById(R.id.booSpriteLayout);
@@ -97,7 +104,6 @@ public class GameActivity extends AppCompatActivity {
 
         this.enemyViews = new HashMap<>();
         ArrayList<Enemy> enemies = this.gameViewModel.getEnemies().getValue();
-        RelativeLayout rootLayout = (RelativeLayout) findViewById(R.id.rootLayout);
         for (Enemy enemy : enemies) {
             RelativeLayout newEnemy = (RelativeLayout) new RelativeLayout(this);
             newEnemy.setLayoutParams(new RelativeLayout.LayoutParams(enemy.getSizeX(), enemy.getSizeY()));
