@@ -173,7 +173,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onChanged(Integer integer) {
                 hp.setText(String.format("Current Health: %d", playerViewModel.getHealth().getValue()));
-                if (integer <= 0) {
+                if (integer <= 0 && gameViewModel.getTimeElapsed().getValue() > 0) {
                     cancelTimers();
                     Intent i = new Intent(getApplicationContext(), EndActivity.class);
                     startActivity(i);
