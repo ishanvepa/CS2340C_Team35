@@ -204,12 +204,14 @@ public class GameActivity extends AppCompatActivity {
 
         if (GameModel.isAtExit(newPosition[0], newPosition[1])) {
             if (gameViewModel.getLevel() >= 3) {
+                cancelTimers();
                 Intent i = new Intent(getApplicationContext(), EndActivity.class);
                 LeaderboardModel leaderboardModel = LeaderboardModel.getInstance();
                 leaderboardModel.addScore(playerViewModel.getScore().getValue());
                 startActivity(i);
             } else {
                 gameViewModel.increaseLevel();
+                cancelTimers();
                 Intent i = new Intent(getApplicationContext(), GameActivity.class);
                 startActivity(i);
             }
@@ -224,7 +226,10 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        cancelTimers();
+    }
 
+    private void cancelTimers() {
         if (timer != null) {
             timer.cancel();
             timer.purge();
