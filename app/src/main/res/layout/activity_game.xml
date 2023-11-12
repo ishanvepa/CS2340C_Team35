@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.GameActivity">
@@ -47,6 +48,74 @@
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/bowserSpriteLayout"
+            android:layout_width="48dp"
+            android:layout_height="93dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="368dp">
+
+            <ImageView
+                android:id="@+id/bowserImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:src="@drawable/bowser"
+                app:srcCompat="@drawable/bowser" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/booSpriteLayout"
+            android:layout_width="48dp"
+            android:layout_height="93dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="468dp">
+
+            <ImageView
+                android:id="@+id/booImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:src="@drawable/boo"
+                app:srcCompat="@drawable/boo" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/koopaSpriteLayout"
+            android:layout_width="48dp"
+            android:layout_height="93dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="568dp">
+
+            <ImageView
+                android:id="@+id/koopaImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:src="@drawable/koopa"
+                app:srcCompat="@drawable/koopa" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/goombaSpriteLayout"
+            android:layout_width="48dp"
+            android:layout_height="93dp"
+            android:layout_marginStart="82dp"
+            android:layout_marginTop="568dp">
+
+            <ImageView
+                android:id="@+id/goombaImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:src="@drawable/goombawalk"
+                app:srcCompat="@drawable/goombawalk" />
+
+        </RelativeLayout>
         <TextView
             android:id="@+id/HPView"
             android:layout_width="wrap_content"
