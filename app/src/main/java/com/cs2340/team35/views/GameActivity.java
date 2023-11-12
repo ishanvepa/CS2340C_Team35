@@ -18,6 +18,7 @@ import com.cs2340.team35.models.LeaderboardModel;
 import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.models.WallModel;
 import com.cs2340.team35.models.enemies.Boo;
+import com.cs2340.team35.models.enemies.Bowser;
 import com.cs2340.team35.models.enemies.Enemy;
 import com.cs2340.team35.viewmodels.PlayerViewModel;
 import com.cs2340.team35.R;
@@ -98,16 +99,21 @@ public class GameActivity extends AppCompatActivity {
         ArrayList<Enemy> enemies = this.gameViewModel.getEnemies().getValue();
         RelativeLayout rootLayout = (RelativeLayout) findViewById(R.id.rootLayout);
         for (Enemy enemy : enemies) {
+            RelativeLayout newEnemy = (RelativeLayout) new RelativeLayout(this);
+            newEnemy.setLayoutParams(new RelativeLayout.LayoutParams(enemy.getSizeX(), enemy.getSizeY()));
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(enemy.getSizeX(), enemy.getSizeY());
+            params.leftMargin = enemy.getX();
+            params.topMargin = enemy.getY();
+
             if (enemy instanceof Boo) {
-                RelativeLayout newBoo = (RelativeLayout) new RelativeLayout(this);
-                newBoo.setBackground(getDrawable(R.drawable.boo));
-                newBoo.setLayoutParams(new RelativeLayout.LayoutParams(enemy.getSizeX(), enemy.getSizeY()));
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(enemy.getSizeX(), enemy.getSizeY());
-                params.leftMargin = enemy.getX();
-                params.topMargin = enemy.getY();
-                rootLayout.addView(newBoo, params);
-                this.enemyViews.put(enemy.getId(), newBoo);
+                newEnemy.setBackground(getDrawable(R.drawable.boo));
+            } else if (enemy instanceof Bowser) {
+                newEnemy.setBackground(getDrawable(R.drawable.bowser));
             }
+
+            rootLayout.addView(newEnemy, params);
+            this.enemyViews.put(enemy.getId(), newEnemy);
+
         }
 
 

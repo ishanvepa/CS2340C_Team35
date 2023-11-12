@@ -1,6 +1,7 @@
 package com.cs2340.team35.models;
 
 import com.cs2340.team35.models.enemies.BooFactory;
+import com.cs2340.team35.models.enemies.BowserFactory;
 import com.cs2340.team35.models.enemies.Enemy;
 import com.cs2340.team35.models.enemies.EnemyFactory;
 
@@ -106,15 +107,16 @@ public class GameModel {
 
     private void changeEnemies() {
         EnemyFactory booFactory = new BooFactory();
+        EnemyFactory bowserFactory = new BowserFactory();
 
         if (this.getLevel() == 1) {
             enemyArrayList = new ArrayList<>();
             enemyArrayList.add(booFactory.CreateEnemy(10, 10, 1, "boo1"));
-            enemyArrayList.add(booFactory.CreateEnemy(50, 1200, 1, "boo4"));
+            enemyArrayList.add(bowserFactory.CreateEnemy(50, 1200, 1, "boo4"));
         } else if (this.getLevel() == 2) {
             enemyArrayList = new ArrayList<>();
-            enemyArrayList.add(booFactory.CreateEnemy(10, 300, 1, "boo2"));
-            enemyArrayList.add(booFactory.CreateEnemy(100, 100, 1, "boo3"));
+            enemyArrayList.add(bowserFactory.CreateEnemy(10, 300, 1, "boo2"));
+            enemyArrayList.add(bowserFactory.CreateEnemy(100, 100, 1, "boo3"));
         } else if (this.getLevel() == 3) {
             enemyArrayList = new ArrayList<>();
             enemyArrayList.add(booFactory.CreateEnemy(50, 1200, 1, "boo4"));
@@ -122,8 +124,8 @@ public class GameModel {
         }
     }
 
-    public boolean notInBounds(int x, int y) {
-        if (y - 10 < 0 || x - 10 < 0 || x + 10 > 1000 || y + 10 > 1800) {
+    public boolean notInBounds(int x, int y, int width, int height) {
+        if (y - 10 < 0 || x - 10 < 0 || x + 10 + width > 1000 || y + 10 + height > 1900) {
            return true;
         }
 
@@ -136,7 +138,7 @@ public class GameModel {
             int nextX = enemy.getNextPositionX();
             int nextY = enemy.getNextPositionY();
 
-            if (isCollision(nextX, nextY) || notInBounds(nextX, nextY)) {
+            if (isCollision(nextX, nextY) || notInBounds(nextX, nextY, enemy.getSizeX(), enemy.getSizeY())) {
                 enemy.reverseSpeed();
             }
 
