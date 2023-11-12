@@ -1,5 +1,7 @@
 package com.cs2340.team35.models;
 
+import android.graphics.Rect;
+
 import com.cs2340.team35.models.enemies.BooFactory;
 import com.cs2340.team35.models.enemies.BowserFactory;
 import com.cs2340.team35.models.enemies.Enemy;
@@ -89,17 +91,22 @@ public class GameModel {
             this.wallModelArrayList.add(new WallModel(42, 950, 1038, 475));
         }
     }
-    public boolean isCollision(int x, int y) {
+
+    public boolean isCollision(int x, int y, int objectWidth, int objectHeight) {
+        Rect objectRect = new Rect(x, y, x + objectWidth, y + objectHeight);
+
         for (WallModel wall : wallModelArrayList) {
-            if (x > wall.getLeftMargin() && x < wall.getLeftMargin() + wall.getWidth()
-                    && ((y > wall.getTopMargin() && y < wall.getTopMargin() + wall.getHeight())
-                    || (y + 120 > wall.getTopMargin() && y + 120
-                    < wall.getTopMargin() + wall.getHeight()))) {
+            Rect wallRect = new Rect(wall.getLeftMargin(), wall.getTopMargin(),
+                    wall.getLeftMargin() + wall.getWidth(),
+                    wall.getTopMargin() + wall.getHeight());
+
+            if (Rect.intersects(objectRect, wallRect)) {
                 return true; // Collision detected
             }
         }
         return false; // No collision
     }
+
 
     public ArrayList<Enemy> getEnemies() {
         return enemyArrayList;
@@ -138,7 +145,7 @@ public class GameModel {
             int nextX = enemy.getNextPositionX();
             int nextY = enemy.getNextPositionY();
 
-            if (isCollision(nextX, nextY) || notInBounds(nextX, nextY, enemy.getSizeX(), enemy.getSizeY())) {
+            if (isCollision(nextX, nextY, enemy.getSizeX(), enemy.getSizeY()) || notInBounds(nextX, nextY, enemy.getSizeX(), enemy.getSizeY())) {
                 enemy.reverseSpeed();
             }
 

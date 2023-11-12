@@ -82,8 +82,8 @@ public class GameViewModel extends ViewModel {
         this.enemyArraylist.postValue(instance.getEnemies());
     }
 
-    public boolean isCollision(int x, int y) {
+    public boolean isCollision(int x, int y, int width, int height) {
         GameModel instance = GameModel.getInstance();
-        return instance.isCollision(x, y);
+        return instance.isCollision(x, y, width, height);
     }
 }

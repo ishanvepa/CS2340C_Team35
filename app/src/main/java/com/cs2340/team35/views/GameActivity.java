@@ -288,7 +288,7 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
-        if (!this.gameViewModel.isCollision(newPosition[0], newPosition[1])) {
+        if (!this.gameViewModel.isCollision(newPosition[0], newPosition[1], 130, 80)) {
             playerViewModel.setPosition(newPosition[0], newPosition[1]);
         }
 
