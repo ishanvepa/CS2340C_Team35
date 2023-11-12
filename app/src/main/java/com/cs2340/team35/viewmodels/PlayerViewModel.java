@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.ScoreModel;
 
-public class PlayerViewModel extends ViewModel implements PlayerModel.Subscriber {
+public class PlayerViewModel extends ViewModel implements PlayerModel.Subscriber, PlayerModel.CollisionSubscriber {
 
     private MutableLiveData<Integer[]> position;
     private MutableLiveData<Integer> health;
@@ -18,6 +18,7 @@ public class PlayerViewModel extends ViewModel implements PlayerModel.Subscriber
         this.health = new MutableLiveData<>(instance.getHealth());
         this.score = new MutableLiveData<>(instance.getScore());
         instance.addSubscriber(this);
+        instance.addCollisionSubscriber(this);
     }
 
     public String getCharacterName() {
@@ -46,6 +47,7 @@ public class PlayerViewModel extends ViewModel implements PlayerModel.Subscriber
     public void setPosition(Integer xpos, Integer ypos) {
         PlayerModel instance = PlayerModel.getInstance();
         instance.setPosition(xpos, ypos);
+        PlayerModel.getInstance().HandleEnemyCollision();
     }
 
     public void positionUpdated(int xpos, int ypos) {
@@ -76,5 +78,10 @@ public class PlayerViewModel extends ViewModel implements PlayerModel.Subscriber
         return PlayerModel.getInstance();
     }
 
-
+    @Override
+    public void HandleCollision() {
+        PlayerModel instance = PlayerModel.getInstance();
+        this.health.postValue(instance.getHealth());
+        this.position.postValue(new Integer[] {instance.getX(), instance.getY()});
+    }
 }
