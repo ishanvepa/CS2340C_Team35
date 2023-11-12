@@ -31,12 +31,12 @@ public class GameViewModel extends ViewModel {
         return instance.getWalls();
     }
 
-    public ArrayList<Enemy> getEnemies() {
+    public LiveData<ArrayList<Enemy>> getEnemies() {
         GameModel instance = GameModel.getInstance();
-        if (enemyArraylist.getValue() == null) {
-            enemyArraylist.postValue(instance.getEnemies());
+        if (enemyArraylist == null || enemyArraylist.getValue() == null) {
+            enemyArraylist = new MutableLiveData<>(instance.getEnemies());
         }
-        return instance.getEnemies();
+        return enemyArraylist;
     }
 
     public int getLevel() {
@@ -47,6 +47,7 @@ public class GameViewModel extends ViewModel {
     public void increaseLevel() {
         GameModel instance = GameModel.getInstance();
         instance.setLevel(instance.getLevel() + 1);
+        enemyArraylist = new MutableLiveData<>(instance.getEnemies());
     }
 
     public void resetLevel() {

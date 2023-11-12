@@ -14,16 +14,19 @@ public class Boo extends Enemy {
     private int sizeX;
     private int sizeY;
 
-    public Boo(int startX, int startY, int damageMultiplier) {
+    private String id;
+
+    public Boo(int startX, int startY, int damageMultiplier, String id) {
         this.x = startX;
         this.y = startY;
         this.damage = 5;
         this.damageMultiplier = damageMultiplier;
-        this.deltaTX = 3;
-        this.deltaTY = 5;
+        this.deltaTX = 30;
+        this.deltaTY = 50;
         this.speedMultiplier = 1;
-        this.sizeX = 20;
-        this.sizeY = 20;
+        this.sizeX = 100;
+        this.sizeY = 100;
+        this.id = id;
     }
     @Override
     public int getDamage() {
@@ -48,6 +51,11 @@ public class Boo extends Enemy {
     @Override
     public void setX(int x) {
         this.x = x;
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
     }
 
     @Override

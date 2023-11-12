@@ -24,6 +24,9 @@ public class GameModel {
     private static ArrayList<Enemy> enemyArrayList;
     private GameModel() {
         gameDifficulty = Difficulty.EASY;
+        level = 1;
+        changeEnemies();
+        changeWalls();
     }
     public void setGameDifficulty(Difficulty gameDifficulty) {
         GameModel.gameDifficulty = gameDifficulty;
@@ -106,20 +109,21 @@ public class GameModel {
 
         if (this.getLevel() == 1) {
             enemyArrayList = new ArrayList<>();
-            enemyArrayList.add(booFactory.CreateEnemy(10, 10, 1));
+            enemyArrayList.add(booFactory.CreateEnemy(10, 10, 1, "boo1"));
+            enemyArrayList.add(booFactory.CreateEnemy(50, 1200, 1, "boo4"));
         } else if (this.getLevel() == 2) {
             enemyArrayList = new ArrayList<>();
-            enemyArrayList.add(booFactory.CreateEnemy(10, 10, 1));
-            enemyArrayList.add(booFactory.CreateEnemy(10, 100, 1));
+            enemyArrayList.add(booFactory.CreateEnemy(10, 300, 1, "boo2"));
+            enemyArrayList.add(booFactory.CreateEnemy(100, 100, 1, "boo3"));
         } else if (this.getLevel() == 3) {
             enemyArrayList = new ArrayList<>();
-            enemyArrayList.add(booFactory.CreateEnemy(10, 10, 1));
-            enemyArrayList.add(booFactory.CreateEnemy(10, 300, 1));
+            enemyArrayList.add(booFactory.CreateEnemy(50, 1200, 1, "boo4"));
+            enemyArrayList.add(booFactory.CreateEnemy(200, 200, 1, "boo5"));
         }
     }
 
     public boolean notInBounds(int x, int y) {
-        if (y - 10 < 0 || x - 10 < 0 || x + 10 > 1800 - 130 || y + 10 > 1797) {
+        if (y - 10 < 0 || x - 10 < 0 || x + 10 > 1000 || y + 10 > 1800) {
            return true;
         }
 
@@ -132,7 +136,7 @@ public class GameModel {
             int nextX = enemy.getNextPositionX();
             int nextY = enemy.getNextPositionY();
 
-            if (isCollision(nextX, nextY) || notInBounds(nextX, nextX)) {
+            if (isCollision(nextX, nextY) || notInBounds(nextX, nextY)) {
                 enemy.reverseSpeed();
             }
 

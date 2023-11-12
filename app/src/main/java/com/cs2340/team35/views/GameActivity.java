@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -16,12 +17,18 @@ import com.cs2340.team35.models.GameModel;
 import com.cs2340.team35.models.LeaderboardModel;
 import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.models.WallModel;
+import com.cs2340.team35.models.enemies.Boo;
+import com.cs2340.team35.models.enemies.Enemy;
 import com.cs2340.team35.viewmodels.PlayerViewModel;
 import com.cs2340.team35.R;
 import com.cs2340.team35.viewmodels.GameViewModel;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import android.view.KeyEvent;
+
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -34,7 +41,7 @@ public class GameActivity extends AppCompatActivity {
     private Timer enemyUpdateTimer;
     private RelativeLayout mainCharacter;
     private TextView mainCharacterText;
-    private List<RelativeLayout> enemies;
+    private Map<String, RelativeLayout> enemyViews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +82,34 @@ public class GameActivity extends AppCompatActivity {
 
         mainCharacter.setVisibility(View.VISIBLE);
 
+        // setup enemies
+
+        RelativeLayout boo = (RelativeLayout) findViewById(R.id.booSpriteLayout);
+        RelativeLayout bowser = (RelativeLayout) findViewById(R.id.bowserSpriteLayout);
+        RelativeLayout koopa = (RelativeLayout) findViewById(R.id.koopaSpriteLayout);
+        RelativeLayout goomba = (RelativeLayout) findViewById(R.id.goombaSpriteLayout);
+
+        boo.setVisibility(View.GONE);
+        bowser.setVisibility(View.GONE);
+        koopa.setVisibility(View.GONE);
+        goomba.setVisibility(View.GONE);
+
+        this.enemyViews = new HashMap<>();
+        ArrayList<Enemy> enemies = this.gameViewModel.getEnemies().getValue();
+        RelativeLayout rootLayout = (RelativeLayout) findViewById(R.id.rootLayout);
+        for (Enemy enemy : enemies) {
+            if (enemy instanceof Boo) {
+                RelativeLayout newBoo = (RelativeLayout) new RelativeLayout(this);
+                newBoo.setBackground(getDrawable(R.drawable.boo));
+                newBoo.setLayoutParams(new RelativeLayout.LayoutParams(enemy.getSizeX(), enemy.getSizeY()));
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(enemy.getSizeX(), enemy.getSizeY());
+                params.leftMargin = enemy.getX();
+                params.topMargin = enemy.getY();
+                rootLayout.addView(newBoo, params);
+                this.enemyViews.put(enemy.getId(), newBoo);
+            }
+        }
+
 
         // setup timer
         if (timer != null) {
@@ -95,6 +130,14 @@ public class GameActivity extends AppCompatActivity {
                 gameViewModel.incrementTimeElapsed();
             }
         }, 0, 1000);
+
+        enemyUpdateTimer = new Timer();
+        enemyUpdateTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                gameViewModel.enemyTimestep();
+            }
+        }, 0, 200);
 
         // setup text content within text
         hp.setText(String.format("Current Health: %d", playerViewModel.getHealth().getValue()));
@@ -145,6 +188,13 @@ public class GameActivity extends AppCompatActivity {
                                 gameViewModel.getTimeElapsed().getValue()));
             }
         });
+
+        gameViewModel.getEnemies().observe(this, new Observer<List<Enemy>>() {
+            @Override
+            public void onChanged(List<Enemy> enemies) {
+                renderEnemies();
+            }
+        });
     }
 
     private void renderPlayer() {
@@ -176,6 +226,21 @@ public class GameActivity extends AppCompatActivity {
             params.leftMargin = wall.getLeftMargin();
             params.topMargin = wall.getTopMargin();
             layout.addView(v, params);
+        }
+    }
+
+    private void renderEnemies() {
+        ArrayList<Enemy> enemies = this.gameViewModel.getEnemies().getValue();
+        for (Enemy enemy : enemies) {
+            RelativeLayout enemyLayout = enemyViews.get(enemy.getId());
+            if (enemyLayout != null) {
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) enemyLayout.getLayoutParams();
+
+                layoutParams.leftMargin = enemy.getX();
+                layoutParams.topMargin = enemy.getY();
+
+                enemyLayout.setLayoutParams(layoutParams);
+            }
         }
     }
     //Movement
