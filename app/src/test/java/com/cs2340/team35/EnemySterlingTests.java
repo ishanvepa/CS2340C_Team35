@@ -68,6 +68,13 @@ public class EnemySterlingTests {
         Assert.assertEquals(goomba.getDamage(), 25);
         goomba.setDamageMultiplier(10);
         Assert.assertEquals(goomba.getDamage(), 50);
+        EnemyFactory koopaFactory = new KoopaFactory();
+        Enemy koopa = koopaFactory.CreateEnemy(0, 0, 1, "s");
+        Assert.assertEquals(koopa.getDamage(), 15);
+        koopa.setDamageMultiplier(5);
+        Assert.assertEquals(koopa.getDamage(), 75);
+        koopa.setDamageMultiplier(2);
+        Assert.assertEquals(koopa.getDamage(), 30);
     }
 }
 
