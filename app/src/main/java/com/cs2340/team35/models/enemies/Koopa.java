@@ -70,4 +70,8 @@ public class Koopa extends Enemy {
     public void setDamageMultiplier(int multiplier) {
         this.damageMultiplier = multiplier;
     }
+
+    public int getSpeedMultiplier(){
+        return this.speedMultiplier;
+    }
 }
