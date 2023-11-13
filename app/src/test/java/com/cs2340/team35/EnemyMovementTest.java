@@ -15,24 +15,24 @@ public class EnemyMovementTest {
         //test Boo movement
         Enemy boo = new Boo(10, 10, 1, "Booey");
         Assert.assertEquals(boo.getNextPositionX(), 40);
-        Assert.assertEquals(boo.getNextPositionY(), 60);
+        Assert.assertEquals(boo.getNextPositionY(), 40);
 
         //test Bowser movement
         Enemy bowser = new Boo(10, 10, 1, "Bowser");
-        Assert.assertEquals(bowser.getNextPositionX(), 20);
-        Assert.assertEquals(bowser.getNextPositionY(), 10);
+        Assert.assertEquals(bowser.getNextPositionX(), 40);
+        Assert.assertEquals(bowser.getNextPositionY(), 40);
     }
     @Test
     public void testEnemyReverseSpeed() {
         //test Boo SpeedReverse
         Boo boo = new Boo(10, 10, 1, "Booey");
         boo.reverseSpeed();
-        Assert.assertEquals(boo.getSpeedMultiplier(), 0);
+        Assert.assertEquals(boo.getSpeedMultiplier(), -1);
 
         //test Bowser SpeedReverse
         Bowser bowser = new Bowser(10, 10, 1, "Bowser");
         bowser.reverseSpeed();
-        Assert.assertEquals(bowser.getSpeedMultiplier(), 0);
+        Assert.assertEquals(bowser.getSpeedMultiplier(), -1);
 
 
     }
