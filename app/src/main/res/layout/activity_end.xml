@@ -118,7 +118,7 @@
     </TableLayout>
 
     <TextView
-        android:id="@+id/WinningText"
+        android:id="@+id/winLoseText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="128dp"
