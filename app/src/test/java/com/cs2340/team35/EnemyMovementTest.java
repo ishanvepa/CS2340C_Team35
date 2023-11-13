@@ -1,6 +1,8 @@
 package com.cs2340.team35;
 
+import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.enemies.Boo;
+import com.cs2340.team35.models.enemies.Bowser;
 import com.cs2340.team35.models.enemies.Enemy;
 
 import org.junit.Test;
@@ -9,7 +11,7 @@ import org.junit.Assert;
 
 public class EnemyMovementTest {
     @Test
-    public void testEnemyMovement{
+    public void testEnemyMovement() {
         //test Boo movement
         Enemy boo = new Boo(10, 10, 1, "Booey");
         Assert.assertEquals(boo.getNextPositionX(), 40);
@@ -20,10 +22,17 @@ public class EnemyMovementTest {
         Assert.assertEquals(bowser.getNextPositionX(), 20);
         Assert.assertEquals(bowser.getNextPositionY(), 10);
     }
-
     @Test
-    public void testEnemyCollision{
-        Assert.assertEquals();
+    public void testEnemyReverseSpeed() {
+        //test Boo SpeedReverse
+        Boo boo = new Boo(10, 10, 1, "Booey");
+        boo.reverseSpeed();
+        Assert.assertEquals(boo.getSpeedMultiplier(), 0);
+
+        //test Bowser SpeedReverse
+        Bowser bowser = new Bowser(10, 10, 1, "Bowser");
+        bowser.reverseSpeed();
+        Assert.assertEquals(bowser.getSpeedMultiplier(), 0);
 
 
     }
