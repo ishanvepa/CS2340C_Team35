@@ -34,7 +34,7 @@ public class EnemySterlingTests {
         int y2 = koopa.getNextPositionY();
         Assert.assertEquals(y2, -20);
     }
-
+  
     @Test
     public void TestBowserSpeedReversal() {
         EnemyFactory bFactory = new BowserFactory();
@@ -45,7 +45,7 @@ public class EnemySterlingTests {
         int x2 = bowser.getNextPositionX();
         Assert.assertEquals(x2, -10);
     }
-
+  
     @Test
     public void TestChangeDamage() {
         EnemyFactory goombaFactory = new GoombaFactory();
@@ -57,4 +57,3 @@ public class EnemySterlingTests {
         Assert.assertEquals(goomba.getDamage(), 50);
     }
 }
-
