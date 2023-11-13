@@ -3,6 +3,7 @@ package com.cs2340.team35.views;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,6 +21,18 @@ public class EndActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end);
+
+        TextView winLoseText = findViewById(R.id.winLoseText);
+        PlayerModel playerModel = PlayerModel.getInstance();
+
+        if (playerModel.getHealth() <= 0) {
+            winLoseText.setText("You Lost!");
+            winLoseText.setTextColor(Color.RED); // Set text color to red for losing
+        } else {
+            winLoseText.setText("You Won!");
+            winLoseText.setTextColor(Color.GREEN); // Set text color to green for winning
+        }
+
         Button restartButton = findViewById(R.id.restartButton);
 
         restartButton.setOnClickListener(v -> {
@@ -30,7 +43,7 @@ public class EndActivity extends AppCompatActivity {
 
         TextView score = findViewById(R.id.Score);
 
-        PlayerModel playerModel = PlayerModel.getInstance();
+        //PlayerModel playerModel = PlayerModel.getInstance();
         LeaderboardModel leaderboardModel = LeaderboardModel.getInstance();
 
         score.setText(String.format("Most recent score: %d",
