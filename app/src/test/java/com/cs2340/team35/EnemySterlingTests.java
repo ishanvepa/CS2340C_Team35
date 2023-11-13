@@ -27,6 +27,8 @@ public class EnemySterlingTests {
         Assert.assertEquals(goomba.getDamage(), 5);
         goomba.setDamageMultiplier(5);
         Assert.assertEquals(goomba.getDamage(), 25);
+        goomba.setDamageMultiplier(10);
+        Assert.assertEquals(goomba.getDamage(), 50);
     }
 }
 
