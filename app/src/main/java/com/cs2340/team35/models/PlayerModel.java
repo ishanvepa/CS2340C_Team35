@@ -1,16 +1,32 @@
 package com.cs2340.team35.models;
 
+import android.graphics.Rect;
+
+import com.cs2340.team35.models.enemies.Enemy;
+import com.cs2340.team35.models.enemies.EnemyFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerModel {
+public class PlayerModel implements Enemy.CollisionSubscriber {
+
     private static PlayerModel instance;
     private static int x;
     private static int y;
 
+    private final int width = 130;
+    private final int height = 130;
+
     private static ScoreModel score;
 
     private static int health;
+
+    @Override
+    public void HandleCollision(Enemy e) {
+        this.setHealth(this.getHealth() - e.getDamage());
+        setPosition(100, 600);
+    }
+
     public enum CharacterName { MARIO, LUIGI, PEACH }
     private static CharacterName character;
     private static String userName;
@@ -67,6 +83,10 @@ public class PlayerModel {
         for (Subscriber s : subscriberList) {
             s.positionUpdated(newX, newY);
         }
+
+        for (Enemy enemy : GameModel.getInstance().getEnemies()) {
+            enemy.detectCollision();
+        }
     }
 
     public void setCharacter(CharacterName character) {
@@ -109,7 +129,16 @@ public class PlayerModel {
         health = newHealth;
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
     public interface Subscriber {
         public void positionUpdated(int newX, int newY);
     }
+
 }

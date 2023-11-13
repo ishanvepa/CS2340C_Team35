@@ -49,7 +49,9 @@ public class PlayerViewModel extends ViewModel implements PlayerModel.Subscriber
     }
 
     public void positionUpdated(int xpos, int ypos) {
-        this.position.setValue(new Integer[] {xpos, ypos});
+        PlayerModel instance = PlayerModel.getInstance();
+        this.position.postValue(new Integer[] {xpos, ypos});
+        this.health.postValue(instance.getHealth());
     }
 
     public LiveData<Integer> getHealth() {
@@ -75,6 +77,5 @@ public class PlayerViewModel extends ViewModel implements PlayerModel.Subscriber
     public static PlayerModel getInstance() {
         return PlayerModel.getInstance();
     }
-
 
 }

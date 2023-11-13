@@ -12,72 +12,71 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="Easy"
-            app:layout_constraintBaseline_toBaselineOf="@+id/Medium"
-            app:layout_constraintEnd_toStartOf="@+id/Medium"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="16dp" />
 
         <TextView
             android:id="@+id/Difficulty"
-            android:layout_width="210dp"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="33dp"
+            android:layout_marginEnd="97dp"
+            android:layout_marginBottom="3dp"
             android:text="Difficulty:"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            app:layout_constraintBottom_toTopOf="@+id/Hard"
+            app:layout_constraintBottom_toBottomOf="@+id/Easy"
+            app:layout_constraintEnd_toStartOf="@+id/Hard"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/chooseSprite"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="6dp"
-            android:layout_marginBottom="14dp"
+            android:layout_height="147dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="24dp"
             android:text="Choose Sprite:"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            app:layout_constraintBottom_toTopOf="@+id/Mario"
-            app:layout_constraintEnd_toEndOf="@+id/Peach"
-            app:layout_constraintStart_toStartOf="@+id/Mario"
-            app:layout_constraintTop_toBottomOf="@+id/Medium" />
+            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
+            app:layout_constraintEnd_toEndOf="@+id/Hard"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="89dp" />
 
         <Button
             android:id="@+id/Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="41dp"
             android:text="Medium"
-            app:layout_constraintBottom_toTopOf="@+id/chooseSprite"
-            app:layout_constraintEnd_toStartOf="@+id/Hard"
-            app:layout_constraintStart_toEndOf="@+id/Easy"
-            app:layout_constraintTop_toBottomOf="@+id/Hard" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/Difficulty"
+            tools:layout_editor_absoluteX="158dp" />
 
         <Button
             android:id="@+id/Hard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:text="Hard"
-            app:layout_constraintBottom_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/Medium"
-            app:layout_constraintTop_toBottomOf="@+id/Difficulty" />
+            app:layout_constraintStart_toEndOf="@+id/Difficulty"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="307dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="1dp"
-            android:layout_marginTop="98dp"
+            android:layout_marginTop="86dp"
             android:layout_marginEnd="1dp"
-            android:layout_marginBottom="476dp"
-            app:layout_constraintBottom_toTopOf="@+id/currentAttributes"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="86dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/Input"
@@ -93,73 +92,78 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="20dp"
             android:scaleType="fitCenter"
-            app:layout_constraintBottom_toTopOf="@+id/Peach"
+            app:layout_constraintBottom_toBottomOf="@+id/Luigi"
             app:layout_constraintEnd_toStartOf="@+id/Luigi"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chooseSprite"
-            app:srcCompat="@drawable/mariosprite" />
+            app:layout_constraintTop_toTopOf="@+id/Luigi"
+            app:srcCompat="@drawable/mariosprite"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="250dp" />
 
         <ImageButton
             android:id="@+id/Luigi"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="29dp"
+            android:layout_width="104dp"
+            android:layout_height="147dp"
+            android:layout_marginTop="161dp"
+            android:layout_marginBottom="147dp"
             android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="@+id/Mario"
-            app:layout_constraintEnd_toStartOf="@+id/Peach"
-            app:layout_constraintStart_toEndOf="@+id/Mario"
-            app:layout_constraintTop_toTopOf="@+id/Mario"
-            app:srcCompat="@drawable/luigisprite" />
+            app:layout_constraintBottom_toBottomOf="@+id/Peach"
+            app:layout_constraintEnd_toEndOf="@+id/chooseSprite"
+            app:layout_constraintStart_toStartOf="@+id/chooseSprite"
+            app:layout_constraintTop_toTopOf="@+id/chooseSprite"
+            app:srcCompat="@drawable/luigisprite"
+            tools:layout_editor_absoluteX="140dp"
+            tools:layout_editor_absoluteY="250dp" />
 
         <ImageButton
             android:id="@+id/Peach"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="34dp"
+            android:layout_height="147dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="33dp"
             android:layout_marginBottom="23dp"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toTopOf="@+id/next"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/Luigi"
-            app:layout_constraintTop_toBottomOf="@+id/Mario"
-            app:srcCompat="@drawable/peachsprite" />
+            app:srcCompat="@drawable/peachsprite"
+            tools:layout_editor_absoluteX="274dp"
+            tools:layout_editor_absoluteY="397dp" />
 
         <Button
             android:id="@+id/next"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="158dp"
+            android:layout_height="147dp"
             android:layout_marginEnd="19dp"
-            android:layout_marginBottom="17dp"
             android:text="Next"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/currentAttributes"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/currentAttributes"
-            app:layout_constraintTop_toBottomOf="@+id/Peach" />
+            app:layout_constraintTop_toTopOf="@+id/currentAttributes"
+            tools:layout_editor_absoluteX="234dp"
+            tools:layout_editor_absoluteY="567dp" />
 
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="46dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginBottom="1dp"
             android:text="Name:"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="@+id/Easy"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="40dp" />
 
         <TextView
             android:id="@+id/currentAttributes"
             android:layout_width="185dp"
             android:layout_height="83dp"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="33dp"
-            android:layout_marginBottom="21dp"
+            android:layout_marginBottom="9dp"
             android:text="Attributes"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/next"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="639dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

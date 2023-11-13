@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cs2340.team35.R;
+import com.cs2340.team35.models.GameModel;
 import com.cs2340.team35.models.LeaderboardModel;
 import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.ScoreModel;
@@ -20,6 +21,7 @@ public class EndActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_end);
 
         TextView winLoseText = findViewById(R.id.winLoseText);
@@ -32,6 +34,7 @@ public class EndActivity extends AppCompatActivity {
             winLoseText.setText("You Won!");
             winLoseText.setTextColor(Color.GREEN); // Set text color to green for winning
         }
+
 
         Button restartButton = findViewById(R.id.restartButton);
 

@@ -1,7 +1,6 @@
 package com.cs2340.team35;
 
 import com.cs2340.team35.models.WallModel;
-import com.cs2340.team35.views.GameActivity;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -40,6 +39,11 @@ public class CollisionUnitTests {
         walls.add(new WallModel(21, 400, 5, 275)); //left wall
         walls.add(new WallModel(21, 400, 300, 275)); //right wall
         Assert.assertFalse(WallModel.isCollision(2, 280, walls));
+    }
+
+    @Test
+    public void TestPlayerHealthAfterCollision() {
+
     }
 
 }

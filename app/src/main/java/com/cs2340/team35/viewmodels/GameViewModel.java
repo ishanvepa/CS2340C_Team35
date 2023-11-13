@@ -5,10 +5,16 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.cs2340.team35.models.GameModel;
+import com.cs2340.team35.models.WallModel;
+import com.cs2340.team35.models.enemies.Enemy;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameViewModel extends ViewModel {
 
     private MutableLiveData<Integer> timeElapsed;
+    private MutableLiveData<ArrayList<Enemy>> enemyArraylist;
 
     public String getDifficulty() {
         GameModel instance = GameModel.getInstance();
@@ -20,6 +26,19 @@ public class GameViewModel extends ViewModel {
         instance.setGameDifficulty(GameModel.Difficulty.valueOf(diff));
     }
 
+    public ArrayList<WallModel> getWalls() {
+        GameModel instance = GameModel.getInstance();
+        return instance.getWalls();
+    }
+
+    public LiveData<ArrayList<Enemy>> getEnemies() {
+        GameModel instance = GameModel.getInstance();
+        if (enemyArraylist == null || enemyArraylist.getValue() == null) {
+            enemyArraylist = new MutableLiveData<>(instance.getEnemies());
+        }
+        return enemyArraylist;
+    }
+
     public int getLevel() {
         GameModel instance = GameModel.getInstance();
         return instance.getLevel();
@@ -28,6 +47,7 @@ public class GameViewModel extends ViewModel {
     public void increaseLevel() {
         GameModel instance = GameModel.getInstance();
         instance.setLevel(instance.getLevel() + 1);
+        enemyArraylist = new MutableLiveData<>(instance.getEnemies());
     }
 
     public void resetLevel() {
@@ -54,5 +74,16 @@ public class GameViewModel extends ViewModel {
         GameModel instance = GameModel.getInstance();
         instance.setTimeElapsed(0);
         this.timeElapsed.postValue(instance.getTimeElapsed());
+    }
+
+    public void enemyTimestep() {
+        GameModel instance = GameModel.getInstance();
+        instance.enemyTimestep();
+        this.enemyArraylist.postValue(instance.getEnemies());
+    }
+
+    public boolean isCollision(int x, int y, int width, int height) {
+        GameModel instance = GameModel.getInstance();
+        return instance.isCollision(x, y, width, height);
     }
 }
