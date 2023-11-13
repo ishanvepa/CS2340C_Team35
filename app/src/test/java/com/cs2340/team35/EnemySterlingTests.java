@@ -19,5 +19,14 @@ public class EnemySterlingTests {
         int y2 = goomba.getNextPositionY();
         Assert.assertEquals(y2, -50);
     }
+
+    @Test
+    public void TestChangeDamage() {
+        EnemyFactory goombaFactory = new GoombaFactory();
+        Enemy goomba = goombaFactory.CreateEnemy(0, 0, 1, "s");
+        Assert.assertEquals(goomba.getDamage(), 5);
+        goomba.setDamageMultiplier(5);
+        Assert.assertEquals(goomba.getDamage(), 25);
+    }
 }
 
