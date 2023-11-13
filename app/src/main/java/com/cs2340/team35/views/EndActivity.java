@@ -21,20 +21,14 @@ public class EndActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (PlayerModel.getInstance().getHealth() <= 0) {
-            setContentView(R.layout.activity_lost);
-            Button restartButton = findViewById(R.id.restartButton);
-
-            restartButton.setOnClickListener(v -> {
-                Intent intent = new Intent(EndActivity.this,
-                        WelcomeActivity.class);
-                startActivity(intent);
-            });
-
-            return;
-        }
-
         setContentView(R.layout.activity_end);
+
+        TextView tx = findViewById(R.id.WinningText);
+        if (PlayerModel.getInstance().getHealth() <= 0) {
+            tx.setText("Game Over");
+        } else {
+            tx.setText("Winner");
+        }
         Button restartButton = findViewById(R.id.restartButton);
 
         restartButton.setOnClickListener(v -> {
