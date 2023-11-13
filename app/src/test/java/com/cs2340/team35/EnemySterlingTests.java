@@ -8,6 +8,8 @@ import com.cs2340.team35.models.enemies.Bowser;
 import com.cs2340.team35.models.enemies.GoombaFactory;
 import com.cs2340.team35.models.enemies.KoopaFactory;
 import com.cs2340.team35.models.enemies.BowserFactory;
+import com.cs2340.team35.models.enemies.Boo;
+import com.cs2340.team35.models.enemies.BooFactory;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -44,6 +46,17 @@ public class EnemySterlingTests {
         bowser.reverseSpeed();
         int x2 = bowser.getNextPositionX();
         Assert.assertEquals(x2, -10);
+    }
+
+    @Test
+    public void TestBooSpeedReversal() {
+        EnemyFactory bFactory = new BooFactory();
+        Enemy boo = bFactory.CreateEnemy(0, 0, 1, "s");
+        int x = boo.getNextPositionX();
+        Assert.assertEquals(x, 30);
+        boo.reverseSpeed();
+        int x2 = boo.getNextPositionX();
+        Assert.assertEquals(x2, -30);
     }
 
     @Test
