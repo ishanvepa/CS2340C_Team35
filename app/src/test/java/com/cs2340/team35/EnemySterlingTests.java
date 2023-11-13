@@ -3,7 +3,9 @@ package com.cs2340.team35;
 import com.cs2340.team35.models.enemies.Enemy;
 import com.cs2340.team35.models.enemies.EnemyFactory;
 import com.cs2340.team35.models.enemies.Goomba;
+import com.cs2340.team35.models.enemies.Koopa;
 import com.cs2340.team35.models.enemies.GoombaFactory;
+import com.cs2340.team35.models.enemies.KoopaFactory;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,6 +20,17 @@ public class EnemySterlingTests {
         goomba.reverseSpeed();
         int y2 = goomba.getNextPositionY();
         Assert.assertEquals(y2, -50);
+    }
+
+    @Test
+    public void TestKoopaSpeedReversal() {
+        EnemyFactory koopaFactory = new KoopaFactory();
+        Enemy koopa = koopaFactory.CreateEnemy(0, 0, 1, "s");
+        int y = koopa.getNextPositionY();
+        Assert.assertEquals(y, 20);
+        koopa.reverseSpeed();
+        int y2 = koopa.getNextPositionY();
+        Assert.assertEquals(y2, -20);
     }
 
     @Test
