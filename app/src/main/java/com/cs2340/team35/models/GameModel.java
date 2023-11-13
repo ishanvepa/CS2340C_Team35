@@ -176,4 +176,9 @@ public class GameModel {
         }
 
     }
+
+    //For unit testing
+    public ArrayList getEnemyArrayList() {
+        return enemyArrayList;
+    }
 }
