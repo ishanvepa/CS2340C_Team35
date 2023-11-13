@@ -4,8 +4,10 @@ import com.cs2340.team35.models.enemies.Enemy;
 import com.cs2340.team35.models.enemies.EnemyFactory;
 import com.cs2340.team35.models.enemies.Goomba;
 import com.cs2340.team35.models.enemies.Koopa;
+import com.cs2340.team35.models.enemies.Bowser;
 import com.cs2340.team35.models.enemies.GoombaFactory;
 import com.cs2340.team35.models.enemies.KoopaFactory;
+import com.cs2340.team35.models.enemies.BowserFactory;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -32,7 +34,18 @@ public class EnemySterlingTests {
         int y2 = koopa.getNextPositionY();
         Assert.assertEquals(y2, -20);
     }
-
+  
+    @Test
+    public void TestBowserSpeedReversal() {
+        EnemyFactory bFactory = new BowserFactory();
+        Enemy bowser = bFactory.CreateEnemy(0, 0, 1, "s");
+        int x = bowser.getNextPositionX();
+        Assert.assertEquals(x, 10);
+        bowser.reverseSpeed();
+        int x2 = bowser.getNextPositionX();
+        Assert.assertEquals(x2, -10);
+    }
+  
     @Test
     public void TestChangeDamage() {
         EnemyFactory goombaFactory = new GoombaFactory();
@@ -44,4 +57,3 @@ public class EnemySterlingTests {
         Assert.assertEquals(goomba.getDamage(), 50);
     }
 }
-
