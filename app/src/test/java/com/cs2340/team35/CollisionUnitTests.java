@@ -41,4 +41,9 @@ public class CollisionUnitTests {
         Assert.assertFalse(WallModel.isCollision(2, 280, walls));
     }
 
+    @Test
+    public void TestPlayerHealthAfterCollision() {
+
+    }
+
 }
