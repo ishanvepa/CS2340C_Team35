@@ -184,15 +184,13 @@ public class GameModel {
             powerupArrayList = new ArrayList<PowerupInterface>();
             PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 100, 600, "health1", "health"));
             powerupArrayList.add(health1);
-            powerupArrayList.add(new SizePowerupDecorator(new PowerupBase(false, 200, 900, "size1", "size")));
-            powerupArrayList.add(new SpeedPowerupDecorator(new PowerupBase(false, 200, 1100, "speed1", "speed")));
         } else if (this.getLevel() == 2) {
             powerupArrayList = new ArrayList<PowerupInterface>();
-            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 100, 600, "health2", "health"));
-            powerupArrayList.add(health1);
+            powerupArrayList.add(new SizePowerupDecorator(new PowerupBase(false, 200, 900, "size1", "size")));
+            powerupArrayList.add(new SpeedPowerupDecorator(new PowerupBase(false, 200, 1100, "speed1", "speed")));
         } else if (this.getLevel() == 3) {
             powerupArrayList = new ArrayList<PowerupInterface>();
-            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 100, 600, "health2", "health"));
+            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 400, 600, "health2", "health"));
             powerupArrayList.add(health1);
         }
 
