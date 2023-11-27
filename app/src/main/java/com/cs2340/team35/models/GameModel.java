@@ -194,6 +194,10 @@ public class GameModel {
             PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 100, 600, "health2", "health"));
             powerupArrayList.add(health1);
         }
+
+        for (PowerupInterface pi : powerupArrayList) {
+            pi.addCollisionSubscriber(PlayerModel.getInstance());
+        }
     }
 
     public ArrayList<PowerupInterface> getPowerups() {

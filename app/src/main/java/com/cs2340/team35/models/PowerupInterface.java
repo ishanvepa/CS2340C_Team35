@@ -8,4 +8,11 @@ public interface PowerupInterface {
     public int getLength();
     public String getId();
     public String getType();
+
+    interface CollisionSubscriber {
+        void HandleCollision(PowerupInterface p);
+    }
+
+    public void addCollisionSubscriber(CollisionSubscriber cs);
+    public void detectCollision();
 }

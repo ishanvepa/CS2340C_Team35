@@ -41,4 +41,14 @@ public abstract class PowerupDecorator implements PowerupInterface {
     public String getId() {
         return this.powerupInterface.getId();
     }
+
+    @Override
+    public void detectCollision() {
+        this.powerupInterface.detectCollision();
+    }
+
+    @Override
+    public void addCollisionSubscriber(CollisionSubscriber cs) {
+        this.powerupInterface.addCollisionSubscriber(cs);
+    }
 }

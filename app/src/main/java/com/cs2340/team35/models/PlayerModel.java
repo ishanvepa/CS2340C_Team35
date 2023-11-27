@@ -8,7 +8,7 @@ import com.cs2340.team35.models.enemies.EnemyFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerModel implements Enemy.CollisionSubscriber {
+public class PlayerModel implements Enemy.CollisionSubscriber, PowerupInterface.CollisionSubscriber {
 
     private static PlayerModel instance;
     private static int x;
@@ -25,6 +25,11 @@ public class PlayerModel implements Enemy.CollisionSubscriber {
     public void HandleCollision(Enemy e) {
         this.setHealth(this.getHealth() - e.getDamage());
         setPosition(100, 600);
+    }
+
+    @Override
+    public void HandleCollision(PowerupInterface p) {
+        p.activate();
     }
 
     public enum CharacterName { MARIO, LUIGI, PEACH }
@@ -86,6 +91,10 @@ public class PlayerModel implements Enemy.CollisionSubscriber {
 
         for (Enemy enemy : GameModel.getInstance().getEnemies()) {
             enemy.detectCollision();
+        }
+
+        for (PowerupInterface pi : GameModel.getInstance().getPowerups()) {
+            pi.detectCollision();
         }
     }
 
