@@ -25,13 +25,15 @@ public class GameModel {
     }
     private static int timeElapsed;
     private static ArrayList<WallModel> wallModelArrayList;
-
     private static ArrayList<Enemy> enemyArrayList;
+
+    private static ArrayList<PowerupInterface> powerupArrayList;
     private GameModel() {
         gameDifficulty = Difficulty.EASY;
         level = 1;
         changeEnemies();
         changeWalls();
+        changePowerups();
     }
     public void setGameDifficulty(Difficulty gameDifficulty) {
         GameModel.gameDifficulty = gameDifficulty;
@@ -61,6 +63,7 @@ public class GameModel {
         level = newLevel;
         changeWalls();
         changeEnemies();
+        changePowerups();
     }
 
     public static boolean isAtExit(int x, int y) {
@@ -175,6 +178,26 @@ public class GameModel {
             enemyArrayList.set(i, enemy);
         }
 
+    }
+
+    private void changePowerups() {
+        if (this.getLevel() == 1) {
+            powerupArrayList = new ArrayList<PowerupInterface>();
+            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 100, 100));
+            powerupArrayList.add(health1);
+        } else if (this.getLevel() == 2) {
+            powerupArrayList = new ArrayList<PowerupInterface>();
+            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 100, 100));
+            powerupArrayList.add(health1);
+        } else if (this.getLevel() == 3) {
+            powerupArrayList = new ArrayList<PowerupInterface>();
+            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 100, 100));
+            powerupArrayList.add(health1);
+        }
+    }
+
+    public ArrayList<PowerupInterface> getPowerups() {
+        return powerupArrayList;
     }
 
     //For unit testing

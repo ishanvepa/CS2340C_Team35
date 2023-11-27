@@ -11,5 +11,6 @@ public class HealthPowerupDecorator extends PowerupDecorator {
         super.activate();
         PlayerModel instance = PlayerModel.getInstance();
         instance.setHealth(instance.getHealth() + 50);
+        instance.setPosition(instance.getX(), instance.getY());
     }
 }

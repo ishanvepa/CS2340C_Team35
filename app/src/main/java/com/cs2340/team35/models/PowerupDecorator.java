@@ -17,4 +17,18 @@ public abstract class PowerupDecorator implements PowerupInterface {
         return this.powerupInterface.isUsed();
     }
 
+    @Override
+    public int getLength() {
+        return this.powerupInterface.getLength();
+    }
+
+    @Override
+    public int getX() {
+        return this.powerupInterface.getX();
+    }
+
+    @Override
+    public int getY() {
+        return this.powerupInterface.getY();
+    }
 }

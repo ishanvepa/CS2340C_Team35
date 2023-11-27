@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.cs2340.team35.models.GameModel;
+import com.cs2340.team35.models.PowerupInterface;
 import com.cs2340.team35.models.WallModel;
 import com.cs2340.team35.models.enemies.Enemy;
 
@@ -15,6 +16,7 @@ public class GameViewModel extends ViewModel {
 
     private MutableLiveData<Integer> timeElapsed;
     private MutableLiveData<ArrayList<Enemy>> enemyArraylist;
+    private MutableLiveData<ArrayList<PowerupInterface>> powerupArraylist;
 
     public String getDifficulty() {
         GameModel instance = GameModel.getInstance();
@@ -38,6 +40,15 @@ public class GameViewModel extends ViewModel {
         }
         return enemyArraylist;
     }
+
+    public LiveData<ArrayList<PowerupInterface>> getPowerups() {
+        GameModel instance = GameModel.getInstance();
+        if (powerupArraylist == null || powerupArraylist.getValue() == null) {
+            powerupArraylist = new MutableLiveData<>(instance.getPowerups());
+        }
+        return powerupArraylist;
+    }
+
 
     public int getLevel() {
         GameModel instance = GameModel.getInstance();

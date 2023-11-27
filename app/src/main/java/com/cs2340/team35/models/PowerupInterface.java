@@ -1,6 +1,9 @@
 package com.cs2340.team35.models;
 
-interface PowerupInterface {
+public interface PowerupInterface {
     public void activate();
     public boolean isUsed();
+    public int getX();
+    public int getY();
+    public int getLength();
 }

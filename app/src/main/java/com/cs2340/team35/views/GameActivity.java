@@ -14,8 +14,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cs2340.team35.models.GameModel;
+import com.cs2340.team35.models.HealthPowerupDecorator;
 import com.cs2340.team35.models.LeaderboardModel;
 import com.cs2340.team35.models.PlayerModel;
+import com.cs2340.team35.models.PowerupInterface;
 import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.models.WallModel;
 import com.cs2340.team35.models.enemies.Boo;
@@ -46,6 +48,8 @@ public class GameActivity extends AppCompatActivity {
     private RelativeLayout mainCharacter;
     private TextView mainCharacterText;
     private Map<String, RelativeLayout> enemyViews;
+
+    private Map<String, RelativeLayout> powerupViews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +132,22 @@ public class GameActivity extends AppCompatActivity {
 
         }
 
+        // setup powerups
+        this.powerupViews = new HashMap<>();
+        ArrayList<PowerupInterface> powerupInterfaces = gameViewModel.getPowerups().getValue();
+        for (PowerupInterface powerup : powerupInterfaces) {
+            RelativeLayout newP = (RelativeLayout) new RelativeLayout(this);
+            newP.setLayoutParams(new RelativeLayout.LayoutParams(powerup.getLength(), powerup.getLength()));
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(powerup.getLength(), powerup.getLength());
+            params.leftMargin = powerup.getX();
+            params.topMargin = powerup.getY();
+
+            if (powerup instanceof HealthPowerupDecorator) {
+                newP.setBackground(getDrawable(R.drawable.heart));
+            }
+
+            rootLayout.addView(newP, params);
+        }
 
         // setup timer
         if (timer != null) {
@@ -180,6 +200,7 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         });
+
         // initial renders
         renderPlayer();
         renderWalls();
@@ -256,6 +277,10 @@ public class GameActivity extends AppCompatActivity {
             params.topMargin = wall.getTopMargin();
             layout.addView(v, params);
         }
+    }
+
+    private void renderPowerups() {
+
     }
 
     private void renderEnemies() {

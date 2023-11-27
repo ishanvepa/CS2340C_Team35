@@ -3,9 +3,15 @@ package com.cs2340.team35.models;
 public class PowerupBase implements PowerupInterface {
 
     private boolean used;
+    private int x;
+    private int y;
 
-    public PowerupBase(boolean used) {
+    private final int LENGTH = 100;
+
+    public PowerupBase(boolean used, int x, int y) {
         this.used = used;
+        this.x = x;
+        this.y = y;
     }
 
     @Override
@@ -22,5 +28,19 @@ public class PowerupBase implements PowerupInterface {
         return this.used;
     }
 
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public int getLength() {
+        return LENGTH;
+    }
 
 }
