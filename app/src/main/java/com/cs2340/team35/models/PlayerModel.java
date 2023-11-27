@@ -32,6 +32,9 @@ public class PlayerModel implements Enemy.CollisionSubscriber, PowerupInterface.
         if (!p.isUsed()) {
             p.activate();
 
+            for (Subscriber s : subscriberList) {
+                s.powerupUpdated();
+            }
         }
     }
 
@@ -151,6 +154,7 @@ public class PlayerModel implements Enemy.CollisionSubscriber, PowerupInterface.
 
     public interface Subscriber {
         public void positionUpdated(int newX, int newY);
+        public void powerupUpdated();
     }
 
 }
