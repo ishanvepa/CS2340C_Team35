@@ -37,6 +37,7 @@ import java.util.List;
 import android.view.KeyEvent;
 
 import java.util.Map;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -379,5 +380,4 @@ public class GameActivity extends AppCompatActivity {
             enemyUpdateTimer  = null;
         }
     }
-
 }

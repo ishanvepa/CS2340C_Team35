@@ -8,9 +8,11 @@ import com.cs2340.team35.models.enemies.Enemy;
 import com.cs2340.team35.models.enemies.EnemyFactory;
 import com.cs2340.team35.models.enemies.GoombaFactory;
 import com.cs2340.team35.models.enemies.KoopaFactory;
+import com.cs2340.team35.viewmodels.PlayerViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GameModel {
     public enum Difficulty { EASY, MEDIUM, HARD }
@@ -180,17 +182,27 @@ public class GameModel {
     }
 
     private void changePowerups() {
+        int randX;
+        int randY;
         if (this.getLevel() == 1) {
+            randX = randomXinScreen(131, 388);
+            randY = randomYinScreen(606, 1769);
             powerupArrayList = new ArrayList<PowerupInterface>();
-            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 100, 600, "health1", "health"));
+            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, randX, randY, "health1", "health"));
             powerupArrayList.add(health1);
         } else if (this.getLevel() == 2) {
+            randX = randomXinScreen(131, 907);
+            randY = randomYinScreen(606, 1056);
             powerupArrayList = new ArrayList<PowerupInterface>();
-            powerupArrayList.add(new SizePowerupDecorator(new PowerupBase(false, 200, 900, "size1", "size")));
-            powerupArrayList.add(new SpeedPowerupDecorator(new PowerupBase(false, 200, 1100, "speed1", "speed")));
+            powerupArrayList.add(new SizePowerupDecorator(new PowerupBase(false, randX, randY, "size1", "size")));
+            randX = randomXinScreen(131, 907);
+            randY = randomYinScreen(606, 1056);
+            powerupArrayList.add(new SpeedPowerupDecorator(new PowerupBase(false, randX, randY, "speed1", "speed")));
         } else if (this.getLevel() == 3) {
             powerupArrayList = new ArrayList<PowerupInterface>();
-            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 400, 600, "health2", "health"));
+            randX = randomXinScreen(650, 907);
+            randY = randomYinScreen(606, 1769);
+            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, randX, randY, "health2", "health"));
             powerupArrayList.add(health1);
         }
 
@@ -201,6 +213,18 @@ public class GameModel {
 
     public ArrayList<PowerupInterface> getPowerups() {
         return powerupArrayList;
+    }
+
+    private int randomXinScreen(int startVal, int endVal) {
+        Random random = new Random();
+        int randVal = random.nextInt(endVal - startVal) + startVal;
+        return randVal;
+    }
+
+    private int randomYinScreen(int startVal, int endVal) {
+        Random random = new Random();
+        int randVal = random.nextInt(endVal - startVal) + startVal;
+        return randVal;
     }
 
     //For unit testing
