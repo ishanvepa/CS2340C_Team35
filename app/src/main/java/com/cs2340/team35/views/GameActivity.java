@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.cs2340.team35.models.GameModel;
 import com.cs2340.team35.models.HealthPowerupDecorator;
 import com.cs2340.team35.models.LeaderboardModel;
 import com.cs2340.team35.models.PlayerModel;
+import com.cs2340.team35.models.PowerupBase;
 import com.cs2340.team35.models.PowerupInterface;
 import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.models.WallModel;
@@ -48,9 +50,7 @@ public class GameActivity extends AppCompatActivity {
     private RelativeLayout mainCharacter;
     private TextView mainCharacterText;
     private Map<String, RelativeLayout> enemyViews;
-
     private Map<String, RelativeLayout> powerupViews;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,10 +142,11 @@ public class GameActivity extends AppCompatActivity {
             params.leftMargin = powerup.getX();
             params.topMargin = powerup.getY();
 
-            if (powerup instanceof HealthPowerupDecorator) {
+            if (powerup.getType() == "health") {
                 newP.setBackground(getDrawable(R.drawable.heart));
             }
 
+            this.powerupViews.put(powerup.getId(), newP);
             rootLayout.addView(newP, params);
         }
 
@@ -245,6 +246,13 @@ public class GameActivity extends AppCompatActivity {
                 renderEnemies();
             }
         });
+
+        gameViewModel.getPowerups().observe(this, new Observer<List<PowerupInterface>>() {
+            @Override
+            public void onChanged(List<PowerupInterface> powerups) {
+                renderPowerups();
+            }
+        });
     }
 
     private void renderPlayer() {
@@ -280,7 +288,15 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void renderPowerups() {
-
+        List<PowerupInterface> powerups = this.gameViewModel.getPowerups().getValue();
+        for (PowerupInterface powerup : powerups) {
+            RelativeLayout powerupView = powerupViews.get(powerup.getId());
+            if (powerupView != null) {
+                if (powerup.isUsed()) {
+                    powerupView.setVisibility(View.GONE);
+                }
+            }
+        }
     }
 
     private void renderEnemies() {

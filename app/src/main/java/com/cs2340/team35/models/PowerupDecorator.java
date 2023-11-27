@@ -31,4 +31,14 @@ public abstract class PowerupDecorator implements PowerupInterface {
     public int getY() {
         return this.powerupInterface.getY();
     }
+
+    @Override
+    public String getType() {
+        return this.powerupInterface.getType();
+    }
+
+    @Override
+    public String getId() {
+        return this.powerupInterface.getId();
+    }
 }

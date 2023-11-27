@@ -6,4 +6,6 @@ public interface PowerupInterface {
     public int getX();
     public int getY();
     public int getLength();
+    public String getId();
+    public String getType();
 }

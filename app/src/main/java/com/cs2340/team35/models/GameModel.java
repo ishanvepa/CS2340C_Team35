@@ -183,15 +183,15 @@ public class GameModel {
     private void changePowerups() {
         if (this.getLevel() == 1) {
             powerupArrayList = new ArrayList<PowerupInterface>();
-            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 100, 100));
+            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 100, 600, "health1", "health"));
             powerupArrayList.add(health1);
         } else if (this.getLevel() == 2) {
             powerupArrayList = new ArrayList<PowerupInterface>();
-            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 100, 100));
+            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 100, 600, "health2", "health"));
             powerupArrayList.add(health1);
         } else if (this.getLevel() == 3) {
             powerupArrayList = new ArrayList<PowerupInterface>();
-            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 100, 100));
+            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 100, 600, "health2", "health"));
             powerupArrayList.add(health1);
         }
     }

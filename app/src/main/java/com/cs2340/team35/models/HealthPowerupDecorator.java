@@ -13,4 +13,9 @@ public class HealthPowerupDecorator extends PowerupDecorator {
         instance.setHealth(instance.getHealth() + 50);
         instance.setPosition(instance.getX(), instance.getY());
     }
+
+    @Override
+    public String getType() {
+        return "health";
+    }
 }

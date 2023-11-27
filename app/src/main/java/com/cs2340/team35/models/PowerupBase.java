@@ -6,9 +6,13 @@ public class PowerupBase implements PowerupInterface {
     private int x;
     private int y;
 
+    private String id;
+
+    private String type;
+
     private final int LENGTH = 100;
 
-    public PowerupBase(boolean used, int x, int y) {
+    public PowerupBase(boolean used, int x, int y, String id, String type) {
         this.used = used;
         this.x = x;
         this.y = y;
@@ -43,4 +47,13 @@ public class PowerupBase implements PowerupInterface {
         return LENGTH;
     }
 
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public String getType() {
+        return type;
+    }
 }
