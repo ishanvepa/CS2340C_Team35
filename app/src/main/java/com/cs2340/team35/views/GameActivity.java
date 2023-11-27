@@ -144,6 +144,8 @@ public class GameActivity extends AppCompatActivity {
 
             if (powerup.getType() == "health") {
                 newP.setBackground(getDrawable(R.drawable.heart));
+            } else if (powerup.getType() == "size") {
+                newP.setBackground(getDrawable(R.drawable.mushroom));
             }
 
             this.powerupViews.put(powerup.getId(), newP);
@@ -258,16 +260,14 @@ public class GameActivity extends AppCompatActivity {
     private void renderPlayer() {
         int posX = this.playerViewModel.getPosition().getValue()[0];
         int posY = this.playerViewModel.getPosition().getValue()[1];
-        ViewGroup.LayoutParams oldparams = mainCharacter.getLayoutParams();
-        RelativeLayout.LayoutParams position = new RelativeLayout.LayoutParams(oldparams.width,
-                oldparams.width);
+        RelativeLayout.LayoutParams position = new RelativeLayout.LayoutParams(PlayerModel.getInstance().getWidth(),
+                PlayerModel.getInstance().getHeight());
         position.leftMargin =  posX;
         position.topMargin =  posY;
 
         mainCharacter.setLayoutParams(position);
-        oldparams = mainCharacterText.getLayoutParams();
-        position = new RelativeLayout.LayoutParams(oldparams.width,
-                oldparams.width);
+        position = new RelativeLayout.LayoutParams(PlayerModel.getInstance().getWidth(),
+                PlayerModel.getInstance().getHeight());
         position.leftMargin = posX;
         position.topMargin = posY - 40;
         mainCharacterText.setLayoutParams(position);

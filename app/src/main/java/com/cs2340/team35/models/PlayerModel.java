@@ -14,8 +14,11 @@ public class PlayerModel implements Enemy.CollisionSubscriber, PowerupInterface.
     private static int x;
     private static int y;
 
-    private final int width = 130;
-    private final int height = 130;
+    public final int originalWidth = 130;
+    public final int originalHeight = 130;
+
+    private int width = originalWidth;
+    private int height = originalHeight;
 
     private static ScoreModel score;
 
@@ -150,6 +153,14 @@ public class PlayerModel implements Enemy.CollisionSubscriber, PowerupInterface.
 
     public int getHeight() {
         return height;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public interface Subscriber {

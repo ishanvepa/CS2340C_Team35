@@ -2,9 +2,9 @@ package com.cs2340.team35.models;
 
 import android.graphics.Rect;
 
-public class HealthPowerupDecorator extends PowerupDecorator {
+public class SizePowerupDecorator extends PowerupDecorator {
 
-    public HealthPowerupDecorator(PowerupInterface powerUp) {
+    public SizePowerupDecorator(PowerupInterface powerUp) {
         super(powerUp);
     }
 
@@ -12,13 +12,13 @@ public class HealthPowerupDecorator extends PowerupDecorator {
     public void activate() {
         super.activate();
         PlayerModel instance = PlayerModel.getInstance();
-        instance.setHealth(instance.getHealth() + 50);
-        instance.setPosition(instance.getX(), instance.getY());
+        instance.setWidth(instance.originalWidth / 2);
+        instance.setHeight(instance.originalHeight / 2);
     }
 
     @Override
     public String getType() {
-        return "health";
+        return "size";
     }
 
     @Override

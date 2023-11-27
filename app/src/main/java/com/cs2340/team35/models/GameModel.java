@@ -131,7 +131,7 @@ public class GameModel {
 
         if (this.getLevel() == 1) {
             enemyArrayList = new ArrayList<>();
-            enemyArrayList.add(booFactory.CreateEnemy(80, 500, damageMultiplier, "boo1"));
+            enemyArrayList.add(booFactory.CreateEnemy(80, 800, damageMultiplier, "boo1"));
             enemyArrayList.add(bowserFactory.CreateEnemy(50, 1200, damageMultiplier, "boo4"));
         } else if (this.getLevel() == 2) {
             enemyArrayList = new ArrayList<>();
@@ -184,6 +184,7 @@ public class GameModel {
             powerupArrayList = new ArrayList<PowerupInterface>();
             PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 100, 600, "health1", "health"));
             powerupArrayList.add(health1);
+            powerupArrayList.add(new SizePowerupDecorator(new PowerupBase(false, 200, 900, "size1", "size")));
         } else if (this.getLevel() == 2) {
             powerupArrayList = new ArrayList<PowerupInterface>();
             PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 100, 600, "health2", "health"));
