@@ -39,6 +39,7 @@ public class ConfigurationActivity extends AppCompatActivity {
         PlayerViewModel playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
 
         playerViewModel.setScore(new ScoreModel(100));
+        playerViewModel.resetAttributes();
 
         easyButton.setOnClickListener(v -> {
             // Set Difficulty to Easy

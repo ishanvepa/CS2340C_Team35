@@ -54,6 +54,13 @@ public class PlayerViewModel extends ViewModel implements PlayerModel.Subscriber
         this.health.postValue(instance.getHealth());
     }
 
+    public void resetAttributes() {
+        PlayerModel instance = PlayerModel.getInstance();
+        instance.setSpeed(1);
+        instance.setWidth(instance.originalWidth);
+        instance.setHeight(instance.originalHeight);
+    }
+
     @Override
     public void powerupUpdated() {
 
