@@ -26,7 +26,6 @@ public class GameModel {
     private static int timeElapsed;
     private static ArrayList<WallModel> wallModelArrayList;
     private static ArrayList<Enemy> enemyArrayList;
-
     private static ArrayList<PowerupInterface> powerupArrayList;
     private GameModel() {
         gameDifficulty = Difficulty.EASY;

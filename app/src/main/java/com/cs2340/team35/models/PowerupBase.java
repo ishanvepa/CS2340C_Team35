@@ -73,6 +73,10 @@ public class PowerupBase implements PowerupInterface {
         subscribers.add(cs);
     }
 
+    public ArrayList<CollisionSubscriber> getSubscribers() {
+        return subscribers;
+    }
+
     @Override
     public void detectCollision() {
         Rect objectRect = new Rect(getX(), getY(), getX() + getLength(), getY() + getLength());

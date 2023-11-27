@@ -1,5 +1,7 @@
 package com.cs2340.team35.models;
 
+import java.util.ArrayList;
+
 public abstract class PowerupDecorator implements PowerupInterface {
     protected PowerupInterface powerupInterface;
 
@@ -50,5 +52,10 @@ public abstract class PowerupDecorator implements PowerupInterface {
     @Override
     public void addCollisionSubscriber(CollisionSubscriber cs) {
         this.powerupInterface.addCollisionSubscriber(cs);
+    }
+
+    @Override
+    public ArrayList<CollisionSubscriber> getSubscribers() {
+        return this.powerupInterface.getSubscribers();
     }
 }

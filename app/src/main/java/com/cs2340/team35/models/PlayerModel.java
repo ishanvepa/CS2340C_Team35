@@ -29,7 +29,10 @@ public class PlayerModel implements Enemy.CollisionSubscriber, PowerupInterface.
 
     @Override
     public void HandleCollision(PowerupInterface p) {
-        p.activate();
+        if (!p.isUsed()) {
+            p.activate();
+
+        }
     }
 
     public enum CharacterName { MARIO, LUIGI, PEACH }
