@@ -54,6 +54,11 @@ public class PlayerViewModel extends ViewModel implements PlayerModel.Subscriber
         this.health.postValue(instance.getHealth());
     }
 
+    @Override
+    public void powerupUpdated() {
+
+    }
+
     public LiveData<Integer> getHealth() {
         return health;
     }

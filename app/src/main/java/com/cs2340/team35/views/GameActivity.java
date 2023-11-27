@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cs2340.team35.models.GameModel;
+import com.cs2340.team35.models.HealthPowerupDecorator;
 import com.cs2340.team35.models.LeaderboardModel;
 import com.cs2340.team35.models.PlayerModel;
+import com.cs2340.team35.models.PowerupBase;
+import com.cs2340.team35.models.PowerupInterface;
 import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.models.WallModel;
 import com.cs2340.team35.models.enemies.Boo;
@@ -46,7 +50,7 @@ public class GameActivity extends AppCompatActivity {
     private RelativeLayout mainCharacter;
     private TextView mainCharacterText;
     private Map<String, RelativeLayout> enemyViews;
-
+    private Map<String, RelativeLayout> powerupViews;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +132,27 @@ public class GameActivity extends AppCompatActivity {
 
         }
 
+        // setup powerups
+        this.powerupViews = new HashMap<>();
+        ArrayList<PowerupInterface> powerupInterfaces = gameViewModel.getPowerups().getValue();
+        for (PowerupInterface powerup : powerupInterfaces) {
+            RelativeLayout newP = (RelativeLayout) new RelativeLayout(this);
+            newP.setLayoutParams(new RelativeLayout.LayoutParams(powerup.getLength(), powerup.getLength()));
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(powerup.getLength(), powerup.getLength());
+            params.leftMargin = powerup.getX();
+            params.topMargin = powerup.getY();
+
+            if (powerup.getType() == "health") {
+                newP.setBackground(getDrawable(R.drawable.heart));
+            } else if (powerup.getType() == "size") {
+                newP.setBackground(getDrawable(R.drawable.mushroom));
+            } else if (powerup.getType() == "speed") {
+                newP.setBackground(getDrawable(R.drawable.speed));
+            }
+
+            this.powerupViews.put(powerup.getId(), newP);
+            rootLayout.addView(newP, params);
+        }
 
         // setup timer
         if (timer != null) {
@@ -180,6 +205,7 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         });
+
         // initial renders
         renderPlayer();
         renderWalls();
@@ -224,21 +250,26 @@ public class GameActivity extends AppCompatActivity {
                 renderEnemies();
             }
         });
+
+        gameViewModel.getPowerups().observe(this, new Observer<List<PowerupInterface>>() {
+            @Override
+            public void onChanged(List<PowerupInterface> powerups) {
+                renderPowerups();
+            }
+        });
     }
 
     private void renderPlayer() {
         int posX = this.playerViewModel.getPosition().getValue()[0];
         int posY = this.playerViewModel.getPosition().getValue()[1];
-        ViewGroup.LayoutParams oldparams = mainCharacter.getLayoutParams();
-        RelativeLayout.LayoutParams position = new RelativeLayout.LayoutParams(oldparams.width,
-                oldparams.width);
+        RelativeLayout.LayoutParams position = new RelativeLayout.LayoutParams(PlayerModel.getInstance().getWidth(),
+                PlayerModel.getInstance().getHeight());
         position.leftMargin =  posX;
         position.topMargin =  posY;
 
         mainCharacter.setLayoutParams(position);
-        oldparams = mainCharacterText.getLayoutParams();
-        position = new RelativeLayout.LayoutParams(oldparams.width,
-                oldparams.width);
+        position = new RelativeLayout.LayoutParams(PlayerModel.getInstance().getWidth(),
+                PlayerModel.getInstance().getHeight());
         position.leftMargin = posX;
         position.topMargin = posY - 40;
         mainCharacterText.setLayoutParams(position);
@@ -255,6 +286,18 @@ public class GameActivity extends AppCompatActivity {
             params.leftMargin = wall.getLeftMargin();
             params.topMargin = wall.getTopMargin();
             layout.addView(v, params);
+        }
+    }
+
+    private void renderPowerups() {
+        List<PowerupInterface> powerups = this.gameViewModel.getPowerups().getValue();
+        for (PowerupInterface powerup : powerups) {
+            RelativeLayout powerupView = powerupViews.get(powerup.getId());
+            if (powerupView != null) {
+                if (powerup.isUsed()) {
+                    powerupView.setVisibility(View.GONE);
+                }
+            }
         }
     }
 

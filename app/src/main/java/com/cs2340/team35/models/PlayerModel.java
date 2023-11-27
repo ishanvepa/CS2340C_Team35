@@ -8,14 +8,18 @@ import com.cs2340.team35.models.enemies.EnemyFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerModel implements Enemy.CollisionSubscriber {
+public class PlayerModel implements Enemy.CollisionSubscriber, PowerupInterface.CollisionSubscriber {
 
     private static PlayerModel instance;
     private static int x;
     private static int y;
 
-    private final int width = 130;
-    private final int height = 130;
+    public final int originalWidth = 130;
+    public final int originalHeight = 130;
+
+    private int width = originalWidth;
+    private int height = originalHeight;
+    private int speed = 1;
 
     private static ScoreModel score;
 
@@ -25,6 +29,17 @@ public class PlayerModel implements Enemy.CollisionSubscriber {
     public void HandleCollision(Enemy e) {
         this.setHealth(this.getHealth() - e.getDamage());
         setPosition(100, 600);
+    }
+
+    @Override
+    public void HandleCollision(PowerupInterface p) {
+        if (!p.isUsed()) {
+            p.activate();
+
+            for (Subscriber s : subscriberList) {
+                s.powerupUpdated();
+            }
+        }
     }
 
     public enum CharacterName { MARIO, LUIGI, PEACH }
@@ -87,6 +102,10 @@ public class PlayerModel implements Enemy.CollisionSubscriber {
         for (Enemy enemy : GameModel.getInstance().getEnemies()) {
             enemy.detectCollision();
         }
+
+        for (PowerupInterface pi : GameModel.getInstance().getPowerups()) {
+            pi.detectCollision();
+        }
     }
 
     public void setCharacter(CharacterName character) {
@@ -137,8 +156,25 @@ public class PlayerModel implements Enemy.CollisionSubscriber {
         return height;
     }
 
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     public interface Subscriber {
         public void positionUpdated(int newX, int newY);
+        public void powerupUpdated();
     }
 
 }

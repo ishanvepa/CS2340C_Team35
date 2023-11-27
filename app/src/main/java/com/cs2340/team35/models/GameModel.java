@@ -25,13 +25,14 @@ public class GameModel {
     }
     private static int timeElapsed;
     private static ArrayList<WallModel> wallModelArrayList;
-
     private static ArrayList<Enemy> enemyArrayList;
+    private static ArrayList<PowerupInterface> powerupArrayList;
     private GameModel() {
         gameDifficulty = Difficulty.EASY;
         level = 1;
         changeEnemies();
         changeWalls();
+        changePowerups();
     }
     public void setGameDifficulty(Difficulty gameDifficulty) {
         GameModel.gameDifficulty = gameDifficulty;
@@ -61,6 +62,7 @@ public class GameModel {
         level = newLevel;
         changeWalls();
         changeEnemies();
+        changePowerups();
     }
 
     public static boolean isAtExit(int x, int y) {
@@ -129,7 +131,7 @@ public class GameModel {
 
         if (this.getLevel() == 1) {
             enemyArrayList = new ArrayList<>();
-            enemyArrayList.add(booFactory.CreateEnemy(80, 500, damageMultiplier, "boo1"));
+            enemyArrayList.add(booFactory.CreateEnemy(80, 800, damageMultiplier, "boo1"));
             enemyArrayList.add(bowserFactory.CreateEnemy(50, 1200, damageMultiplier, "boo4"));
         } else if (this.getLevel() == 2) {
             enemyArrayList = new ArrayList<>();
@@ -175,6 +177,30 @@ public class GameModel {
             enemyArrayList.set(i, enemy);
         }
 
+    }
+
+    private void changePowerups() {
+        if (this.getLevel() == 1) {
+            powerupArrayList = new ArrayList<PowerupInterface>();
+            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 100, 600, "health1", "health"));
+            powerupArrayList.add(health1);
+        } else if (this.getLevel() == 2) {
+            powerupArrayList = new ArrayList<PowerupInterface>();
+            powerupArrayList.add(new SizePowerupDecorator(new PowerupBase(false, 200, 900, "size1", "size")));
+            powerupArrayList.add(new SpeedPowerupDecorator(new PowerupBase(false, 200, 1100, "speed1", "speed")));
+        } else if (this.getLevel() == 3) {
+            powerupArrayList = new ArrayList<PowerupInterface>();
+            PowerupInterface health1 = new HealthPowerupDecorator(new PowerupBase(false, 400, 600, "health2", "health"));
+            powerupArrayList.add(health1);
+        }
+
+        for (PowerupInterface pi : powerupArrayList) {
+            pi.addCollisionSubscriber(PlayerModel.getInstance());
+        }
+    }
+
+    public ArrayList<PowerupInterface> getPowerups() {
+        return powerupArrayList;
     }
 
     //For unit testing

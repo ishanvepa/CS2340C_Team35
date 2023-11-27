@@ -5,16 +5,19 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.cs2340.team35.models.GameModel;
+import com.cs2340.team35.models.PlayerModel;
+import com.cs2340.team35.models.PowerupInterface;
 import com.cs2340.team35.models.WallModel;
 import com.cs2340.team35.models.enemies.Enemy;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameViewModel extends ViewModel {
+public class GameViewModel extends ViewModel implements PlayerModel.Subscriber {
 
     private MutableLiveData<Integer> timeElapsed;
     private MutableLiveData<ArrayList<Enemy>> enemyArraylist;
+    private MutableLiveData<ArrayList<PowerupInterface>> powerupArraylist;
 
     public String getDifficulty() {
         GameModel instance = GameModel.getInstance();
@@ -39,6 +42,15 @@ public class GameViewModel extends ViewModel {
         return enemyArraylist;
     }
 
+    public LiveData<ArrayList<PowerupInterface>> getPowerups() {
+        GameModel instance = GameModel.getInstance();
+        if (powerupArraylist == null || powerupArraylist.getValue() == null) {
+            powerupArraylist = new MutableLiveData<>(instance.getPowerups());
+        }
+        return powerupArraylist;
+    }
+
+
     public int getLevel() {
         GameModel instance = GameModel.getInstance();
         return instance.getLevel();
@@ -57,7 +69,9 @@ public class GameViewModel extends ViewModel {
 
     public GameViewModel() {
         GameModel instance = GameModel.getInstance();
+        PlayerModel pInstance = PlayerModel.getInstance();
         this.timeElapsed = new MutableLiveData<>(instance.getTimeElapsed());
+        pInstance.addSubscriber(this);
     }
 
     public LiveData<Integer> getTimeElapsed() {
@@ -85,5 +99,17 @@ public class GameViewModel extends ViewModel {
     public boolean isCollision(int x, int y, int width, int height) {
         GameModel instance = GameModel.getInstance();
         return instance.isCollision(x, y, width, height);
+    }
+
+    @Override
+    public void positionUpdated(int xpos, int ypos) {
+
+    }
+
+    @Override
+    public void powerupUpdated() {
+        getPowerups();
+        GameModel instance = GameModel.getInstance();
+        this.powerupArraylist.postValue(instance.getPowerups());
     }
 }
