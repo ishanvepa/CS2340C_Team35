@@ -146,6 +146,8 @@ public class GameActivity extends AppCompatActivity {
                 newP.setBackground(getDrawable(R.drawable.heart));
             } else if (powerup.getType() == "size") {
                 newP.setBackground(getDrawable(R.drawable.mushroom));
+            } else if (powerup.getType() == "speed") {
+                newP.setBackground(getDrawable(R.drawable.speed));
             }
 
             this.powerupViews.put(powerup.getId(), newP);
