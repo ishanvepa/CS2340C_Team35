@@ -28,7 +28,7 @@ public class EnemyLevelUnitTest {
         enemy1test.add(bowser1);
         Assert.assertEquals(enemy1Arr.get(0).getDamage(), enemy1test.get(0).getDamage());
         Assert.assertEquals(enemy1Arr.get(0).getX(), enemy1test.get(0).getX());
-        Assert.assertEquals(enemy1Arr.get(0).getY(), enemy1test.get(0).getY());
+        Assert.assertEquals(500, enemy1test.get(0).getY());
         Assert.assertEquals(enemy1Arr.get(0).getId(), enemy1test.get(0).getId());
 
         Assert.assertEquals(enemy1Arr.get(1).getDamage(), enemy1test.get(1).getDamage());
