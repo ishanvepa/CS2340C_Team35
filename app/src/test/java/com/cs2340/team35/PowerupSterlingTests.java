@@ -16,4 +16,14 @@ public class PowerupSterlingTests {
         isUsed = true;
         Assert.assertEquals(isUsed, pUp2.isUsed());
     }
+
+    @Test
+    public void TestActivate() {
+        PowerupBase pUp = new PowerupBase(false, 5, 5, "pUp", "star");
+        boolean isUsed = false;
+        Assert.assertEquals(isUsed, pUp.isUsed());
+        pUp.activate();
+        isUsed = true;
+        Assert.assertEquals(isUsed, pUp.isUsed());
+    }
 }
