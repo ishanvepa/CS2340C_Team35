@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.opengl.Visibility;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -52,6 +54,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView mainCharacterText;
     private Map<String, RelativeLayout> enemyViews;
     private Map<String, RelativeLayout> powerupViews;
+    private View swordView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +63,7 @@ public class GameActivity extends AppCompatActivity {
         // set up game view model
         gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
         playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
-
+        swordView = findViewById(R.id.swordView);
         // set up text elements
         TextView hp = (TextView) findViewById(R.id.HPView);
         TextView diff = (TextView) findViewById(R.id.difficultyText);
@@ -305,6 +308,10 @@ public class GameActivity extends AppCompatActivity {
     private void renderEnemies() {
         ArrayList<Enemy> enemies = this.gameViewModel.getEnemies().getValue();
         for (Enemy enemy : enemies) {
+            if(enemy.isDead()) {
+                enemy.removeFromGame();
+                removeFromGame(enemy);
+            }
             RelativeLayout enemyLayout = enemyViews.get(enemy.getId());
             if (enemyLayout != null) {
                 RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) enemyLayout.getLayoutParams();
@@ -316,11 +323,28 @@ public class GameActivity extends AppCompatActivity {
             }
         }
     }
+    protected void removeFromGame(Enemy enemy) {
+        RelativeLayout enemyLayout = enemyViews.get(enemy.getId());
+        enemyLayout.setVisibility(View.GONE);
+        enemy.removeFromGame();
+        GameModel game = GameModel.getInstance();
+        ArrayList<Enemy> enemies = game.getEnemies();
+        enemies.remove(enemy);
+        gameViewModel.setEnemies(enemies);
+
+    }
+
     //Movement
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         PlayerViewModel playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
         Movement strategy = null;
+        if (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_SPACE) {
+            PlayerModel player = PlayerModel.getInstance();
+            player.swingSword();
+            swordSwing();
+            return true;
+        }
         if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
             strategy = new MovementDown();
         } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
@@ -339,7 +363,6 @@ public class GameActivity extends AppCompatActivity {
 
         Integer[] newPosition = strategy.movementStrategy(currPosition[0],
                 currPosition[1], screenWidth, screenHeight);
-
         if (GameModel.isAtExit(newPosition[0], newPosition[1])) {
             if (gameViewModel.getLevel() >= 3) {
                 cancelTimers();
@@ -354,19 +377,37 @@ public class GameActivity extends AppCompatActivity {
                 startActivity(i);
             }
         }
-
         if (!this.gameViewModel.isCollision(newPosition[0], newPosition[1], 130, 80)) {
             playerViewModel.setPosition(newPosition[0], newPosition[1]);
+            updateSword(newPosition[0], newPosition[1]);
         }
 
         return true;
+    }
+    public void swordSwing() {
+        PlayerModel player = PlayerModel.getInstance();
+        player.swingSword();
+        animateSwordSwing();
+    }
+
+    private void animateSwordSwing() {
+        ObjectAnimator rotationAnimator = ObjectAnimator.ofFloat(swordView, "rotation", 0f, 180f);
+        rotationAnimator.setDuration(500); // Set the duration of the animation in milliseconds
+        rotationAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        rotationAnimator.start();
+
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         cancelTimers();
     }
+    private void updateSword(int newX, int newY) {
+        swordView.setX(newX);
+        swordView.setY(newY);
 
+    }
     private void cancelTimers() {
         if (timer != null) {
             timer.cancel();

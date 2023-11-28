@@ -33,6 +33,9 @@ public class GameViewModel extends ViewModel implements PlayerModel.Subscriber {
         GameModel instance = GameModel.getInstance();
         return instance.getWalls();
     }
+    public void setEnemies(ArrayList<Enemy> enemies) {
+        this.enemyArraylist.setValue(enemies);
+    }
 
     public LiveData<ArrayList<Enemy>> getEnemies() {
         GameModel instance = GameModel.getInstance();
@@ -111,5 +114,9 @@ public class GameViewModel extends ViewModel implements PlayerModel.Subscriber {
         getPowerups();
         GameModel instance = GameModel.getInstance();
         this.powerupArraylist.postValue(instance.getPowerups());
+    }
+    @Override
+    public void swordSwing() {
+
     }
 }

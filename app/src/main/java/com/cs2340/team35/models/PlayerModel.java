@@ -23,6 +23,7 @@ public class PlayerModel implements Enemy.CollisionSubscriber, PowerupInterface.
 
     private static ScoreModel score;
 
+    private Sword sword;
     private static int health;
 
     @Override
@@ -61,6 +62,7 @@ public class PlayerModel implements Enemy.CollisionSubscriber, PowerupInterface.
         health = 0;
         score = new ScoreModel(10);
         subscriberList = new ArrayList<>();
+        sword = new Sword(10);
     }
 
     public static PlayerModel getInstance() {
@@ -171,10 +173,31 @@ public class PlayerModel implements Enemy.CollisionSubscriber, PowerupInterface.
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+    public Sword getSword() {
+        return sword;
+    }
+    public void swingSword() {
 
+        for (Enemy enemy : GameModel.getInstance().getEnemies()) {
+            if (isSwordCollision(enemy)) {
+                enemy.setDead(true);
+                enemy.removeFromGame();
+            }
+        }
+        for (Subscriber s : subscriberList) {
+            s.swordSwing();
+        }
+    }
+    private boolean isSwordCollision(Enemy enemy) {
+        Rect swordRect = new Rect(x, y, x + sword.getLength(), y + sword.getLength());
+        Rect enemyRect = new Rect(enemy.getX(), enemy.getY(), enemy.getX() + enemy.getSizeX(), enemy.getY() + enemy.getSizeY());
+
+        return Rect.intersects(swordRect, enemyRect);
+    }
     public interface Subscriber {
         public void positionUpdated(int newX, int newY);
         public void powerupUpdated();
+        public void swordSwing();
     }
 
 }
