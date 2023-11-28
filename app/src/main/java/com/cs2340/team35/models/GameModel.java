@@ -215,13 +215,13 @@ public class GameModel {
         return powerupArrayList;
     }
 
-    private int randomXinScreen(int startVal, int endVal) {
+    public int randomXinScreen(int startVal, int endVal) {
         Random random = new Random();
         int randVal = random.nextInt(endVal - startVal) + startVal;
         return randVal;
     }
 
-    private int randomYinScreen(int startVal, int endVal) {
+    public int randomYinScreen(int startVal, int endVal) {
         Random random = new Random();
         int randVal = random.nextInt(endVal - startVal) + startVal;
         return randVal;
