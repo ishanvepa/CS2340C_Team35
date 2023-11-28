@@ -43,4 +43,17 @@ public class PowerupRandomUnitTest {
         }
         Assert.assertTrue(inRange2);
     }
+
+    @Test
+    public void powerUpRandomLevel3() {
+        GameModel gameModel = GameModel.getInstance();
+        int randomX = gameModel.randomXinScreen(650, 907);
+        int randomY = gameModel.randomYinScreen(606, 1769);
+        PowerupBase testPowerupBase1 = new PowerupBase(false, randomX, randomY, "health2", "health");
+        boolean inRange = false;
+        if ((testPowerupBase1.getX() >= 650 && testPowerupBase1.getX() <= 907) && (testPowerupBase1.getY() >= 606 && testPowerupBase1.getY() <= 1769)) {
+            inRange = true;
+        }
+        Assert.assertTrue(inRange);
+    }
 }
