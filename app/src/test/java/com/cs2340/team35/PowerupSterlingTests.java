@@ -1,9 +1,13 @@
 package com.cs2340.team35;
 
 import com.cs2340.team35.models.PowerupBase;
+import com.cs2340.team35.models.PowerupInterface;
+import com.cs2340.team35.models.enemies.Enemy;
 
 import org.junit.Test;
 import org.junit.Assert;
+
+import java.util.ArrayList;
 
 public class PowerupSterlingTests {
 
@@ -25,5 +29,20 @@ public class PowerupSterlingTests {
         pUp.activate();
         isUsed = true;
         Assert.assertEquals(isUsed, pUp.isUsed());
+    }
+
+    @Test
+    public void TestList() {
+        ArrayList<PowerupInterface.CollisionSubscriber> list = new ArrayList<>();
+        PowerupBase pUp = new PowerupBase(false, 5, 5, "pUp", "star");
+        PowerupInterface.CollisionSubscriber cs = new PowerupInterface.CollisionSubscriber() {
+            @Override
+            public void HandleCollision(PowerupInterface p) {
+                return;
+            }
+        };
+        pUp.addCollisionSubscriber(cs);
+        list.add(cs);
+        Assert.assertEquals(pUp.getSubscribers().size(), list.size());
     }
 }
