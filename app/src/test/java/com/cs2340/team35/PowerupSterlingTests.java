@@ -44,5 +44,14 @@ public class PowerupSterlingTests {
         pUp.addCollisionSubscriber(cs);
         list.add(cs);
         Assert.assertEquals(pUp.getSubscribers().size(), list.size());
+        PowerupInterface.CollisionSubscriber cs2 = new PowerupInterface.CollisionSubscriber() {
+            @Override
+            public void HandleCollision(PowerupInterface p) {
+                return;
+            }
+        };
+        pUp.addCollisionSubscriber(cs2);
+        list.add(cs2);
+        Assert.assertEquals(pUp.getSubscribers().size(), list.size());
     }
 }
