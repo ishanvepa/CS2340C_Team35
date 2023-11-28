@@ -75,5 +75,7 @@ public class EnemySterlingTests {
         Assert.assertEquals(koopa.getDamage(), 75);
         koopa.setDamageMultiplier(2);
         Assert.assertEquals(koopa.getDamage(), 30);
+        koopa.setDamageMultiplier(0);
+        Assert.assertEquals(koopa.getDamage(), 0);
     }
 }
