@@ -352,6 +352,11 @@ public class GameActivity extends AppCompatActivity {
         for (Enemy enemy : enemies) {
             RelativeLayout enemyLayout = enemyViews.get(enemy.getId());
             if (enemyLayout != null) {
+                if (enemy.isDead()) {
+                    enemyLayout.setVisibility(View.GONE);
+                    continue;
+                }
+
                 RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) enemyLayout.getLayoutParams();
 
                 layoutParams.leftMargin = enemy.getX();
@@ -383,11 +388,11 @@ public class GameActivity extends AppCompatActivity {
             PlayerModel.getInstance().addProjectile(-45, 0);
             return true;
         }
-        else if (keyCode == KeyEvent.KEYCODE_S) {
+        else if (keyCode == KeyEvent.KEYCODE_W) {
             PlayerModel.getInstance().addProjectile(0, -45);
             return true;
         }
-        else if (keyCode == KeyEvent.KEYCODE_W) {
+        else if (keyCode == KeyEvent.KEYCODE_S) {
             PlayerModel.getInstance().addProjectile(0, 45);
             return true;
         }

@@ -10,6 +10,18 @@ public abstract class Enemy {
 
     public int x;
     public int y;
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
+    }
+
+    public boolean isDead = false;
+
+
     public abstract int getDamage();
     public abstract int getNextPositionX();
     public abstract int getNextPositionY();
@@ -46,6 +58,10 @@ public abstract class Enemy {
     };
 
     public void detectCollision() {
+        if (isDead()) {
+            return;
+        }
+
         Rect objectRect = new Rect(getX(), getY(), getX() + getSizeX(), getY() + getSizeY());
         PlayerModel instance = PlayerModel.getInstance();
         Rect playerRect = new Rect(instance.getX(), instance.getY(), instance.getX() + instance.getWidth(), instance.getY() + instance.getHeight());
