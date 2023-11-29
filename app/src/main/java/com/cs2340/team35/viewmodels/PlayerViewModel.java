@@ -65,10 +65,7 @@ public class PlayerViewModel extends ViewModel implements PlayerModel.Subscriber
     public void powerupUpdated() {
 
     }
-    @Override
-    public void swordSwing() {
 
-    }
 
     public LiveData<Integer> getHealth() {
         return health;

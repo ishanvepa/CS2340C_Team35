@@ -115,8 +115,4 @@ public class GameViewModel extends ViewModel implements PlayerModel.Subscriber {
         GameModel instance = GameModel.getInstance();
         this.powerupArraylist.postValue(instance.getPowerups());
     }
-    @Override
-    public void swordSwing() {
-
-    }
 }

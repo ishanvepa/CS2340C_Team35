@@ -54,16 +54,16 @@ public class GameActivity extends AppCompatActivity {
     private TextView mainCharacterText;
     private Map<String, RelativeLayout> enemyViews;
     private Map<String, RelativeLayout> powerupViews;
-    private View swordView;
+
+    private View gunView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
+        gunView = findViewById(R.id.gun);
         // set up game view model
         gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
         playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
-        swordView = findViewById(R.id.swordView);
         // set up text elements
         TextView hp = (TextView) findViewById(R.id.HPView);
         TextView diff = (TextView) findViewById(R.id.difficultyText);
@@ -213,7 +213,6 @@ public class GameActivity extends AppCompatActivity {
         // initial renders
         renderPlayer();
         renderWalls();
-
         int currentLevel = gameViewModel.getLevel();
         View root = findViewById(android.R.id.content);
         if (currentLevel == 1) {
@@ -341,8 +340,7 @@ public class GameActivity extends AppCompatActivity {
         Movement strategy = null;
         if (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_SPACE) {
             PlayerModel player = PlayerModel.getInstance();
-            player.swingSword();
-            swordSwing();
+            player.getGun().shoot();
             return true;
         }
         if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
@@ -379,34 +377,26 @@ public class GameActivity extends AppCompatActivity {
         }
         if (!this.gameViewModel.isCollision(newPosition[0], newPosition[1], 130, 80)) {
             playerViewModel.setPosition(newPosition[0], newPosition[1]);
-            updateSword(newPosition[0], newPosition[1]);
+            PlayerModel.getInstance().getGun().move(newPosition[0] + 5, newPosition[1] + 5);
         }
 
         return true;
     }
-    public void swordSwing() {
-        PlayerModel player = PlayerModel.getInstance();
-        player.swingSword();
-        animateSwordSwing();
-    }
+    private void renderGun() {
+        PlayerModel playerModel = PlayerModel.getInstance();
+        int gunX = playerModel.getGun().getX();
+        int gunY = playerModel.getGun().getY();
 
-    private void animateSwordSwing() {
-        ObjectAnimator rotationAnimator = ObjectAnimator.ofFloat(swordView, "rotation", 0f, 180f);
-        rotationAnimator.setDuration(500); // Set the duration of the animation in milliseconds
-        rotationAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        RelativeLayout.LayoutParams gunParams = new RelativeLayout.LayoutParams(20, 20);
+        gunParams.leftMargin = gunX;
+        gunParams.topMargin = gunY;
 
-        rotationAnimator.start();
-
+        gunView.setLayoutParams(gunParams);
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         cancelTimers();
-    }
-    private void updateSword(int newX, int newY) {
-        swordView.setX(newX);
-        swordView.setY(newY);
-
     }
     private void cancelTimers() {
         if (timer != null) {

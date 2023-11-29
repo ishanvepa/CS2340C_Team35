@@ -214,10 +214,10 @@
         <!-- Other views and layout elements -->
 
         <ImageView
-            android:id="@+id/swordView"
+            android:id="@+id/gun"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/sword"
+            android:src="@drawable/gun"
             android:layout_centerInParent="true" />
     </RelativeLayout>
 
