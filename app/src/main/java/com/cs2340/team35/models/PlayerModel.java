@@ -29,6 +29,7 @@ public class PlayerModel implements Enemy.CollisionSubscriber, PowerupInterface.
     public void HandleCollision(Enemy e) {
         this.setHealth(this.getHealth() - e.getDamage());
         setPosition(100, 600);
+        score.setCurrentScore(score.getCurrentScore() - 20);
     }
 
     @Override

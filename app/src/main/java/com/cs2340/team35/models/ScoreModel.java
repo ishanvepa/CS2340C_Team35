@@ -16,4 +16,12 @@ public class ScoreModel implements Comparable<ScoreModel> {
     public void setCurrentScore(int currentScore) {
         this.currentScore = currentScore;
     }
+
+    public void increaseScore(int amount) {
+        this.currentScore += amount;
+    }
+
+    public void decreaseScore(int amount) {
+        this.currentScore -= amount;
+    }
 }

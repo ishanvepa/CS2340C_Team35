@@ -297,6 +297,9 @@ public class GameActivity extends AppCompatActivity {
             if (powerupView != null) {
                 if (powerup.isUsed()) {
                     powerupView.setVisibility(View.GONE);
+                    //increase score when powerup is collected
+                    ScoreModel incScore = playerViewModel.getScore().getValue();
+                    playerViewModel.setScore(new ScoreModel(incScore.getCurrentScore() + 10));
                 }
             }
         }
