@@ -20,6 +20,7 @@ import com.cs2340.team35.models.LeaderboardModel;
 import com.cs2340.team35.models.PlayerModel;
 import com.cs2340.team35.models.PowerupBase;
 import com.cs2340.team35.models.PowerupInterface;
+import com.cs2340.team35.models.ProjectileModel;
 import com.cs2340.team35.models.ScoreModel;
 import com.cs2340.team35.models.WallModel;
 import com.cs2340.team35.models.enemies.Boo;
@@ -52,6 +53,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView mainCharacterText;
     private Map<String, RelativeLayout> enemyViews;
     private Map<String, RelativeLayout> powerupViews;
+    private Map<Integer, RelativeLayout> projectileViews;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +112,9 @@ public class GameActivity extends AppCompatActivity {
         goomba.setVisibility(View.GONE);
 
         this.enemyViews = new HashMap<>();
+        this.projectileViews = new HashMap<>();
+        playerViewModel.resetProjectiles();
+
         ArrayList<Enemy> enemies = this.gameViewModel.getEnemies().getValue();
         for (Enemy enemy : enemies) {
             RelativeLayout newEnemy = (RelativeLayout) new RelativeLayout(this);
@@ -180,6 +185,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void run() {
                 gameViewModel.enemyTimestep();
+                playerViewModel.projectileTimestep();
             }
         }, 0, 200);
 
@@ -252,6 +258,14 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        playerViewModel.getProjectiles().observe(this, new Observer<List<ProjectileModel>>() {
+            @Override
+            public void onChanged(List<ProjectileModel> projectileModels) {
+                renderProjectiles();
+            }
+        });
+
+
         gameViewModel.getPowerups().observe(this, new Observer<List<PowerupInterface>>() {
             @Override
             public void onChanged(List<PowerupInterface> powerups) {
@@ -274,6 +288,34 @@ public class GameActivity extends AppCompatActivity {
         position.leftMargin = posX;
         position.topMargin = posY - 40;
         mainCharacterText.setLayoutParams(position);
+    }
+
+    private void renderProjectiles() {
+        List<ProjectileModel> pm = playerViewModel.getProjectiles().getValue();
+        RelativeLayout rootLayout = (RelativeLayout) findViewById(R.id.rootLayout);
+
+        for (int i =0; i < pm.size(); i ++) {
+            ProjectileModel pmi = pm.get(i);
+            if (projectileViews.get(i) == null) {
+                RelativeLayout p = (RelativeLayout) new RelativeLayout(this);
+                p.setLayoutParams(new RelativeLayout.LayoutParams(pmi.SIZE_X, pmi.SIZE_Y));
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(pmi.SIZE_X, pmi.SIZE_Y);
+                params.leftMargin = pmi.getX();
+                params.topMargin = pmi.getY();
+
+                p.setBackground(getDrawable(R.drawable.projectile));
+                this.projectileViews.put(i, p);
+                rootLayout.addView(p, params);
+            } else {
+                RelativeLayout p = projectileViews.get(i);
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) p.getLayoutParams();
+
+                layoutParams.leftMargin = pmi.getX();
+                layoutParams.topMargin = pmi.getY();
+
+                p.setLayoutParams(layoutParams);
+            }
+        }
     }
 
     private void renderWalls() {
@@ -310,6 +352,11 @@ public class GameActivity extends AppCompatActivity {
         for (Enemy enemy : enemies) {
             RelativeLayout enemyLayout = enemyViews.get(enemy.getId());
             if (enemyLayout != null) {
+                if (enemy.isDead()) {
+                    enemyLayout.setVisibility(View.GONE);
+                    continue;
+                }
+
                 RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) enemyLayout.getLayoutParams();
 
                 layoutParams.leftMargin = enemy.getX();
@@ -332,7 +379,24 @@ public class GameActivity extends AppCompatActivity {
             strategy = new MovementLeft();
         } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
             strategy = new MovementRight();
+        } else if (keyCode == KeyEvent.KEYCODE_D) {
+            PlayerModel.getInstance().addProjectile(45, 0);
+            return true;
         }
+
+        else if (keyCode == KeyEvent.KEYCODE_A) {
+            PlayerModel.getInstance().addProjectile(-45, 0);
+            return true;
+        }
+        else if (keyCode == KeyEvent.KEYCODE_W) {
+            PlayerModel.getInstance().addProjectile(0, -45);
+            return true;
+        }
+        else if (keyCode == KeyEvent.KEYCODE_S) {
+            PlayerModel.getInstance().addProjectile(0, 45);
+            return true;
+        }
+
 
         Integer[] currPosition = playerViewModel.getPosition().getValue();
 

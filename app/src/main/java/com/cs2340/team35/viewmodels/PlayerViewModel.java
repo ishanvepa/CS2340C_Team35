@@ -4,7 +4,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.cs2340.team35.models.PlayerModel;
+import com.cs2340.team35.models.ProjectileModel;
 import com.cs2340.team35.models.ScoreModel;
+
+import java.util.ArrayList;
 
 public class PlayerViewModel extends ViewModel implements PlayerModel.Subscriber {
 
@@ -15,6 +18,7 @@ public class PlayerViewModel extends ViewModel implements PlayerModel.Subscriber
     public PlayerViewModel() {
         PlayerModel instance = PlayerModel.getInstance();
         this.position = new MutableLiveData<>(new Integer[] {instance.getX(), instance.getY() });
+        this.projectiles = new MutableLiveData<>(new ArrayList<ProjectileModel>());
         this.health = new MutableLiveData<>(instance.getHealth());
         this.score = new MutableLiveData<>(instance.getScore());
         instance.addSubscriber(this);
@@ -88,6 +92,30 @@ public class PlayerViewModel extends ViewModel implements PlayerModel.Subscriber
 
     public static PlayerModel getInstance() {
         return PlayerModel.getInstance();
+    }
+
+    private MutableLiveData<ArrayList<ProjectileModel>> projectiles;
+
+    public MutableLiveData<ArrayList<ProjectileModel>> getProjectiles() {
+        return projectiles;
+    }
+
+    public void addProjectileModel(int deltaX, int deltaY) {
+        PlayerModel instance = PlayerModel.getInstance();
+        instance.addProjectile(deltaX, deltaY);
+        projectiles.postValue(instance.getProjectiles());
+    }
+
+    public void projectileTimestep() {
+        PlayerModel instance = PlayerModel.getInstance();
+        instance.projectileTimestep();
+        projectiles.postValue(instance.getProjectiles());
+    }
+
+    public void resetProjectiles() {
+        PlayerModel instance = PlayerModel.getInstance();
+        instance.resetProjectiles();
+        projectiles.postValue(instance.getProjectiles());
     }
 
 }

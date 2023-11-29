@@ -22,14 +22,17 @@ public class PlayerModel implements Enemy.CollisionSubscriber, PowerupInterface.
     private int speed = 1;
 
     private static ScoreModel score;
-
     private static int health;
+
+    private static ArrayList<ProjectileModel> projectiles;
 
     @Override
     public void HandleCollision(Enemy e) {
-        this.setHealth(this.getHealth() - e.getDamage());
-        setPosition(100, 600);
-        score.setCurrentScore(score.getCurrentScore() - 20);
+        if (!e.isDead()) {
+            this.setHealth(this.getHealth() - e.getDamage());
+            setPosition(100, 600);
+            score.setCurrentScore(score.getCurrentScore() - 20);
+        }
     }
 
     @Override
@@ -62,6 +65,34 @@ public class PlayerModel implements Enemy.CollisionSubscriber, PowerupInterface.
         health = 0;
         score = new ScoreModel(10);
         subscriberList = new ArrayList<>();
+        projectiles = new ArrayList<>();
+    }
+
+    public void addProjectile(int deltaX, int deltaY) {
+        ProjectileModel p = new ProjectileModel(x, y, deltaX, deltaY);
+        projectiles.add(p);
+    }
+
+    public void projectileTimestep() {
+        for (ProjectileModel pm : projectiles) {
+            pm.timestep();
+
+            if (pm.getX() < 0 || pm.getX() > 2000 || pm.getY() < 0 || pm.getY() > 3000) {
+                pm.setOffScreen(true);
+            }
+
+            if (!pm.isOffScreen()) {
+                pm.detectCollision();
+            }
+        }
+    }
+
+    public void resetProjectiles() {
+        projectiles = new ArrayList<>();
+    }
+
+    public static ArrayList<ProjectileModel> getProjectiles() {
+        return projectiles;
     }
 
     public static PlayerModel getInstance() {
